@@ -13,5 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Apollo">
+      <UniqueIdentifier>{e2406580-e383-402c-9a39-17a76e905d35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tricky%27s Units">
+      <UniqueIdentifier>{8e67fc16-794c-4cad-bfa8-4105d28fb87a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\JCR6">
+      <UniqueIdentifier>{cefb7ea0-8630-49a6-837e-71864ec070cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Kthura">
+      <UniqueIdentifier>{e800b5e3-05a1-481d-8d13-20083ce6cde8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Source Files\Apollo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\ArgParse.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\ErrorCodes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

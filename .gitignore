@@ -3,4 +3,5 @@ MKL*
 *.MKL.*
 Test
 bin
-
+Debug/
+x64/

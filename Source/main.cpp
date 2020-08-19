@@ -23,3 +23,37 @@
 // 
 // Version: 20.08.19
 // EndLic
+
+#include <iostream>
+#include <stdio.h>
+#include <ArgParse.h>
+#include <ErrorCodes.h>
+#include <globals.h>
+
+using namespace TrickyUnits;
+
+
+namespace Tricky_Apollo {
+
+
+	void CLI_Args(int n, char* args[]){
+		FlagConfig Flag = {};
+		AddFlag_Bool(Flag, "v", false); // Version		
+		printf("Parsing %d parameter(s)\n", n);
+		CLI_Config = ParseArg(n, args, Flag);
+		if (ParseArgReport() != "") {
+			cout << "Error occured: " << ParseArgReport() << "\n";
+			exit(AE_CLI_Arg_Error);
+		}
+		cout << "Executable: " << CLI_Config.myexe << "\n";
+	}
+
+}
+
+using namespace Tricky_Apollo;
+
+int main(int n, char* args[]) {
+	printf("Apollo Game Engine\nWritten by Jeroen P. Broks\nBuild date: %s\n(c) Jeroen P. Broks\nReleased under the terms of the GPL3\n\n",__DATE__);
+	CLI_Args(n, args);
+	return AE_NoError;
+}
