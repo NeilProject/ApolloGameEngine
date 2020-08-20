@@ -1,6 +1,6 @@
 // Lic:
 // Apollo
-// Error Codes
+// Global Variables
 // 
 // 
 // 
@@ -23,16 +23,12 @@
 // 
 // Version: 20.08.21
 // EndLic
+#include <string>
+#include <ArgParse.h>
+#include <jcr6_core.hpp>
 
-#ifndef APOLLO_INCLUDED_ERRORS
-#define APOLLO_INCLUDED_ERRORS
-enum { 
-	AE_NoError=0,
-	AE_CLI_Arg_Error,
-	AE_NoPackage,
-	AE_JCR6Error,
-	AE_NoIdentify,
-	AE_IdentifyError,
-	AE_VersionTooLow
-};
-#endif
+namespace Tricky_Apollo {
+	 TrickyUnits::ParsedArg CLI_Config;
+	 std::string PackageMainFile="";
+	 jcr6::JT_Dir JCRPackage;
+}

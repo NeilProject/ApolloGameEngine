@@ -54,6 +54,9 @@
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="Source\globals.cpp">
+      <Filter>Source Files\Apollo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\ErrorCodes.h">

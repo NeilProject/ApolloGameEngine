@@ -21,16 +21,27 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.20
+// Version: 20.08.21
 // EndLic
+#include <QuickString.hpp>
 #include "..\Headers\Identify.hpp"
 
 
 namespace Tricky_Apollo {
 	using namespace std;
+	using namespace TrickyUnits;
+
+	TrickyUnits::GINIE Identify::ConfigData;
 
 	void Identify::LoadIdentify() {
 		auto ID_Script = JCRPackage.Lines("ID/Identify.ini");
 		ConfigData.Parse(ID_Script);
 	}
+	string Identify::MetaData(std::string key)	{
+		return ConfigData.Value("META", key);
+	}
+	string Identify::EngineData(std::string key)	{
+		return Upper(ConfigData.Value("ENGINE",key));
+	}
+	
 }

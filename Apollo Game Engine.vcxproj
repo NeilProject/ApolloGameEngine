@@ -149,6 +149,7 @@
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
+    <ClCompile Include="Source\globals.cpp" />
     <ClCompile Include="Source\Identify.cpp" />
     <ClCompile Include="Source\main.cpp" />
   </ItemGroup>

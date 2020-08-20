@@ -21,11 +21,12 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.20
+// Version: 20.08.21
 // EndLic
 // Tricky's Units
+#ifndef APOLLO_INCLUDED_ID
+#define APOLLO_INCLUDED_ID
 #include <GINIE.hpp>
-
 #include <Globals.h>
 namespace Tricky_Apollo {
 
@@ -34,6 +35,10 @@ namespace Tricky_Apollo {
 		static TrickyUnits::GINIE ConfigData;
 	public:
 		static void LoadIdentify();
+		static string MetaData(std::string key);
+		static string EngineData(std::string key);
+		
 	};
 
 }
+#endif

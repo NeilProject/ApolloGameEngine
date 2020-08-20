@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.20
+// Version: 20.08.21
 // EndLic
 
 // Internal
@@ -38,18 +38,22 @@
 // SDL
 
 // JCR6
+#include <jcr6_core.hpp>
+#include <jcr6_quakepak.hpp>
+#include <jcr6_wad.hpp>
 
 // Apollo
 #include <ErrorCodes.h>
-#include <globals.h>
+#include <Globals.h>
+#include <Identify.hpp>
 
 using namespace TrickyUnits;
-
+using namespace jcr6;
 
 namespace Tricky_Apollo {
 
 
-	void CLI_Args(int n, char* args[]){
+	void CLI_Args(int n, char* args[]) {
 		FlagConfig Flag = {};
 		AddFlag_Bool(Flag, "v", false); // Version		
 		printf("Parsing %d parameter(s)\n", n);
@@ -61,7 +65,7 @@ namespace Tricky_Apollo {
 		cout << "Executable: " << CLI_Config.myexe << "\n";
 	}
 
-	void FindGameData(){
+	void FindGameData() {
 		if (CLI_Config.arguments.size() > 0) {
 			PackageMainFile = CLI_Config.arguments[0];
 		}
@@ -69,14 +73,40 @@ namespace Tricky_Apollo {
 			// Please note!! The line below only applies to Windows. In Linux and especially on Mac, a different approach will be desireable! Keep that in line if you want to port this!
 			PackageMainFile = StripExt(CLI_Config.myexe) + ".Apollo.JCR";
 		}
-		if (!FileExists(PackageMainFile)){
+		if (!FileExists(PackageMainFile)) {
 			cout << "No game package specified! Either specify it as a parameter, or have the package named \"" << PackageMainFile << "\"\n\n";
 			exit(AE_NoPackage);
 		}
 		cout << "Game package: " << PackageMainFile << "\n";
-
+		cout << "\n\nStarting up JCR6\n";
+		init_JCR6();
+		init_quakepak();
+		InitWAD();
+		cout << "Analyzing: " << PackageMainFile << "\n";
+		JCRPackage = jcr6::Dir(PackageMainFile);
+		if (Get_JCR_Error_Message() != "Ok") {
+			cout << "ERROR while analying JCR package: " << Get_JCR_Error_Message() << "\n\n";
+			exit(AE_JCR6Error);
+		}
+		if (!JCRPackage.EntryExists("ID/Identify.ini")) {
+			cout << "ERROR! Package " << PackageMainFile << " does not contain a ID/Identify.ini entry! Either this is not an Apollo package, or the file may be corrupted!\n";
+			exit(AE_NoIdentify);
+		}
+		cout << "Identifying\n";
+		Identify::LoadIdentify();
+		if (Identify::EngineData("Main") != "APOLLO") {
+			cout << "ERROR! Package is for the " << Identify::EngineData("Main") << " engine!\n";
+			exit(AE_IdentifyError);
+		}
+		if (Identify::EngineData("Sub") != "GAMECPSDL") {
+			cout << "ERROR! Package is for the Apollo " << Identify::EngineData("sub") << " engine!\n";
+			exit(AE_IdentifyError);
+		}
+		cout << "\n\n";
+		cout << "Title:     " << Identify::MetaData("Title") << "\n";
+		cout << "Author:    " << Identify::MetaData("Author") << "\n";
+		cout << "Copyright: " << Identify::MetaData("Copyright") << "\n";
 	}
-
 }
 
 using namespace Tricky_Apollo;

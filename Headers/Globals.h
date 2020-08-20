@@ -21,14 +21,18 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.20
+// Version: 20.08.21
 // EndLic
+
+#ifndef APOLLO_INCLUDED_GLOBALS
+#define APOLLO_INCLUDED_GLOBALS
 #include <ArgParse.h>
 #include <jcr6_core.hpp>
 
 
 namespace Tricky_Apollo {
-	TrickyUnits::ParsedArg CLI_Config;
-	string PackageMainFile = "";
-	jcr6::JT_Dir JCRPackage;
+	extern TrickyUnits::ParsedArg CLI_Config;
+	extern string PackageMainFile;
+	extern jcr6::JT_Dir JCRPackage;
 }
+#endif
