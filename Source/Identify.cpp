@@ -1,6 +1,6 @@
 // Lic:
 // Apollo
-// Globals
+// Identify
 // 
 // 
 // 
@@ -23,12 +23,14 @@
 // 
 // Version: 20.08.20
 // EndLic
-#include <ArgParse.h>
-#include <jcr6_core.hpp>
+#include "..\Headers\Identify.hpp"
 
 
 namespace Tricky_Apollo {
-	TrickyUnits::ParsedArg CLI_Config;
-	string PackageMainFile = "";
-	jcr6::JT_Dir JCRPackage;
+	using namespace std;
+
+	void Identify::LoadIdentify() {
+		auto ID_Script = JCRPackage.Lines("ID/Identify.ini");
+		ConfigData.Parse(ID_Script);
+	}
 }

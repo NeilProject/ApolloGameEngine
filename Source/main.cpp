@@ -21,12 +21,25 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.19
+// Version: 20.08.20
 // EndLic
 
+// Internal
 #include <iostream>
 #include <stdio.h>
+
+// Tricky's Units
 #include <ArgParse.h>
+#include <QuickStream.hpp>
+#include <QuickString.hpp>
+
+// Lua
+
+// SDL
+
+// JCR6
+
+// Apollo
 #include <ErrorCodes.h>
 #include <globals.h>
 
@@ -48,6 +61,22 @@ namespace Tricky_Apollo {
 		cout << "Executable: " << CLI_Config.myexe << "\n";
 	}
 
+	void FindGameData(){
+		if (CLI_Config.arguments.size() > 0) {
+			PackageMainFile = CLI_Config.arguments[0];
+		}
+		else {
+			// Please note!! The line below only applies to Windows. In Linux and especially on Mac, a different approach will be desireable! Keep that in line if you want to port this!
+			PackageMainFile = StripExt(CLI_Config.myexe) + ".Apollo.JCR";
+		}
+		if (!FileExists(PackageMainFile)){
+			cout << "No game package specified! Either specify it as a parameter, or have the package named \"" << PackageMainFile << "\"\n\n";
+			exit(AE_NoPackage);
+		}
+		cout << "Game package: " << PackageMainFile << "\n";
+
+	}
+
 }
 
 using namespace Tricky_Apollo;
@@ -55,5 +84,6 @@ using namespace Tricky_Apollo;
 int main(int n, char* args[]) {
 	printf("Apollo Game Engine\nWritten by Jeroen P. Broks\nBuild date: %s\n(c) Jeroen P. Broks\nReleased under the terms of the GPL3\n\n",__DATE__);
 	CLI_Args(n, args);
+	FindGameData();
 	return AE_NoError;
 }

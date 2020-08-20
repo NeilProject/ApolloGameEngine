@@ -1,6 +1,6 @@
 // Lic:
 // Apollo
-// Globals
+// Identify
 // 
 // 
 // 
@@ -23,12 +23,17 @@
 // 
 // Version: 20.08.20
 // EndLic
-#include <ArgParse.h>
-#include <jcr6_core.hpp>
+// Tricky's Units
+#include <GINIE.hpp>
 
-
+#include <Globals.h>
 namespace Tricky_Apollo {
-	TrickyUnits::ParsedArg CLI_Config;
-	string PackageMainFile = "";
-	jcr6::JT_Dir JCRPackage;
+
+	class Identify {
+	private:
+		static TrickyUnits::GINIE ConfigData;
+	public:
+		static void LoadIdentify();
+	};
+
 }

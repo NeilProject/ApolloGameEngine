@@ -36,12 +36,33 @@
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JCR6\src\jcr6_core.cpp">
+      <Filter>Source Files\JCR6</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JCR6\src\jcr6_quakepak.cpp">
+      <Filter>Source Files\JCR6</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JCR6\src\jcr6_wad.cpp">
+      <Filter>Source Files\JCR6</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Identify.cpp">
+      <Filter>Source Files\Apollo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\ErrorCodes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Identify.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
