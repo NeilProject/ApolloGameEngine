@@ -37,8 +37,10 @@ namespace Tricky_Apollo {
 		AE_NoIdentify,
 		AE_IdentifyError,
 		AE_VersionTooLow,
+		AE_ARF_NotFound,
+		AE_ARF_Invalid,
 		AE_SDL_Error,
-		AE_Script_Error
+		AE_Script_Error,
 	};
 }
 #endif

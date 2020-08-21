@@ -52,7 +52,26 @@ using namespace TrickyUnits;
 using namespace jcr6;
 
 namespace Tricky_Apollo {
-
+	void CheckARF() {
+		cout << "\n\nStarting up JCR6\n";
+		init_JCR6();
+		init_quakepak();
+		InitWAD();
+		string ARFile = StripExt(CLI_Config.myexe) + ".arf";
+		if (!FileExists(ARFile)) { cout << "ERROR! " << ARFile << " not found!\n"; exit(AE_ARF_NotFound); }
+		ARF = Dir(ARFile);
+		auto ARFIDLines = ARF.Lines("ID/Identify.ini");
+		auto E = Get_JCR_Error_Message();
+		if (E != "Ok") {
+			cout << "ERROR! No identification data or error in loading it in " << ARFile << "\nJCR6 reported: "<<E<<"\n"; exit(AE_ARF_Invalid);
+		}
+		GINIE AG; AG.Parse(ARFIDLines);
+		if (AG.Value("ARF", "CHECK") != "Wendicka_Lovejoy") {
+			cout << "ERROR! " << ARFile << " does not appear to be set up for the Apollo Game Engine!\n";
+			exit(AE_ARF_Invalid);
+		}
+		cout << "Validated: " << ARFile << "\n\n";
+	}
 
 	void CLI_Args(int n, char* args[]) {
 		FlagConfig Flag = {};
@@ -79,10 +98,6 @@ namespace Tricky_Apollo {
 			exit(AE_NoPackage);
 		}
 		cout << "Game package: " << PackageMainFile << "\n";
-		cout << "\n\nStarting up JCR6\n";
-		init_JCR6();
-		init_quakepak();
-		InitWAD();
 		cout << "Analyzing: " << PackageMainFile << "\n";
 		JCRPackage = jcr6::Dir(PackageMainFile);
 		if (Get_JCR_Error_Message() != "Ok") {
@@ -121,6 +136,7 @@ using namespace Tricky_Apollo;
 int main(int n, char* args[]) {
 	printf("Apollo Game Engine\nWritten by Jeroen P. Broks\nBuild date: %s\n(c) Jeroen P. Broks\nReleased under the terms of the GPL3\n\n",__DATE__);
 	CLI_Args(n, args);
+	CheckARF();
 	FindGameData();
 	Apollo_SDL_Start();
 	// TODO : The code that comes in between ;)

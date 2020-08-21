@@ -31,4 +31,5 @@ namespace Tricky_Apollo {
 	 TrickyUnits::ParsedArg CLI_Config;
 	 std::string PackageMainFile="";
 	 jcr6::JT_Dir JCRPackage;
+	 jcr6::JT_Dir ARF;
 }

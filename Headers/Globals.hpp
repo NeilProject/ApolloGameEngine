@@ -34,5 +34,6 @@ namespace Tricky_Apollo {
 	extern TrickyUnits::ParsedArg CLI_Config;
 	extern std::string PackageMainFile;
 	extern jcr6::JT_Dir JCRPackage;
+	extern jcr6::JT_Dir ARF;
 }
 #endif
