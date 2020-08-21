@@ -1,6 +1,6 @@
 // Lic:
 // Apollo
-// Globals
+// Global definitions
 // 
 // 
 // 
