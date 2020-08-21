@@ -34,20 +34,53 @@
 // Apollo
 #include "../Headers/SDL_Manager.hpp"
 #include "../Headers/Identify.hpp"
+#include "../Headers/ErrorCodes.hpp"
 
+namespace Tricky_Apollo {
 
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
+    //The window we'll be rendering to
+    SDL_Window* gWindow = NULL;
 
-//The surface contained by the window
-SDL_Surface* gScreenSurface = NULL;
+    //The surface contained by the window
+    SDL_Surface* gScreenSurface = NULL;
 
-void Apollo_SDL_Start() {
-	printf("Starting up SDL\n\n");
-}
+    void Apollo_SDL_Start() {
+        printf("Starting up SDL\n\n");
+        //Initialization flag
+        bool success = true;
 
-void Apollo_SDL_End() {
-	printf("Preparing to terminate SDL\n");
-	printf("Terminating SDL\n");
-	printf("SDL Terminated")
+        //Initialize SDL
+        if (SDL_Init(SDL_INIT_VIDEO) < 0)
+        {
+            printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+            success = false;
+        }
+        else
+        {
+            //Create window
+            gWindow = SDL_CreateWindow(Identify::WindowTitle().c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Identify::WinWidth() , Identify::WinHeight(), SDL_WINDOW_SHOWN);
+            if (gWindow == NULL)
+            {
+                printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+                success = false;
+            }
+            else
+            {
+                //Get window surface
+                gScreenSurface = SDL_GetWindowSurface(gWindow);
+            }
+        }
+
+        if (!success) exit(AE_SDL_Error);
+        printf("SDL started succesfully\n\n");
+    }
+
+    void Apollo_SDL_End() {
+        printf("Preparing to terminate SDL\n");
+        // TODO: Destroy all still open textures and other stuff!
+        SDL_DestroyWindow(gWindow);
+        gWindow = NULL;
+        printf("Terminating SDL\n");
+        printf("SDL Terminated");
+    }
 }
