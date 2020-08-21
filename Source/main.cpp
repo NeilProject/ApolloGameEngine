@@ -46,6 +46,7 @@
 #include <ErrorCodes.hpp>
 #include <Globals.hpp>
 #include <Identify.hpp>
+#include <SDL_Manager.hpp>
 
 using namespace TrickyUnits;
 using namespace jcr6;
@@ -121,5 +122,8 @@ int main(int n, char* args[]) {
 	printf("Apollo Game Engine\nWritten by Jeroen P. Broks\nBuild date: %s\n(c) Jeroen P. Broks\nReleased under the terms of the GPL3\n\n",__DATE__);
 	CLI_Args(n, args);
 	FindGameData();
+	Apollo_SDL_Start();
+	// TODO : The code that comes in between ;)
+	Apollo_SDL_End();
 	return AE_NoError;
 }
