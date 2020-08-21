@@ -54,10 +54,10 @@
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
-    <ClCompile Include="Source\globals.cpp">
+    <ClCompile Include="Source\SDL_Manager.cpp">
       <Filter>Source Files\Apollo</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SDL_Manager.cpp">
+    <ClCompile Include="Source\Globals.cpp">
       <Filter>Source Files\Apollo</Filter>
     </ClCompile>
   </ItemGroup>
