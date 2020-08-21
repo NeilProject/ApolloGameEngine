@@ -27,7 +27,7 @@
 #ifndef APOLLO_INCLUDED_ID
 #define APOLLO_INCLUDED_ID
 #include <GINIE.hpp>
-#include <Globals.h>
+#include <Globals.hpp>
 namespace Tricky_Apollo {
 
 	class Identify {

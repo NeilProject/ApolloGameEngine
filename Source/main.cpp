@@ -43,8 +43,8 @@
 #include <jcr6_wad.hpp>
 
 // Apollo
-#include <ErrorCodes.h>
-#include <Globals.h>
+#include <ErrorCodes.hpp>
+#include <Globals.hpp>
 #include <Identify.hpp>
 
 using namespace TrickyUnits;
