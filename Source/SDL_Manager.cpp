@@ -209,7 +209,8 @@ namespace Tricky_Apollo {
 
     void Apollo_SDL_End() {
         if (!Begun_SDL) {
-            printf("Request to terminate SDL refused, as SDL never started in the first place");
+            printf("Request to terminate SDL refused, as SDL never started in the first place\n");
+            return;
         }
         printf("Preparing to terminate SDL\n");
         // Destroy all still open textures and other stuff!
