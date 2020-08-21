@@ -33,6 +33,7 @@ enum {
 	AE_JCR6Error,
 	AE_NoIdentify,
 	AE_IdentifyError,
-	AE_VersionTooLow
+	AE_VersionTooLow,
+	AE_SDL_Error
 };
 #endif
