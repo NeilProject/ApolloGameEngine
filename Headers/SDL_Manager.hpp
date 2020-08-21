@@ -26,7 +26,11 @@
 #ifndef INCLUDED_APOLLO_SDL_START_AND_FINISH
 #define INCLUDED_APOLLO_SDL_START_AND_FINISH
 
-void Apollo_SDL_Start();
-void Apollo_SDL_End();
-
+namespace Tricky_Apollo {
+	void Apollo_SDL_Start();
+	void Apollo_SDL_End();
+	void Apollo_SDL_Flip();
+	void Apollo_SDL_ClsColor(int r, int g, int b);
+	void Apollo_SDL_Cls();
+}
 #endif
