@@ -34,6 +34,7 @@ enum {
 	AE_NoIdentify,
 	AE_IdentifyError,
 	AE_VersionTooLow,
-	AE_SDL_Error
+	AE_SDL_Error,
+	AE_Script_Error
 };
 #endif
