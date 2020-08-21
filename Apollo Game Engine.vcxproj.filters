@@ -60,6 +60,12 @@
     <ClCompile Include="Source\Globals.cpp">
       <Filter>Source Files\Apollo</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Crash.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\core.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -72,6 +78,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Globals.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Crash.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Core.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

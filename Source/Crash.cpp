@@ -23,3 +23,25 @@
 // 
 // Version: 20.08.21
 // EndLic
+
+#include "../Headers/Crash.hpp"
+#include "../Headers/SDL_Manager.hpp"
+#include <iostream>
+#include <string>
+
+namespace Tricky_Apollo {
+	using namespace std;
+
+	void Crash(string Message, string State, string TraceBack, int exitcode) {
+		cout << "\x1b[41;33;1mFatal Error!\x1b[0m\nError: " << Message << "\nState: " << State << "\n\n" << TraceBack << "\n";
+		// loop
+		ImmHalt(exitcode);
+	}
+
+	void ImmHalt(int exitcode) {
+		Apollo_SDL_End();
+		// TODO: Make sure Lua is unloaded
+		exit(exitcode);
+	}
+
+}

@@ -23,3 +23,13 @@
 // 
 // Version: 20.08.21
 // EndLic
+#pragma once
+#include <string>
+#include <ErrorCodes.hpp>
+
+namespace Tricky_Apollo {
+
+	void Crash(std::string Message, std::string State = "", std::string TraceBack = "", int exitcode = AE_General_Error);
+	void ImmHalt(int exitcode = 0);
+
+}
