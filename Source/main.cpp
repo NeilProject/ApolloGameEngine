@@ -105,7 +105,13 @@ namespace Tricky_Apollo {
 		cout << "\n\n";
 		cout << "Title:     " << Identify::MetaData("Title") << "\n";
 		cout << "Author:    " << Identify::MetaData("Author") << "\n";
-		cout << "Copyright: " << Identify::MetaData("Copyright") << "\n";
+		cout << "Copyright: " << Identify::MetaData("Copyright") << "\n\n";
+		cout << "Starting up window entitled \"" << Identify::WindowTitle() << "\"; ";
+		if (Identify::FullScreen())
+			cout << "Full Screen";
+		else
+			cout << Identify::WinWidth() << "x" << Identify::WinHeight();
+		cout << "\n";
 	}
 }
 
