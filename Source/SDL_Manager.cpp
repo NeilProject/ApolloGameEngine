@@ -23,13 +23,24 @@
 // 
 // Version: 20.08.21
 // EndLic
+
 // C or C++
 #include <stdio.h>
 
+// SDL
+#include <SDL.h>
+
 
 // Apollo
-#include "../Headers/SDL_InitAndClose.hpp"
+#include "../Headers/SDL_Manager.hpp"
 #include "../Headers/Identify.hpp"
+
+
+//The window we'll be rendering to
+SDL_Window* gWindow = NULL;
+
+//The surface contained by the window
+SDL_Surface* gScreenSurface = NULL;
 
 void Apollo_SDL_Start() {
 	printf("Starting up SDL\n\n");
