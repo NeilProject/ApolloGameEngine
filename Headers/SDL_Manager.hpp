@@ -1,6 +1,6 @@
 // Lic:
 // Apollo
-// Init and close SDL
+// SDL Manager
 // 
 // 
 // 
@@ -23,10 +23,22 @@
 // 
 // Version: 20.08.21
 // EndLic
+
 #ifndef INCLUDED_APOLLO_SDL_START_AND_FINISH
 #define INCLUDED_APOLLO_SDL_START_AND_FINISH
 
+#include <SDL.h>
+
 namespace Tricky_Apollo {
+	/// <summary>
+	/// When set to true, all kind of debug crap will be shown on the console
+	/// </summary>
+	extern bool Apollo_SDL_Loudmouth;
+
+	// Texture
+	void RemTex(std::string Tag);
+
+	// Base features
 	void Apollo_SDL_Start();
 	void Apollo_SDL_End();
 	void Apollo_SDL_Flip();
