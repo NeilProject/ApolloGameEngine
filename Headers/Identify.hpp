@@ -35,9 +35,12 @@ namespace Tricky_Apollo {
 		static TrickyUnits::GINIE ConfigData;
 	public:
 		static void LoadIdentify();
-		static string MetaData(std::string key);
-		static string EngineData(std::string key);
-		
+		static std::string MetaData(std::string key);
+		static std::string EngineData(std::string key);
+		static std::string WindowTitle();
+		static bool FullScreen();		
+		static int WinHeight();
+		static int WinWidth();
 	};
 
 }

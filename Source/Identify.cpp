@@ -43,5 +43,27 @@ namespace Tricky_Apollo {
 	string Identify::EngineData(std::string key)	{
 		return Upper(ConfigData.Value("ENGINE",key));
 	}
-	
+
+	string Identify::WindowTitle() {
+		if (ConfigData.Value("Window", "Title") != "") return ConfigData.Value("Window", "Title");
+		if (ConfigData.Value("Meta", "Title") != "") return ConfigData.Value("Meta", "Title");
+		string s = "Apollo Game Engine - (c) Jeroen P. Broks (build "; s += __DATE__; s +=")";
+		return s;
+	}
+
+	bool Identify::FullScreen() { return Upper(ConfigData.Value("Window", "FullScreen")) == "YES"; }
+
+	int Identify::WinHeight() {
+		int ret = stoi(ConfigData.Value("Window", "Height"));
+		if (ret < 25) ret = 800;
+		return ret;
+	}
+
+	int Identify::WinWidth() {
+		int ret = stoi(ConfigData.Value("Window", "Width"));
+		if (ret < 25) ret = 600;
+		return ret;
+	}
+
+
 }
