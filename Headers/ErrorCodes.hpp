@@ -1,6 +1,6 @@
 // Lic:
 // Apollo
-// Error Codes
+// Error codes
 // 
 // 
 // 
