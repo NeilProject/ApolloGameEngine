@@ -57,21 +57,21 @@
     <ClCompile Include="Source\globals.cpp">
       <Filter>Source Files\Apollo</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SDL_InitAndClose.cpp">
+    <ClCompile Include="Source\SDL_Manager.cpp">
       <Filter>Source Files\Apollo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\ErrorCodes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Globals.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Identify.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\SDL_InitAndClose.hpp">
+    <ClInclude Include="Headers\SDL_Manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\ErrorCodes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Globals.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
