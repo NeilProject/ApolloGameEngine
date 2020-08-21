@@ -23,3 +23,25 @@
 // 
 // Version: 20.08.21
 // EndLic
+
+#include <iostream>
+
+#include <QuickString.hpp>
+
+#include <Globals.hpp>
+#include <core.hpp>
+#include <Crash.hpp>
+namespace Tricky_Apollo {
+
+	std::string MainScript() {
+		static std::string sMainScript = "";
+		if (sMainScript != "") return sMainScript;
+		for (auto FE : JCRPackage.Entries()) {
+			if (TrickyUnits::suffixed(FE.first,"/MAIN.NEIL")) {
+				sMainScript = FE.second.Entry();
+				return sMainScript;
+			}
+		}
+		Crash("Script Main.Neil not found in any directory of the main package", "", "", AE_NoMainScript);
+	}
+}

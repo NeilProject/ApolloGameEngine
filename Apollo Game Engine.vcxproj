@@ -150,12 +150,16 @@
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
+    <ClCompile Include="Source\core.cpp" />
+    <ClCompile Include="Source\Crash.cpp" />
     <ClCompile Include="Source\Globals.cpp" />
     <ClCompile Include="Source\Identify.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\SDL_Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\Core.hpp" />
+    <ClInclude Include="Headers\Crash.hpp" />
     <ClInclude Include="Headers\ErrorCodes.hpp" />
     <ClInclude Include="Headers\Globals.hpp" />
     <ClInclude Include="Headers\Identify.hpp" />
