@@ -24,6 +24,9 @@
 // Version: 20.08.21
 // EndLic
 
+
+#define Apollo_SDL_QuickTest
+
 // C or C++
 #include <stdio.h>
 
@@ -43,6 +46,25 @@ namespace Tricky_Apollo {
 
     //The surface contained by the window
     SDL_Surface* gScreenSurface = NULL;
+
+    void Apollo_SDL_Flip() {
+        SDL_UpdateWindowSurface(gWindow);
+    }
+
+    static int CLSR = 0, CLSG = 0, CLSB = 0;
+
+    void Apollo_SDL_ClsColor(int r, int g, int b) {
+        CLSR = r;
+        CLSG = g;
+        CLSB = b;
+    }
+
+    void Apollo_SDL_Cls() {
+        SDL_FillRect(gScreenSurface, NULL, SDL_MapRGB(gScreenSurface->format, CLSR, CLSG, CLSB));
+    }
+
+
+
 
     void Apollo_SDL_Start() {
         printf("Starting up SDL\n\n");
@@ -73,6 +95,14 @@ namespace Tricky_Apollo {
 
         if (!success) exit(AE_SDL_Error);
         printf("SDL started succesfully\n\n");
+        #ifdef Apollo_SDL_QuickTest
+        // This test is will make the entire window purple, wait a few seconds and move on.
+        // This test was only implemented to allow me to test stuff while the rest of the engine was still non-existent.
+        SDL_FillRect(gScreenSurface, NULL, SDL_MapRGB(gScreenSurface->format, 0xFF, 0x00, 0xFF));
+        Apollo_SDL_Flip();
+        SDL_Delay(5000);
+
+        #endif
     }
 
     void Apollo_SDL_End() {
