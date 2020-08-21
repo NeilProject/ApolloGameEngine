@@ -47,6 +47,7 @@
 #include <Globals.hpp>
 #include <Identify.hpp>
 #include <SDL_Manager.hpp>
+#include <core.hpp>
 
 using namespace TrickyUnits;
 using namespace jcr6;
@@ -129,6 +130,12 @@ namespace Tricky_Apollo {
 			cout << Identify::WinWidth() << "x" << Identify::WinHeight();
 		cout << "\n";
 	}
+
+	void LookUpMainScript() {
+		cout << "\nLooking up: Main.neil\n";
+		cout << "\nFound: " << MainScript() << "\n";
+	}
+	
 }
 
 using namespace Tricky_Apollo;
@@ -139,6 +146,7 @@ int main(int n, char* args[]) {
 	CheckARF();
 	FindGameData();
 	Apollo_SDL_Start();
+	LookUpMainScript();
 	// TODO : The code that comes in between ;)
 	Apollo_SDL_End();
 	return AE_NoError;
