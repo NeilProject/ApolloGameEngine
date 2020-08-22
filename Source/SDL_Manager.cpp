@@ -137,7 +137,12 @@ namespace Tricky_Apollo {
     }
 
     void Apollo_SDL_Cls() {
-        SDL_FillRect(gScreenSurface, NULL, SDL_MapRGB(gScreenSurface->format, CLSR, CLSG, CLSB));
+        //SDL_FillRect(gScreenSurface, NULL, SDL_MapRGB(gScreenSurface->format, CLSR, CLSG, CLSB));
+        // Uint8 * r, g, b,a;        
+        // SDL_GetRenderDrawColor(gRenderer, r, g, b, a);
+        SDL_SetRenderDrawColor(gRenderer, CLSR, CLSG, CLSB,255);
+        SDL_RenderClear(gRenderer);
+        SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
     }
 
 
@@ -220,6 +225,7 @@ namespace Tricky_Apollo {
         }
         RemAllTex();
         // And flush the last things now
+        SDL_DestroyRenderer(gRenderer);
         SDL_DestroyWindow(gWindow);
         gWindow = NULL;
         printf("Terminating SDL\n");
