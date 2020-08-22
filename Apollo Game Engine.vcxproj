@@ -83,7 +83,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\include;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Source;$(LibraryPath)</LibraryPath>
-    <IncludePath>E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\include;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\include;E:\Projects\Applications\VisualStudio\VC\JCR6\headers;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Headers;E:\Projects\Applications\VisualStudio\VC\TrickyUnits\Headers;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Projects\Applications\VisualStudio\VC\TQSG;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\include;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\include;E:\Projects\Applications\VisualStudio\VC\JCR6\headers;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Headers;E:\Projects\Applications\VisualStudio\VC\TrickyUnits\Headers;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -146,6 +146,7 @@
     <ClCompile Include="..\JCR6\src\jcr6_core.cpp" />
     <ClCompile Include="..\JCR6\src\jcr6_quakepak.cpp" />
     <ClCompile Include="..\JCR6\src\jcr6_wad.cpp" />
+    <ClCompile Include="..\TQSG\TQSG.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\ArgParse.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="Source\SDL_Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\TQSG\TQSG.hpp" />
     <ClInclude Include="Headers\Core.hpp" />
     <ClInclude Include="Headers\Crash.hpp" />
     <ClInclude Include="Headers\ErrorCodes.hpp" />

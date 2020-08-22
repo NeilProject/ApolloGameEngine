@@ -66,6 +66,9 @@
     <ClCompile Include="Source\core.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="..\TQSG\TQSG.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="Headers\Core.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TQSG\TQSG.hpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
