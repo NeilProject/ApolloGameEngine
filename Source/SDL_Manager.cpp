@@ -42,6 +42,9 @@
 // Tricky Units
 #include <QuickString.hpp>
 
+// TQSG
+#include <TQSG.hpp>
+
 
 // Apollo
 #include "../Headers/SDL_Manager.hpp"
@@ -58,15 +61,9 @@ namespace Tricky_Apollo {
 
     static bool Begun_SDL = false;
 
-    //The window we'll be rendering to
-    static SDL_Window* gWindow = NULL;
 
-    //The surface contained by the window
-    static SDL_Surface* gScreenSurface = NULL;
-    static SDL_Renderer* gRenderer = NULL;
-
-    static SDL_Texture* Tex_Death = NULL;
-    static std::map<std::string, SDL_Texture*> Texture;
+    // static SDL_Texture* Tex_Death = NULL;
+    static std::map<std::string, TQSG_Image> Texture;
 
     static void Apollo_SDL_Klets(std::string Gezwets) {
         if (Apollo_SDL_Loudmouth)
@@ -74,6 +71,7 @@ namespace Tricky_Apollo {
     }
 
 
+    /* Likely no longer needed
     static SDL_Texture* Tex_From_JCR(JT_Dir &JD, string entry) {
         SDL_RWops* RWBuf = NULL;
         JT_Entry E = JD.Entry(entry);
@@ -83,29 +81,35 @@ namespace Tricky_Apollo {
         SDL_Texture* ret = IMG_LoadTexture_RW(gRenderer, RWBuf,1);
         return ret;
     }
+    */
 
     void RemTex(std::string Tag) {
         auto T = Upper(Tag);
-        SDL_DestroyTexture(Texture[T]);
+        //SDL_DestroyTexture(Texture[T]);
+        Texture[T].KillAll(); // Should happen automatically on erase, but it never hurts to make 100% sure!
         Texture.erase(T);
         Apollo_SDL_Klets("Disposed " + T);
     }
 
     static void RemAllTex() {
         Apollo_SDL_Klets("Removing all textures");
-        for (auto TL : Texture) {
+        for (auto &TL : Texture) {
             Apollo_SDL_Klets(TL.first);
-            SDL_DestroyTexture(TL.second);
+            //SDL_DestroyTexture(TL.second);
+            TL.second.KillAll();
         }
         Apollo_SDL_Klets("All removals done");
         Texture.clear();
     }
     
-    static void SetTex(std::string Tag, SDL_Texture* Tex) {
+    static void SetTex(std::string Tag, TQSG_Image &Tex) { //static void SetTex(std::string Tag, SDL_Texture* Tex) {
         auto T = Upper(Tag);
+        /* Texture manager should destroy the old automatically now!
         if (Texture.count(T) == 1) {
             Apollo_SDL_Klets("Request to replace texture " + T + ", but I gotta dispose the old texture first!");
         }
+        */
+        Texture[Upper(Tag)] = Tex;
         
     }
 
@@ -121,30 +125,18 @@ namespace Tricky_Apollo {
                 T = "IMAGE::" + T;
             } while (Texture.count(T) > 0);
         }
-        SetTex(T, Tex_From_JCR(JCRPackage, File));
+        // SetTex(T, Tex_From_JCR(JCRPackage, File));
+        TQSG_Image LTex;
+        LTex.Create(JCRPackage, File);
+        SetTex(T, LTex);
     }
 
     void Apollo_SDL_Flip() {
-        SDL_UpdateWindowSurface(gWindow);
+        //SDL_UpdateWindowSurface(gWindow);
+        TQSG_Flip();
     }
 
-    static int CLSR = 0, CLSG = 0, CLSB = 0;
-
-    void Apollo_SDL_ClsColor(int r, int g, int b) {
-        CLSR = r;
-        CLSG = g;
-        CLSB = b;
-    }
-
-    void Apollo_SDL_Cls() {
-        //SDL_FillRect(gScreenSurface, NULL, SDL_MapRGB(gScreenSurface->format, CLSR, CLSG, CLSB));
-        // Uint8 * r, g, b,a;        
-        // SDL_GetRenderDrawColor(gRenderer, r, g, b, a);
-        SDL_SetRenderDrawColor(gRenderer, CLSR, CLSG, CLSB,255);
-        SDL_RenderClear(gRenderer);
-        SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
-    }
-
+    
 
 
 
@@ -154,58 +146,14 @@ namespace Tricky_Apollo {
         //Initialization flag
         bool success = true;
 
-        //Initialize SDL
-        if (SDL_Init(SDL_INIT_VIDEO) < 0)
-        {
-            printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-            success = false;
-        }
-        else
-        {
-            //Create window
-            gWindow = SDL_CreateWindow(Identify::WindowTitle().c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Identify::WinWidth() , Identify::WinHeight(), SDL_WINDOW_SHOWN);
-            if (gWindow == NULL)
-            {
-                printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-                success = false;
-            }
-            else
-            {
-                gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-                if (gRenderer == NULL)
-                {
-                    printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
-                    success = false;
-                }
-                else
-                {
-                    //Initialize renderer color
-                    SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-                    //Initialize PNG loading
-                    int imgFlags = IMG_INIT_PNG;
-                    if (!(IMG_Init(imgFlags) & imgFlags))
-                    {
-                        printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
-                        success = false;
-                    }
-                }
-
-                //Get window surface
-                gScreenSurface = SDL_GetWindowSurface(gWindow);
-
-                // Load Death
-                printf("Loading Death Picture\n");
-                Tex_Death = Tex_From_JCR(ARF, "Pics/Death.png");
-            }
-        }
-
+        success = TQSG_Init(Identify::WindowTitle(),Identify::WinWidth(),Identify::WinHeight());
         if (!success) exit(AE_SDL_Error);
         printf("SDL started succesfully\n\n");
         #ifdef Apollo_SDL_QuickTest
         // This test is will make the entire window purple, wait a few seconds and move on.
         // This test was only implemented to allow me to test stuff while the rest of the engine was still non-existent.
-        SDL_FillRect(gScreenSurface, NULL, SDL_MapRGB(gScreenSurface->format, 0xFF, 0x00, 0xFF));
+        //SDL_FillRect(gScreenSurface, NULL, SDL_MapRGB(gScreenSurface->format, 0xFF, 0x00, 0xFF));
+        TQSG_Cls();
         Apollo_SDL_Flip();
         SDL_Delay(5000);
         #endif
@@ -219,16 +167,17 @@ namespace Tricky_Apollo {
         }
         printf("Preparing to terminate SDL\n");
         // Destroy all still open textures and other stuff!
-        if (Tex_Death != NULL) {
-            printf("Removing Death from RAM\n\n");
-            SDL_DestroyTexture(Tex_Death); Tex_Death = NULL;
-        }
+        //if (Tex_Death != NULL) {
+        //    printf("Removing Death from RAM\n\n");
+        //    SDL_DestroyTexture(Tex_Death); Tex_Death = NULL;
+        //}
         RemAllTex();
         // And flush the last things now
-        SDL_DestroyRenderer(gRenderer);
-        SDL_DestroyWindow(gWindow);
-        gWindow = NULL;
+        //SDL_DestroyRenderer(gRenderer);
+        //SDL_DestroyWindow(gWindow);
+        //gWindow = NULL;
         printf("Terminating SDL\n");
+        TQSG_Close();
         printf("SDL Terminated");
     }
 }
