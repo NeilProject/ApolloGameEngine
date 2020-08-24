@@ -71,6 +71,7 @@ namespace Tricky_Apollo {
     }
 
 
+    /* Likely no longer needed
     static SDL_Texture* Tex_From_JCR(JT_Dir &JD, string entry) {
         SDL_RWops* RWBuf = NULL;
         JT_Entry E = JD.Entry(entry);
@@ -80,29 +81,35 @@ namespace Tricky_Apollo {
         SDL_Texture* ret = IMG_LoadTexture_RW(gRenderer, RWBuf,1);
         return ret;
     }
+    */
 
     void RemTex(std::string Tag) {
         auto T = Upper(Tag);
-        SDL_DestroyTexture(Texture[T]);
+        //SDL_DestroyTexture(Texture[T]);
+        Texture[T].KillAll(); // Should happen automatically on erase, but it never hurts to make 100% sure!
         Texture.erase(T);
         Apollo_SDL_Klets("Disposed " + T);
     }
 
     static void RemAllTex() {
         Apollo_SDL_Klets("Removing all textures");
-        for (auto TL : Texture) {
+        for (auto &TL : Texture) {
             Apollo_SDL_Klets(TL.first);
-            SDL_DestroyTexture(TL.second);
+            //SDL_DestroyTexture(TL.second);
+            TL.second.KillAll();
         }
         Apollo_SDL_Klets("All removals done");
         Texture.clear();
     }
     
-    static void SetTex(std::string Tag, SDL_Texture* Tex) {
+    static void SetTex(std::string Tag, TQSG_Image Tex) { //static void SetTex(std::string Tag, SDL_Texture* Tex) {
         auto T = Upper(Tag);
+        /* Texture manager should destroy the old automatically now!
         if (Texture.count(T) == 1) {
             Apollo_SDL_Klets("Request to replace texture " + T + ", but I gotta dispose the old texture first!");
         }
+        */
+        Texture[Upper(Tag)] = Tex;
         
     }
 
