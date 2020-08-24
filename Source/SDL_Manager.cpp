@@ -50,7 +50,7 @@
 #include "../Headers/SDL_Manager.hpp"
 #include "../Headers/Identify.hpp"
 #include "../Headers/ErrorCodes.hpp"
-
+#include "../Headers/Crash.hpp"
 
 namespace Tricky_Apollo {
 
@@ -134,6 +134,17 @@ namespace Tricky_Apollo {
         SetTex(T, LTex);
     }
 
+    void Apollo_SDL_Draw(std::string Tag, int x, int y, std::string State, std::string Traceback) {
+        auto T = Upper(Tag);
+        if (Texture.count(T) != 1) {
+            if (T == "**DEATH**") return; // Otherwise we get a cyclic function call, recursing stuff forever until the stack blows up!
+            Crash("There is no image loaded named " + T, State, Traceback, AE_NoTextureOnTag);
+            return;
+        }
+        auto& Tex = Texture[T];
+        Tex.Draw(x, y);
+    }
+
     void Apollo_SDL_Flip() {
         //SDL_UpdateWindowSurface(gWindow);
         TQSG_Flip();
@@ -156,9 +167,9 @@ namespace Tricky_Apollo {
         // This test is will make the entire window purple, wait a few seconds and move on.
         // This test was only implemented to allow me to test stuff while the rest of the engine was still non-existent.
         //SDL_FillRect(gScreenSurface, NULL, SDL_MapRGB(gScreenSurface->format, 0xFF, 0x00, 0xFF));
-        TQSG_Cls();
-        Apollo_SDL_Flip();
-        SDL_Delay(5000);
+        //TQSG_Cls();
+        //Apollo_SDL_Flip();
+        //SDL_Delay(5000);
         #endif
         Begun_SDL = true;
     }

@@ -42,6 +42,8 @@ namespace Tricky_Apollo {
 		AE_SDL_Error,
 		AE_Script_Error,
 		AE_NoMainScript,
+		AE_NoTextureOnTag,
+		AE_NoAudioOnTag,
 		AE_General_Error
 	};
 }

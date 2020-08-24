@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.21
+// Version: 20.08.24
 // EndLic
 
 #ifndef INCLUDED_APOLLO_SDL_START_AND_FINISH
@@ -44,6 +44,7 @@ namespace Tricky_Apollo {
 	void Apollo_SDL_End();
 	void Apollo_SDL_Flip();
 	std::string LoadTex(std::string Tag, std::string File);
+	void Apollo_SDL_Draw(std::string Tag, int x, int y, std::string State = "C++", std::string Traceback = "No Traceback possible");
 	//void Apollo_SDL_ClsColor(int r, int g, int b);
 	//void Apollo_SDL_Cls();
 }
