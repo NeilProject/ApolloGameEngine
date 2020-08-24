@@ -42,6 +42,9 @@
 // Tricky Units
 #include <QuickString.hpp>
 
+// TQSG
+#include <TQSG.hpp>
+
 
 // Apollo
 #include "../Headers/SDL_Manager.hpp"
@@ -58,15 +61,9 @@ namespace Tricky_Apollo {
 
     static bool Begun_SDL = false;
 
-    //The window we'll be rendering to
-    static SDL_Window* gWindow = NULL;
 
-    //The surface contained by the window
-    static SDL_Surface* gScreenSurface = NULL;
-    static SDL_Renderer* gRenderer = NULL;
-
-    static SDL_Texture* Tex_Death = NULL;
-    static std::map<std::string, SDL_Texture*> Texture;
+    // static SDL_Texture* Tex_Death = NULL;
+    static std::map<std::string, TQSG_Image> Texture;
 
     static void Apollo_SDL_Klets(std::string Gezwets) {
         if (Apollo_SDL_Loudmouth)
