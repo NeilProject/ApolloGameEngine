@@ -126,8 +126,9 @@ namespace Tricky_Apollo {
             } while (Texture.count(T) > 0);
         }
         // SetTex(T, Tex_From_JCR(JCRPackage, File));
-        auto LTex = TQSG_Image::Create(JCRPackage, File);
-        SetTex(T, *LTex);
+        TQSG_Image LTex;
+        LTex.Create(JCRPackage, File);
+        SetTex(T, LTex);
     }
 
     void Apollo_SDL_Flip() {
