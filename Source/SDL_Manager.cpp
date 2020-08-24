@@ -60,6 +60,7 @@ namespace Tricky_Apollo {
     bool Apollo_SDL_Loudmouth = true;
 
     static bool Begun_SDL = false;
+    TQSG_TTF Apollo_SysFont;
 
 
     // static SDL_Texture* Tex_Death = NULL;
@@ -172,6 +173,10 @@ namespace Tricky_Apollo {
         //SDL_Delay(5000);
         #endif
         Begun_SDL = true;
+        printf("Loading SysFont -- ");
+        Apollo_SysFont.LoadFont(ARF, "Fonts/F25_Bank_Printer.ttf");
+        if (Apollo_SysFont.HasFont()) printf("Success!"); else printf("\x1b[31mFONT ERROR>\x1b[0m %s\n", TQSG_GetError().c_str());
+
     }
 
     void Apollo_SDL_End() {
@@ -185,6 +190,9 @@ namespace Tricky_Apollo {
         //    printf("Removing Death from RAM\n\n");
         //    SDL_DestroyTexture(Tex_Death); Tex_Death = NULL;
         //}
+        printf("Disposing SysFont\n");
+        Apollo_SysFont.Kill();
+        printf("Removing all loaded textures\n");
         RemAllTex();
         // And flush the last things now
         //SDL_DestroyRenderer(gRenderer);

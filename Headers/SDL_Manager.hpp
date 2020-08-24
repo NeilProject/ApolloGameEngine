@@ -28,6 +28,7 @@
 #define INCLUDED_APOLLO_SDL_START_AND_FINISH
 
 #include <SDL.h>
+#include <TQSG.hpp>
 #include <string>
 
 namespace Tricky_Apollo {
@@ -35,6 +36,10 @@ namespace Tricky_Apollo {
 	/// When set to true, all kind of debug crap will be shown on the console
 	/// </summary>
 	extern bool Apollo_SDL_Loudmouth;
+	extern TrickyUnits::TQSG_TTF Apollo_SysFont;
+	
+	
+	
 
 	// Texture
 	void RemTex(std::string Tag);
@@ -47,5 +52,6 @@ namespace Tricky_Apollo {
 	void Apollo_SDL_Draw(std::string Tag, int x, int y, std::string State = "C++", std::string Traceback = "No Traceback possible");
 	//void Apollo_SDL_ClsColor(int r, int g, int b);
 	//void Apollo_SDL_Cls();
+
 }
 #endif

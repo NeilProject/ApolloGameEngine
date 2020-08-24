@@ -43,11 +43,17 @@ namespace Tricky_Apollo {
 	void Crash(string Message, string State, string TraceBack, int exitcode) {
 		cout << "\x1b[41;33;1mFatal Error!\x1b[0m\nError: " << Message << "\nState: " << State << "\n\n" << TraceBack << "\n";
 		auto Tag = LoadTex("**DEATH**", "Pics/Death.png");
+		
 		TQSG_ClsColor(0, 0, 100);
+		// do
 		TQSG_Cls();
 		TQMG_Color(0, 0, 255);
 		Apollo_SDL_Draw("**DEATH**", 0, 0);
+		TQMG_Color(0, 255, 255);
+		Apollo_SysFont.Draw("Houston! We have a problem!", 5, 5);
+
 		TQSG_Flip();
+		// while(whatever)
 		SDL_Delay(5000); // Temp function as I got no event manager yet!
 		// loop
 		ImmHalt(exitcode);
