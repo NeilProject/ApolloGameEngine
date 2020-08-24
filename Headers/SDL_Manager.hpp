@@ -28,6 +28,7 @@
 #define INCLUDED_APOLLO_SDL_START_AND_FINISH
 
 #include <SDL.h>
+#include <string>
 
 namespace Tricky_Apollo {
 	/// <summary>
@@ -42,7 +43,8 @@ namespace Tricky_Apollo {
 	void Apollo_SDL_Start();
 	void Apollo_SDL_End();
 	void Apollo_SDL_Flip();
-	void Apollo_SDL_ClsColor(int r, int g, int b);
-	void Apollo_SDL_Cls();
+	std::string LoadTex(std::string Tag, std::string File);
+	//void Apollo_SDL_ClsColor(int r, int g, int b);
+	//void Apollo_SDL_Cls();
 }
 #endif

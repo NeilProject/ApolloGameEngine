@@ -34,6 +34,7 @@ namespace Tricky_Apollo {
 
 	void Crash(string Message, string State, string TraceBack, int exitcode) {
 		cout << "\x1b[41;33;1mFatal Error!\x1b[0m\nError: " << Message << "\nState: " << State << "\n\n" << TraceBack << "\n";
+		auto Tag = LoadTex("**DEATH**", "Pics/Death.png");
 		// loop
 		ImmHalt(exitcode);
 	}

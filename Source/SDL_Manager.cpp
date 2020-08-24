@@ -127,6 +127,9 @@ namespace Tricky_Apollo {
         }
         // SetTex(T, Tex_From_JCR(JCRPackage, File));
         TQSG_Image LTex;
+        if (prefixed(Tag,"**") && suffixed(Tag,"**"))
+            LTex.Create(ARF, File);
+        else
         LTex.Create(JCRPackage, File);
         SetTex(T, LTex);
     }
