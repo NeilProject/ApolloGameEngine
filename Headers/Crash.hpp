@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.24
+// Version: 20.08.25
 // EndLic
 #pragma once
 #include <string>
@@ -29,7 +29,7 @@
 
 namespace Tricky_Apollo {
 
-	void Crash(std::string Message, std::string State = "", std::string TraceBack = "", int exitcode = AE_General_Error);
+	void Crash(std::string Message, std::string State = "C++", std::string TraceBack = "", int exitcode = AE_General_Error);
 	void ImmHalt(int exitcode = 0);
 
 }

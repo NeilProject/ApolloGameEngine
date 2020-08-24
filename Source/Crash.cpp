@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.24
+// Version: 20.08.25
 // EndLic
 
 
@@ -51,10 +51,19 @@ namespace Tricky_Apollo {
 		Apollo_SDL_Draw("**DEATH**", 0, 0);
 		TQMG_Color(0, 255, 255);
 		Apollo_SysFont.Draw("Houston! We have a problem!", 5, 5);
-
+		TQMG_Color(255, 255, 0);
+		Apollo_SysFont.Draw(Message, 5, 30);
+		int sy = 30 + Apollo_SysFont.TextHeight(Message.c_str());
+		TQMG_Color(255, 255, 255);
+		Apollo_SysFont.Draw(TraceBack,5,sy);
+		sy += Apollo_SysFont.TextHeight(TraceBack.c_str());
+		TQMG_Color(255, 0, 255);
+		string h = "State: " + State;
+		if (State == "") h += "C++";
+		Apollo_SysFont.Draw(h, 5, sy);
 		TQSG_Flip();
 		// while(whatever)
-		SDL_Delay(5000); // Temp function as I got no event manager yet!
+		SDL_Delay(15000); // Temp function as I got no event manager yet!
 		// loop
 		ImmHalt(exitcode);
 	}

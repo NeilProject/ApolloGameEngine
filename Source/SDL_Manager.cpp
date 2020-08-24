@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.24
+// Version: 20.08.25
 // EndLic
 
 
@@ -60,7 +60,7 @@ namespace Tricky_Apollo {
     bool Apollo_SDL_Loudmouth = true;
 
     static bool Begun_SDL = false;
-    TQSG_TTF Apollo_SysFont;
+    TQSG_ImageFont Apollo_SysFont;
 
 
     // static SDL_Texture* Tex_Death = NULL;
@@ -174,8 +174,8 @@ namespace Tricky_Apollo {
         #endif
         Begun_SDL = true;
         printf("Loading SysFont -- ");
-        Apollo_SysFont.LoadFont(ARF, "Fonts/F25_Bank_Printer.ttf");
-        if (Apollo_SysFont.HasFont()) printf("Success!"); else printf("\x1b[31mFONT ERROR>\x1b[0m %s\n", TQSG_GetError().c_str());
+        Apollo_SysFont.LoadFont(ARF, "Fonts/F25_Bank_Printer.24.jfbf");
+        //if (Apollo_SysFont.HasFont()) printf("Success!"); else printf("\x1b[31mFONT ERROR>\x1b[0m %s\n", TQSG_GetError().c_str());
 
     }
 

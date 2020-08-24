@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.24
+// Version: 20.08.25
 // EndLic
 
 #include <iostream>
@@ -42,6 +42,6 @@ namespace Tricky_Apollo {
 				return sMainScript;
 			}
 		}
-		Crash("Script Main.Neil not found in any directory of the main package", "", "", AE_NoMainScript);
+		Crash("Script Main.Neil not found in any directory\nof the main package", "", "", AE_NoMainScript);
 	}
 }

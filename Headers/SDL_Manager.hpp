@@ -21,11 +21,13 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.24
+// Version: 20.08.25
 // EndLic
+
 
 #ifndef INCLUDED_APOLLO_SDL_START_AND_FINISH
 #define INCLUDED_APOLLO_SDL_START_AND_FINISH
+
 
 #include <SDL.h>
 #include <TQSG.hpp>
@@ -36,7 +38,7 @@ namespace Tricky_Apollo {
 	/// When set to true, all kind of debug crap will be shown on the console
 	/// </summary>
 	extern bool Apollo_SDL_Loudmouth;
-	extern TrickyUnits::TQSG_TTF Apollo_SysFont;
+	extern TrickyUnits::TQSG_ImageFont Apollo_SysFont;
 	
 	
 	
