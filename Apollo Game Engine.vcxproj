@@ -148,6 +148,7 @@
     <ClCompile Include="..\JCR6\src\jcr6_wad.cpp" />
     <ClCompile Include="..\TQSG\TQSG.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\ArgParse.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\CheckEndian.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
