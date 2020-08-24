@@ -126,7 +126,7 @@ namespace Tricky_Apollo {
             } while (Texture.count(T) > 0);
         }
         // SetTex(T, Tex_From_JCR(JCRPackage, File));
-        auto LTex = new TQSG_Image(JCRPackage, File);
+        auto LTex = TQSG_Image::Create(JCRPackage, File);
         SetTex(T, *LTex);
     }
 
@@ -166,16 +166,17 @@ namespace Tricky_Apollo {
         }
         printf("Preparing to terminate SDL\n");
         // Destroy all still open textures and other stuff!
-        if (Tex_Death != NULL) {
-            printf("Removing Death from RAM\n\n");
-            SDL_DestroyTexture(Tex_Death); Tex_Death = NULL;
-        }
+        //if (Tex_Death != NULL) {
+        //    printf("Removing Death from RAM\n\n");
+        //    SDL_DestroyTexture(Tex_Death); Tex_Death = NULL;
+        //}
         RemAllTex();
         // And flush the last things now
-        SDL_DestroyRenderer(gRenderer);
-        SDL_DestroyWindow(gWindow);
-        gWindow = NULL;
+        //SDL_DestroyRenderer(gRenderer);
+        //SDL_DestroyWindow(gWindow);
+        //gWindow = NULL;
         printf("Terminating SDL\n");
+        TQSG_Close();
         printf("SDL Terminated");
     }
 }
