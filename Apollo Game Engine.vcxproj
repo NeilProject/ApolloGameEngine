@@ -82,8 +82,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_ttf-2.0.15\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Source;$(LibraryPath)</LibraryPath>
-    <IncludePath>E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_ttf-2.0.15\include;E:\Projects\Applications\VisualStudio\VC\TQSG;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\include;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\include;E:\Projects\Applications\VisualStudio\VC\JCR6\headers;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Headers;E:\Projects\Applications\VisualStudio\VC\TrickyUnits\Headers;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\Lua Library\x64\Release;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_ttf-2.0.15\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Source;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_ttf-2.0.15\include;E:\Projects\Applications\VisualStudio\VC\TQSG;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\include;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\include;E:\Projects\Applications\VisualStudio\VC\JCR6\headers;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Headers;E:\Projects\Applications\VisualStudio\VC\TrickyUnits\Headers;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -139,7 +139,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Lua.lib;sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -153,6 +153,7 @@
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
+    <ClCompile Include="Headers\States.cpp" />
     <ClCompile Include="Source\core.cpp" />
     <ClCompile Include="Source\Crash.cpp" />
     <ClCompile Include="Source\Globals.cpp" />
@@ -163,12 +164,14 @@
   <ItemGroup>
     <ClInclude Include="..\TQSG\TQSE.hpp" />
     <ClInclude Include="..\TQSG\TQSG.hpp" />
+    <ClInclude Include="Headers\AP_Lua_CPP.hpp" />
     <ClInclude Include="Headers\Core.hpp" />
     <ClInclude Include="Headers\Crash.hpp" />
     <ClInclude Include="Headers\ErrorCodes.hpp" />
     <ClInclude Include="Headers\Globals.hpp" />
     <ClInclude Include="Headers\Identify.hpp" />
     <ClInclude Include="Headers\SDL_Manager.hpp" />
+    <ClInclude Include="Headers\States.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

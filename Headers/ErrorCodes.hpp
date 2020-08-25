@@ -44,6 +44,7 @@ namespace Tricky_Apollo {
 		AE_NoMainScript,
 		AE_NoTextureOnTag,
 		AE_NoAudioOnTag,
+		AE_LuaStateCreationFailure,
 		AE_General_Error
 	};
 }

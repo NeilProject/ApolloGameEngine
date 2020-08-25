@@ -31,6 +31,11 @@
 #include <Globals.hpp>
 #include <core.hpp>
 #include <Crash.hpp>
+#include <States.hpp>
+
+#include <AP_Lua_CPP.hpp>
+
+
 namespace Tricky_Apollo {
 
 	std::string MainScript() {

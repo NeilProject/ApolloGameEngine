@@ -28,6 +28,9 @@
     <Filter Include="Header Files\Tricky%27s Units">
       <UniqueIdentifier>{eafb5822-242a-4421-9a66-7e3b6282da24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Apollo\API">
+      <UniqueIdentifier>{afea9d3e-cf79-4c08-8e01-2f43e8dba23d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -78,6 +81,9 @@
     <ClCompile Include="..\TQSG\TQSE.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="Headers\States.cpp">
+      <Filter>Source Files\Apollo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -103,6 +109,12 @@
     </ClInclude>
     <ClInclude Include="..\TQSG\TQSE.hpp">
       <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\States.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\AP_Lua_CPP.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
