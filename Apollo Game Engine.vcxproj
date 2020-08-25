@@ -146,6 +146,7 @@
     <ClCompile Include="..\JCR6\src\jcr6_core.cpp" />
     <ClCompile Include="..\JCR6\src\jcr6_quakepak.cpp" />
     <ClCompile Include="..\JCR6\src\jcr6_wad.cpp" />
+    <ClCompile Include="..\TQSG\TQSE.cpp" />
     <ClCompile Include="..\TQSG\TQSG.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\ArgParse.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\CheckEndian.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Source\SDL_Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\TQSG\TQSE.hpp" />
     <ClInclude Include="..\TQSG\TQSG.hpp" />
     <ClInclude Include="Headers\Core.hpp" />
     <ClInclude Include="Headers\Crash.hpp" />

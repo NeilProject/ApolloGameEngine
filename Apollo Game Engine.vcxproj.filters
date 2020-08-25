@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Kthura">
       <UniqueIdentifier>{e800b5e3-05a1-481d-8d13-20083ce6cde8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Tricky%27s Units">
+      <UniqueIdentifier>{eafb5822-242a-4421-9a66-7e3b6282da24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -72,6 +75,9 @@
     <ClCompile Include="Source\Crash.cpp">
       <Filter>Source Files\Apollo</Filter>
     </ClCompile>
+    <ClCompile Include="..\TQSG\TQSE.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -93,7 +99,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\TQSG\TQSG.hpp">
-      <Filter>Source Files\Tricky%27s Units</Filter>
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TQSG\TQSE.hpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
