@@ -31,6 +31,7 @@
 
 // TQSG
 #include <TQSG.hpp>
+#include <TQSE.hpp>
 
 // Apollo
 #include "../Headers/Crash.hpp"
@@ -43,27 +44,36 @@ namespace Tricky_Apollo {
 	void Crash(string Message, string State, string TraceBack, int exitcode) {
 		cout << "\x1b[41;33;1mFatal Error!\x1b[0m\nError: " << Message << "\nState: " << State << "\n\n" << TraceBack << "\n";
 		auto Tag = LoadTex("**DEATH**", "Pics/Death.png");
-		
-		TQSG_ClsColor(0, 0, 100);
-		// do
-		TQSG_Cls();
-		TQMG_Color(0, 0, 255);
-		Apollo_SDL_Draw("**DEATH**", 0, 0);
-		TQMG_Color(0, 255, 255);
-		Apollo_SysFont.Draw("Houston! We have a problem!", 5, 5);
-		TQMG_Color(255, 255, 0);
-		Apollo_SysFont.Draw(Message, 5, 30);
-		int sy = 30 + Apollo_SysFont.TextHeight(Message.c_str());
-		TQMG_Color(255, 255, 255);
-		Apollo_SysFont.Draw(TraceBack,5,sy);
-		sy += Apollo_SysFont.TextHeight(TraceBack.c_str());
-		TQMG_Color(255, 0, 255);
-		string h = "State: " + State;
-		if (State == "") h += "C++";
-		Apollo_SysFont.Draw(h, 5, sy);
-		TQSG_Flip();
-		// while(whatever)
-		SDL_Delay(15000); // Temp function as I got no event manager yet!
+		auto DW = TexWidth("**DEATH**");
+		auto DH = TexHeight("**DEATH**");
+		int SX, SY; TQSG_ScreenSize(&SX, &SY);
+		auto DX = 0, DY = 0;
+		if (DH < SY) DY = SY - DH;
+		printf("DEAH %dx%d; Screen %dx%d; Coords(%d,%d)\n", DW, DH, SX, SY, DX, DY);
+		TQSG_ClsColor(0, 0, 100);		
+		do {
+			TQSE_Poll();
+			TQSG_Cls();
+			TQMG_Color(0, 0, 255);
+			Apollo_SDL_Draw("**DEATH**", 0, DY);
+			TQMG_Color(0, 255, 255);
+			Apollo_SysFont.Draw("Houston! We have a problem!", 5, 5);
+			TQMG_Color(255, 255, 0);
+			Apollo_SysFont.Draw(Message, 5, 30);
+			int sy = 30 + Apollo_SysFont.TextHeight(Message.c_str());
+			TQMG_Color(255, 255, 255);
+			Apollo_SysFont.Draw(TraceBack, 5, sy);
+			sy += Apollo_SysFont.TextHeight(TraceBack.c_str());
+			TQMG_Color(255, 0, 255);
+			string h = "State: " + State;
+			if (State == "") h += "C++";
+			Apollo_SysFont.Draw(h, 5, sy);
+
+			TQMG_Color(255, 180, 0);
+			Apollo_SysFont.Draw("Hit ESCAPE to exit", 5, TQSG_ScreenHeight()-30);
+			TQSG_Flip();
+		} while ((!TQSE_Quit()) && (!TQSE_KeyHit(SDLK_ESCAPE)));
+		// SDL_Delay(15000); // Temp function as I got no event manager yet!
 		// loop
 		ImmHalt(exitcode);
 	}

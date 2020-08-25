@@ -51,6 +51,9 @@ namespace Tricky_Apollo {
 	void Apollo_SDL_End();
 	void Apollo_SDL_Flip();
 	std::string LoadTex(std::string Tag, std::string File);
+	int TexWidth(std::string Tag, std::string State="C++", std::string Traceback="");
+	int TexHeight(std::string Tag, std::string State = "C++", std::string Traceback = "");
+
 	void Apollo_SDL_Draw(std::string Tag, int x, int y, std::string State = "C++", std::string Traceback = "No Traceback possible");
 	//void Apollo_SDL_ClsColor(int r, int g, int b);
 	//void Apollo_SDL_Cls();

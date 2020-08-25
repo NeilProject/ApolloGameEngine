@@ -44,6 +44,7 @@
 
 // TQSG
 #include <TQSG.hpp>
+#include <TQSE.hpp>
 
 
 // Apollo
@@ -135,6 +136,28 @@ namespace Tricky_Apollo {
         SetTex(T, LTex);
     }
 
+    int TexHeight(std::string Tag, std::string State, std::string Traceback) {
+        auto T = Upper(Tag);
+        if (Texture.count(T) != 1) {
+            if (T == "**DEATH**") return 0; // Otherwise we get a cyclic function call, recursing stuff forever until the stack blows up!
+            Crash("TextWidth(): There is no image loaded named " + T, State, Traceback, AE_NoTextureOnTag);
+            return 0;
+        }
+        auto& Tex = Texture[T];
+        return Tex.Height();
+    }
+
+    int TexWidth(std::string Tag, std::string State, std::string Traceback) {
+        auto T = Upper(Tag);
+        if (Texture.count(T) != 1) {
+            if (T == "**DEATH**") return 0; // Otherwise we get a cyclic function call, recursing stuff forever until the stack blows up!
+            Crash("TextWidth(): There is no image loaded named " + T, State, Traceback, AE_NoTextureOnTag);
+            return 0;
+        }
+        auto& Tex = Texture[T];
+        return Tex.Width();
+    }
+
     void Apollo_SDL_Draw(std::string Tag, int x, int y, std::string State, std::string Traceback) {
         auto T = Upper(Tag);
         if (Texture.count(T) != 1) {
@@ -161,7 +184,7 @@ namespace Tricky_Apollo {
         //Initialization flag
         bool success = true;
 
-        success = TQSG_Init(Identify::WindowTitle(),Identify::WinWidth(),Identify::WinHeight());
+        success = TQSG_Init(Identify::WindowTitle(),Identify::WinWidth(),Identify::WinHeight(),Identify::FullScreen());
         if (!success) exit(AE_SDL_Error);
         printf("SDL started succesfully\n\n");
         #ifdef Apollo_SDL_QuickTest
@@ -173,9 +196,11 @@ namespace Tricky_Apollo {
         //SDL_Delay(5000);
         #endif
         Begun_SDL = true;
-        printf("Loading SysFont -- ");
+        printf("Loading SysFont\n");
         Apollo_SysFont.LoadFont(ARF, "Fonts/F25_Bank_Printer.24.jfbf");
         //if (Apollo_SysFont.HasFont()) printf("Success!"); else printf("\x1b[31mFONT ERROR>\x1b[0m %s\n", TQSG_GetError().c_str());
+        printf("Initiating Event Handler\n");
+        TQSE_Init();
 
     }
 
