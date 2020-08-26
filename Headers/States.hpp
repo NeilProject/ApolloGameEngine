@@ -47,6 +47,7 @@ namespace Tricky_Apollo {
 		std::string StateName = "Nameless";
 		void SetName(std::string Name);
 		void InitScripts();
+		std::string StateType = "Neil";
 	public:
 		/// <summary>
 		/// Initiates the state, activates all libraries. Initiates Neil, and all that stuff.
@@ -67,6 +68,7 @@ namespace Tricky_Apollo {
 		std::string TraceBack();
 		static std::string TraceBack(std::string state);
 		static Apollo_State* Get(std::string state,std::string CalledByState="C++");
+		void SetStateType(std::string NewState);
 
 		static bool HasState(std::string state);
 

@@ -164,6 +164,7 @@ namespace Tricky_Apollo {
 	}
 
 	void Apollo_State::Load(std::string File, bool merge) {
+		if ((!merge) && suffixed(Upper(File), ".LUA")) StateType = "Lua";
 		auto script = TrickyUnits::LoadString(File);
 		LoadString(script, merge);
 	}
@@ -171,9 +172,13 @@ namespace Tricky_Apollo {
 	void Apollo_State::Load(std::string State, std::string File, bool merge) {
 		auto script = TrickyUnits::LoadString(File);
 		LoadString(State,script, merge);
+		if ((!merge) && suffixed(Upper(File), ".LUA")) {
+			auto S = Get(State); S->SetStateType("Lua");
+		}
 	}
 
 	void Apollo_State::Load(jcr6::JT_Dir& JD, std::string Entry, bool merge) {
+		if ((!merge) && suffixed(Upper(Enry), ".LUA")) StateType = "Lua";
 		auto script = JD.String(Entry);
 		LoadString(script, merge);
 	}
@@ -181,6 +186,10 @@ namespace Tricky_Apollo {
 	void Apollo_State::Load(std::string State, jcr6::JT_Dir& JD, std::string Entry, bool merge) {
 		auto script = JD.String(Entry);
 		LoadString(State,script, merge);
+		if ((!merge) && suffixed(Upper(Entry), ".LUA")) {
+			auto S = Get(State); S->SetStateType("Lua");
+		}
+
 	}
 
 	void Apollo_State::LoadJCR6(std::string JCR6MainFile, std::string Entry, bool merge){
@@ -210,6 +219,10 @@ namespace Tricky_Apollo {
 			return NULL;
 		}
 		return &(StateMap[us]);
+	}
+
+	void Apollo_State::SetStateType(std::string NewState) {
+		StateType = NewState;
 	}
 
 	bool Apollo_State::HasState(std::string state) {
