@@ -47,6 +47,6 @@ namespace Tricky_Apollo {
 				return sMainScript;
 			}
 		}
-		Crash("Script Main.Neil not found in any directory\nof the main package", "", "", AE_NoMainScript);
+		Crash("Script Main.Neil not found in any directory\nof the main package", "C++","Check package: "+PackageMainFile, AE_NoMainScript);
 	}
 }
