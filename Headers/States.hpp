@@ -71,4 +71,9 @@ namespace Tricky_Apollo {
 
 		~Apollo_State();
 	};
+
+	/// <summary>
+	/// Makes sure that he deep core stuff is added to states before getting to work
+	/// </summary>
+	void States_Init();
 }
