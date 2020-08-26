@@ -44,6 +44,7 @@ namespace Tricky_Apollo {
 	static std::vector< luaL_Reg > NeededFunctions;
 	static std::vector< std::string > CoreLuaScripts;
 	static std::vector< std::string > CoreNeilScripts;
+	static bool State_Init_Done = false;
 
 	static int Apollo_Paniek(lua_State* L) {
 		// Normally this should not happen, but just in case!
@@ -67,8 +68,36 @@ namespace Tricky_Apollo {
 		}
 		luaL_openlibs(MyState);
 		lua_atpanic(MyState, Apollo_Paniek);
+		if (NeededFunctions.size()) {
+			std::cout << "There are \x1b[33m" << NeededFunctions.size() << "\x1b[0m API functions to be added (including NULL if that's added)\n";
+			auto l = NeededFunctions[NeededFunctions.size() - 1];
+			/*
+			if (!(l.func == NULL && l.name == NULL)) {
+				std::cout << "Adding the two NULL values needed to end it all\n";
+				NeededFunctions.push_back({ NULL,NULL }); // C can't find the end otherwise.
+			}
+			//*/
+			// /* 
+			for (int i = 0; i < NeededFunctions.size(); ++i) {
+				auto n = "Null";
+				auto f = "Null";
+				if (NeededFunctions[i].name) n = NeededFunctions[i].name;
+				if (NeededFunctions[i].func) f = "Function present";
+				std::cout << i << "> Registering " << n << " F:" << f << "\n";
+				lua_register(MyState, NeededFunctions[i].name, NeededFunctions[i].func); // Ugly, but works?
+			}
+			// */
+			
+			//luaL_setfuncs(MyState, &NeededFunctions[0], 0);
+			//luaL_newlib(MyState, &NeededFunctions[0]);
+
+
+		} else {
+			std::cout << "\x1b[41;1;37mWARNING\x1b[0m No API functions to be added yet!";
+		}
 		// /* Test Lua
 		luaL_loadstring(MyState, "print('Hello World! Testing new Lua State')");
+		luaL_loadstring(MyState, "Apollo_TestAPI_Function()"); // Testing API function
 		lua_call(MyState, 0, 0);
 		// */		
 	}
@@ -155,5 +184,16 @@ namespace Tricky_Apollo {
 			std::cout << " = Nothing to destroy! State was empty!\n";
 		else
 			lua_close(MyState);
+	}
+
+	static int LuaAPITest(lua_State* L) {
+		std::cout << "A small step for a man\nbut a giant leap for mankind!\n";
+		return 0;
+	}
+
+	void States_Init() {
+		if (State_Init_Done) return;
+		State_Init_Done = 0;
+		NeededFunctions.push_back({ "Apollo_TestAPI_Function",LuaAPITest });
 	}
 }
