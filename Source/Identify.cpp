@@ -21,9 +21,10 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.21
+// Version: 20.08.26
 // EndLic
 #include <QuickString.hpp>
+#include <Crash.hpp>
 #include "..\Headers\Identify.hpp"
 
 
@@ -63,6 +64,18 @@ namespace Tricky_Apollo {
 		int ret = stoi(ConfigData.Value("Window", "Width"));
 		if (ret < 25) ret = 600;
 		return ret;
+	}
+
+	FlowType Identify::GetFlowType() {
+		auto FT=Upper(ConfigData.Value("Flow", "Type"));
+		if (FT == "" || FT == "REGULARREPEATIVEFLOW")
+			return RegularRepeativeFlow;
+		if (FT == "SEMICALLBACK")
+			return SemiCallback;
+		if (FT == "FULLCALLBACK")
+			return FullCallback;
+		Crash("Unknown flow type: " + ConfigData.Value("Flow", "Type"), "Your project file", "Check ID/Identify.ini", AE_UnknownFlowType);
+		return UnknownFlow; // I must return something! Even though it doesn't matter anymore!
 	}
 
 

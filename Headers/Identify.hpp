@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.21
+// Version: 20.08.26
 // EndLic
 // Tricky's Units
 #ifndef APOLLO_INCLUDED_ID
@@ -29,6 +29,13 @@
 #include <GINIE.hpp>
 #include <Globals.hpp>
 namespace Tricky_Apollo {
+
+	enum FlowType {
+		UnknownFlow,
+		RegularRepeativeFlow,
+		SemiCallback,
+		FullCallback
+	};
 
 	class Identify {
 	private:
@@ -41,6 +48,7 @@ namespace Tricky_Apollo {
 		static bool FullScreen();		
 		static int WinHeight();
 		static int WinWidth();
+		static FlowType GetFlowType();
 	};
 
 }
