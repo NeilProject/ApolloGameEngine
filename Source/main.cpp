@@ -48,6 +48,7 @@
 #include <Identify.hpp>
 #include <SDL_Manager.hpp>
 #include <core.hpp>
+#include <States.hpp>
 
 using namespace TrickyUnits;
 using namespace jcr6;
@@ -132,8 +133,12 @@ namespace Tricky_Apollo {
 	}
 
 	void LookUpMainScript() {
+		//cout << "\n\nInit scripting engine\n";
+		States_Init();
 		cout << "\nLooking up: Main.neil\n";
-		cout << "\nFound: " << MainScript() << "\n";
+		auto ms = MainScript();
+		cout << "\nFound: " <<ms << "\n";
+		Apollo_State::Load("APOLLO_MAIN", JCRPackage, ms);
 	}
 	
 }
