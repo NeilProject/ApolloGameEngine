@@ -88,6 +88,13 @@ namespace Tricky_Apollo {
 				luaL_loadstring(MyState, source.c_str());
 			}
 			lua_call(MyState, 0, 0);
+			// State data in the state itself
+			std::string StateData = "Group ApolloState\nreadonly string Name=\"" + StateName + "\"\nget string TraceBack\nreturn Lua.debug.traceback()\n end";
+			StateData += "\n\nend";
+			std::string exe = "local statedata = Neil.Load(\"" + bsdec(StateData) + "\")\nstatedata()";
+			exe += "\nprint('Apollo State:',Neil.Globals.ApolloState.NamE) -- debug only\n"; // debug only
+			luaL_loadstring(MyState,exe.c_str());
+			lua_call(MyState, 0, 0);
 		}
 	}
 	void Apollo_State::Init() {
@@ -223,10 +230,20 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int LuaAPICrash(lua_State* L) {
+		std::string errmessage = luaL_checkstring(L, 1);
+		std::string state = "unknown"; if (!lua_isnil(L, 2)) state = luaL_checkstring(L, 2);
+		std::string trace = ""; if (!lua_isnil(L, 3)) trace = luaL_checkstring(L, 3);
+		Crash(errmessage, state, trace, AE_Script_Error);
+		return 0;
+	}
+
 	void States_Init() {
 		if (State_Init_Done) return;
 		State_Init_Done = 0;
 		NeededFunctions.push_back({ "Apollo_TestAPI_Function",LuaAPITest });
+		NeededFunctions.push_back({ "Apollo_Crash",LuaAPICrash });
 		CoreLuaScripts.push_back({ true,"Neil","Neil/Neil.lua" });
+		
 	}
 }
