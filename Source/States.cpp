@@ -1,3 +1,28 @@
+// Lic:
+// Apollo
+// The United States of Lua
+// 
+// 
+// 
+// (c) Jeroen P. Broks, 2020
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// 
+// Please note that some references to data like pictures or audio, do not automatically
+// fall under this licenses. Mostly this is noted in the respective files.
+// 
+// Version: 20.08.26
+// EndLic
 // C++
 #include <iostream>
 
@@ -8,7 +33,8 @@
 #include <QuickString.hpp>
 
 // Myself
-#include "States.hpp"
+#include <States.hpp>
+#include <QuickStream.hpp>
 
 namespace Tricky_Apollo {
 	using namespace TrickyUnits;
@@ -58,6 +84,47 @@ namespace Tricky_Apollo {
 		StateMap[UState].Init();
 	}
 
+	void Apollo_State::LoadString(std::string script, bool merge) {
+		if (MyState == NULL) Init();
+		Crash("Loading a string into a Lua state has not yet been implemented","C++:Development","It's all in development folks!\nRome wasn't built in one day either, you know!\nSo please wait ahile longer!");
+	}
+
+	void Apollo_State::LoadString(std::string state, std::string script, bool merge) {
+		if (!merge) Init(state);
+		if (!HasState(state)) Init(state);
+		StateMap[Upper(state)].LoadString(script);
+	}
+
+	void Apollo_State::Load(std::string File, bool merge) {
+		auto script = TrickyUnits::LoadString(File);
+		LoadString(script, merge);
+	}
+
+	void Apollo_State::Load(std::string State, std::string File, bool merge) {
+		auto script = TrickyUnits::LoadString(File);
+		LoadString(State,script, merge);
+	}
+
+	void Apollo_State::Load(jcr6::JT_Dir& JD, std::string Entry, bool merge) {
+		auto script = JD.String(Entry);
+		LoadString(script, merge);
+	}
+
+	void Apollo_State::Load(std::string State, jcr6::JT_Dir& JD, std::string Entry, bool merge) {
+		auto script = JD.String(Entry);
+		LoadString(State,script, merge);
+	}
+
+	void Apollo_State::LoadJCR6(std::string JCR6MainFile, std::string Entry, bool merge){
+		auto J = jcr6::Dir(JCR6MainFile);
+		Load(J, Entry, merge);
+	}
+
+	void Apollo_State::Load(std::string State, std::string JCR6MainFile, std::string Entry, bool merge) {
+		auto J = jcr6::Dir(JCR6MainFile);
+		Load(State,J, Entry, merge);
+	}
+
 	std::string Apollo_State::TraceBack() {
 		return "Traceback not a working feature yet";
 	}
@@ -84,6 +151,9 @@ namespace Tricky_Apollo {
 
 	Apollo_State::~Apollo_State() {
 		std::cout << "Destroy state " << StateName << "\n";
-		lua_close(MyState);
+		if (MyState == NULL)
+			std::cout << " = Nothing to destroy! State was empty!\n";
+		else
+			lua_close(MyState);
 	}
 }
