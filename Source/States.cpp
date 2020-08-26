@@ -34,16 +34,27 @@
 
 // Myself
 #include <States.hpp>
+
+// Apollo
 #include <QuickStream.hpp>
+#include <Globals.hpp>
+
+#define Apollo_State_Debug
 
 namespace Tricky_Apollo {
 	using namespace TrickyUnits;
 
 	static std::map<std::string, Apollo_State> StateMap;
 
+	typedef struct ScriptModule{
+		bool isModule = false;
+		std::string ReturnAs = "";
+		std::string Script = "";
+	} ScriptModule;
+
 	static std::vector< luaL_Reg > NeededFunctions;
-	static std::vector< std::string > CoreLuaScripts;
-	static std::vector< std::string > CoreNeilScripts;
+	static std::vector< ScriptModule > CoreLuaScripts;
+	static std::vector< ScriptModule > CoreNeilScripts;
 	static bool State_Init_Done = false;
 
 	static int Apollo_Paniek(lua_State* L) {
@@ -58,6 +69,26 @@ namespace Tricky_Apollo {
 
 	void Apollo_State::SetName(std::string Name) {
 		StateName = Name;
+	}
+	void Apollo_State::InitScripts() {
+		// Lua first after that Neil (also because Neil itself is written in Lua, so Neil cannot be run without these)
+		std::cout << "Number of core Lua scripts: \x1b[34;1m" << CoreLuaScripts.size() << "\x1b[0m\n";
+		for (auto& scr : CoreLuaScripts) {
+			auto source = ARF.String(scr.Script);
+			if (scr.isModule) {
+#ifdef Apollo_State_Debug
+				std::cout << "Adding to state: " << scr.Script << " as module " << scr.ReturnAs << "!\n";
+#endif
+				std::string tomod = "local source =\"" + TrickyUnits::bsdec(source) + "\"\n\nlocal func = load(source,\"" + scr.ReturnAs + "\")\n\n" + scr.ReturnAs + " = func()";
+				luaL_loadstring(MyState, tomod.c_str());
+			} else {
+#ifdef Apollo_State_Debug
+				std::cout << "Adding to state: " << scr.Script << " as pure call!\n";
+#endif
+				luaL_loadstring(MyState, source.c_str());
+			}
+			lua_call(MyState, 0, 0);
+		}
 	}
 	void Apollo_State::Init() {
 		MyState = luaL_newstate();  /* create state */
@@ -100,6 +131,7 @@ namespace Tricky_Apollo {
 		luaL_loadstring(MyState, "Apollo_TestAPI_Function()"); // Testing API function
 		lua_call(MyState, 0, 0);
 		// */		
+		InitScripts();
 	}
 	
 	void Apollo_State::Init(std::string State) {
@@ -115,7 +147,7 @@ namespace Tricky_Apollo {
 
 	void Apollo_State::LoadString(std::string script, bool merge) {
 		if (MyState == NULL) Init();
-		Crash("Loading a string into a Lua state has not yet been implemented","C++:Development","It's all in development folks!\nRome wasn't built in one day either, you know!\nSo please wait ahile longer!");
+		Crash("Loading a string into a Lua state has not yet been implemented","C++:Development","It's all in development folks!\nRome wasn't built in one day either, you know!\nSo please wait awhile longer!");
 	}
 
 	void Apollo_State::LoadString(std::string state, std::string script, bool merge) {
@@ -195,5 +227,6 @@ namespace Tricky_Apollo {
 		if (State_Init_Done) return;
 		State_Init_Done = 0;
 		NeededFunctions.push_back({ "Apollo_TestAPI_Function",LuaAPITest });
+		CoreLuaScripts.push_back({ true,"Neil","Neil/Neil.lua" });
 	}
 }
