@@ -17,7 +17,9 @@
 -- misrepresented as being the original software.
 -- 3. This notice may not be removed or altered from any source distribution.
 -- </License Block>
-local Apollo_Crash=Apollo_Crash
-function Apollo_Panic(errormessage)
+
+-- local Apollo_Crash=Apollo_Crash
+--function Apollo_Panic(errormessage)
+return function(errormessage) -- Does this work?
 	Apollo_Crash(errormessage,Neil.Globals.ApolloState.Name,Neil.Globals.ApolloState.TraceBack)
 end
