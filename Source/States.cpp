@@ -16,6 +16,8 @@ namespace Tricky_Apollo {
 	static std::map<std::string, Apollo_State> StateMap;
 
 	static std::vector< luaL_Reg > NeededFunctions;
+	static std::vector< std::string > CoreLuaScripts;
+	static std::vector< std::string > CoreNeilScripts;
 
 	static int Apollo_Paniek(lua_State* L) {
 		// Normally this should not happen, but just in case!
@@ -42,7 +44,7 @@ namespace Tricky_Apollo {
 		// /* Test Lua
 		luaL_loadstring(MyState, "print('Hello World! Testing new Lua State')");
 		lua_call(MyState, 0, 0);
-		// */
+		// */		
 	}
 	
 	void Apollo_State::Init(std::string State) {
