@@ -46,6 +46,7 @@ namespace Tricky_Apollo {
 		// static std::map<std::string, Apollo_State> StateMap; // C++ doesn't appear to like this getup, and since this is not to be meddled with anyway, let's go for the "dirty" method
 		std::string StateName = "Nameless";
 		void SetName(std::string Name);
+		void InitScripts();
 	public:
 		/// <summary>
 		/// Initiates the state, activates all libraries. Initiates Neil, and all that stuff.
