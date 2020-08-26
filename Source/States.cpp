@@ -80,22 +80,25 @@ namespace Tricky_Apollo {
 				std::cout << "Adding to state: " << scr.Script << " as module " << scr.ReturnAs << "!\n";
 #endif
 				std::string tomod = "local source =\"" + TrickyUnits::bsdec(source) + "\"\n\nlocal func = load(source,\"" + scr.ReturnAs + "\")\n\n" + scr.ReturnAs + " = func()";
+				// std::cout << "<huh>\n" << tomod << "\n</huh>\n\n"; continue;// HUH?
 				luaL_loadstring(MyState, tomod.c_str());
+				lua_call(MyState, 0, 0);
 			} else {
 #ifdef Apollo_State_Debug
 				std::cout << "Adding to state: " << scr.Script << " as pure call!\n";
 #endif
 				luaL_loadstring(MyState, source.c_str());
+				//std::cout << "<huh>\n" << source << "\n</huh>\n\n"; return;// HUH?
+				lua_call(MyState, 0, 0);
 			}
-			lua_call(MyState, 0, 0);
-			// State data in the state itself
-			std::string StateData = "Group ApolloState\nreadonly string Name=\"" + StateName + "\"\nget string TraceBack\nreturn Lua.debug.traceback()\n end";
-			StateData += "\n\nend";
-			std::string exe = "local statedata = Neil.Load(\"" + bsdec(StateData) + "\")\nstatedata()";
-			exe += "\nprint('Apollo State:',Neil.Globals.ApolloState.NamE) -- debug only\n"; // debug only
-			luaL_loadstring(MyState,exe.c_str());
-			lua_call(MyState, 0, 0);
 		}
+		// State data in the state itself
+		std::string StateData = "Group ApolloState\nreadonly string Name=\"" + StateName + "\"\nget string TraceBack\nreturn Lua.debug.traceback()\n end";
+		StateData += "\n\nend";
+		std::string exe = "local statedata = Neil.Load(\"" + bsdec(StateData) + "\")\nstatedata()";
+		exe += "\nprint('Apollo State:',Neil.Globals.ApolloState.Name) -- debug only\n"; // debug only
+		luaL_loadstring(MyState, exe.c_str());
+		lua_call(MyState, 0, 0);
 	}
 	void Apollo_State::Init() {
 		MyState = luaL_newstate();  /* create state */
@@ -178,7 +181,7 @@ namespace Tricky_Apollo {
 	}
 
 	void Apollo_State::Load(jcr6::JT_Dir& JD, std::string Entry, bool merge) {
-		if ((!merge) && suffixed(Upper(Enry), ".LUA")) StateType = "Lua";
+		if ((!merge) && suffixed(Upper(Entry), ".LUA")) StateType = "Lua";
 		auto script = JD.String(Entry);
 		LoadString(script, merge);
 	}
@@ -257,6 +260,6 @@ namespace Tricky_Apollo {
 		NeededFunctions.push_back({ "Apollo_TestAPI_Function",LuaAPITest });
 		NeededFunctions.push_back({ "Apollo_Crash",LuaAPICrash });
 		CoreLuaScripts.push_back({ true,"Neil","Neil/Neil.lua" });
-		
+		CoreLuaScripts.push_back({ true,"Apollo_Panic","Neil/Panic.lua" });		
 	}
 }
