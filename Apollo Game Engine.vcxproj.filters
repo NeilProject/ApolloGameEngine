@@ -81,7 +81,7 @@
     <ClCompile Include="..\TQSG\TQSE.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
-    <ClCompile Include="Headers\States.cpp">
+    <ClCompile Include="Source\States.cpp">
       <Filter>Source Files\Apollo</Filter>
     </ClCompile>
   </ItemGroup>

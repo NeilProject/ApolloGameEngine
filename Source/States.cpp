@@ -15,6 +15,18 @@ namespace Tricky_Apollo {
 
 	static std::map<std::string, Apollo_State> StateMap;
 
+	static std::vector< luaL_Reg > NeededFunctions;
+
+	static int Apollo_Paniek(lua_State* L) {
+		// Normally this should not happen, but just in case!
+		// The "Lua Panic!" prefix is to make sure I know this happened.
+		auto err = luaL_checkstring(L, 1);
+		std::string Paniek = "Lua Panic!\n";
+		Paniek += err;
+		Crash(Paniek, "??", "??");
+		return 0;
+	}
+
 	void Apollo_State::SetName(std::string Name) {
 		StateName = Name;
 	}
@@ -25,6 +37,12 @@ namespace Tricky_Apollo {
 			Crash("Lua could not create a new state: Not enough memory", StateName, "", AE_LuaStateCreationFailure);
 			return; // Now "Crash" should already end all stuff, but ya never know, so to make sure!
 		}
+		luaL_openlibs(MyState);
+		lua_atpanic(MyState, Apollo_Paniek);
+		// /* Test Lua
+		luaL_loadstring(MyState, "print('Hello World! Testing new Lua State')");
+		lua_call(MyState, 0, 0);
+		// */
 	}
 	
 	void Apollo_State::Init(std::string State) {
