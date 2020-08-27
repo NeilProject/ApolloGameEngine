@@ -72,6 +72,11 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AGGA_Flip(lua_State* L) {
+		TQSG_Flip;
+		return 0;
+	}
+
 
 
 	// Images
@@ -82,6 +87,8 @@ namespace Tricky_Apollo {
 	void ApolloAPIInit_Graphics() {
 		Apollo_State::RequireFunction("AGGA_Cls", AGGA_Cls);
 		Apollo_State::RequireFunction("AGGA_ClsColor", AGGA_ClsColor);
+		Apollo_State::RequireFunction("AGGA_Alpha", AGGA_Alpha); 
+		Apollo_State::RequireFunction("AGGA_Flip", AGGA_Flip);
 		Apollo_State::RequireNeil("API/Graphics.neil");
 	}
 }
