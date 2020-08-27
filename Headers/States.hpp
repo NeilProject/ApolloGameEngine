@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.26
+// Version: 20.08.27
 // EndLic
 #pragma once
 
@@ -71,6 +71,16 @@ namespace Tricky_Apollo {
 		void SetStateType(std::string NewState);
 
 		static bool HasState(std::string state);
+		static std::string NameFromState(lua_State* L);
+
+		/// <summary>
+		/// When executed all new states will support this function as part of the API now.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="func"></param>
+		static void RequireFunction(const char* name, lua_CFunction func);
+		static void RequireNeil(std::string name);
+
 
 		~Apollo_State();
 	};

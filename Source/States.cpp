@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.26
+// Version: 20.08.27
 // EndLic
 // C++
 #include <iostream>
@@ -58,12 +58,33 @@ namespace Tricky_Apollo {
 	static bool State_Init_Done = false;
 
 	static int Apollo_Paniek(lua_State* L) {
+		std::string Trace = "";
+		// /* DEBUG
+		cout << lua_gettop(L) << "\n";
+		for (int i = 1; i <= lua_gettop(L);i++) {
+			cout << "Arg #" << i << "\t";
+			switch (lua_type(L, i)) {
+			case LUA_TSTRING:
+				cout << "String \"" << luaL_checkstring(L, i);
+				Trace += luaL_checkstring(L, i); Trace +="\n";
+				break;
+			case LUA_TNUMBER:
+				cout << "Number " << luaL_checknumber(L, i);
+			case LUA_TFUNCTION:
+				cout << "Function";
+			default:
+				cout << "Unknown: " << lua_type(L, i);
+				break;
+			}
+			cout << "\n";
+		}
+		// */
 		// Normally this should not happen, but just in case!
 		// The "Lua Panic!" prefix is to make sure I know this happened.
-		auto err = luaL_checkstring(L, 1);
+		//auto err = luaL_checkstring(L, 1);
 		std::string Paniek = "Lua Panic!\n";
-		Paniek += err;
-		Crash(Paniek, "??", "??");
+		//Paniek += err;
+		Crash(Paniek, "C++: PANIC!", "Lua Dump:\n"+Trace);
 		return 0;
 	}
 
@@ -96,11 +117,33 @@ namespace Tricky_Apollo {
 		std::string StateData = "Group ApolloState\nreadonly string Name=\"" + StateName + "\"\nget string TraceBack\nreturn Lua.debug.traceback()\n end";
 		StateData += "\n\nend";
 		std::string exe = "local statedata = Neil.Load(\"" + bsdec(StateData) + "\")\nstatedata()";
-		exe += "\nprint('Apollo State:',Neil.Globals.ApolloState.Name) -- debug only\n"; // debug only
+		//exe += "\nprint('Apollo State:',Neil.Globals.ApolloState.Name) -- debug only\n"; // debug only
 		luaL_loadstring(MyState, exe.c_str());
 		lua_call(MyState, 0, 0);
+		// And now for all the API linkup Neil Scripts
+		std::cout << "Number of core Neil scripts: \x1b[34;1m" << CoreNeilScripts.size() << "\x1b[0m\n";
+		for (auto& scr : CoreNeilScripts) {
+			if (scr.isModule) {
+				Crash("No support for Module for core Neil (yet)");
+			} else {
+				std::cout << "Executing core Neil Script: " << scr.Script << "\n";
+				auto script = ARF.String(scr.Script);
+				auto safe = bsdec(script);
+				auto workout = "--[[CORECALL: "+scr.Script+"]]\nlocal success,lfunc,err = xpcall(Neil.Load,Apollo_Panic,\"" + safe + "\",\"ARF:"+scr.Script+"\")\n";
+				//workout += "print ('DEBUG1: ',success,lfunc,err)\n"; // debug only!
+				workout += "if not success then Apollo_Crash(lfunc,\"Neil Translation\") return end\n";
+				workout += "if not lfunc then Apollo_Crash(err or 'Something really went wrong during the Neil translation') return end\n";
+				//workout += "print ('DEBUG2: ',success,lfunc,err)\n"; // debug only!
+				workout += "sucesss,err = xpcall(lfunc,Apollo_Panic)\n";
+				//cout << "<NEIL>\n" << workout << "</NEIL>\n";
+				luaL_loadstring(MyState, workout.c_str());
+				lua_call(MyState, 0, 0);
+			}
+		}
+
 	}
 	void Apollo_State::Init() {
+		if (MyState != NULL) lua_close(MyState);
 		MyState = luaL_newstate();  /* create state */
 		if (MyState == NULL) {
 			std::cout << "\x1b[31mLua Error\x1b[0m " << "Cannot create state: not enough memory\n";
@@ -142,6 +185,7 @@ namespace Tricky_Apollo {
 		lua_call(MyState, 0, 0);
 		// */		
 		InitScripts();
+		StateType = "";
 	}
 	
 	void Apollo_State::Init(std::string State) {
@@ -155,43 +199,69 @@ namespace Tricky_Apollo {
 		StateMap[UState].Init();
 	}
 
-	void Apollo_State::LoadString(std::string script, bool merge) {
-		if (MyState == NULL) Init();
-		Crash("Loading a string into a Lua state has not yet been implemented","C++:Development","It's all in development folks!\nRome wasn't built in one day either, you know!\nSo please wait awhile longer!");
+	void Apollo_State::LoadString(std::string source, bool merge) {
+		if (MyState == NULL || (!merge)) Init();
+		//Crash("Loading a string into a Lua state has not yet been implemented","C++:Development","It's all in development folks!\nRome wasn't built in one day either, you know!\nSo please wait awhile longer!");
+		//auto source = JCRPackage.String(script);
+		std::string work = "--[[Apollo Load String]]\n";
+		if (StateType == "Lua") {
+			work += "local success,workfunc = xpcall(load,Apollo_Panic,\"" + bsdec(source) + "\",Neil.Globals.ApolloState.Name)\n";
+		} else if (StateType=="Neil") {
+			work += "local success,workfunc = xpcall(Neil.Load,Apollo_Panic,\"" + bsdec(source) + "\",Neil.Globals.ApolloState.Name)\n";
+		} else {
+			Crash("StateType has not been recognized: " + StateType);
+		}
+		work += "\n\nlocal e\n";
+		work += "success,e=xpcall(workfunc,Apollo_Panic)\n";
+		// cout << "<LOADED SCRIPT>\n" << work << "</LOADED SCRIPT>\n";
+		luaL_loadstring(MyState,work.c_str());
+		lua_call(MyState,0, 0);
 	}
 
 	void Apollo_State::LoadString(std::string state, std::string script, bool merge) {
 		if (!merge) Init(state);
 		if (!HasState(state)) Init(state);
-		StateMap[Upper(state)].LoadString(script);
+		StateMap[Upper(state)].LoadString(script,true);
 	}
 
 	void Apollo_State::Load(std::string File, bool merge) {
+		if (!merge) Init();
 		if ((!merge) && suffixed(Upper(File), ".LUA")) StateType = "Lua";
+		if ((!merge) && suffixed(Upper(File), ".NEIL")) StateType = "Neil";
 		auto script = TrickyUnits::LoadString(File);
-		LoadString(script, merge);
+		LoadString(script,true);
 	}
 
 	void Apollo_State::Load(std::string State, std::string File, bool merge) {
 		auto script = TrickyUnits::LoadString(File);
-		LoadString(State,script, merge);
+		if (!merge) Init(State);
 		if ((!merge) && suffixed(Upper(File), ".LUA")) {
 			auto S = Get(State); S->SetStateType("Lua");
 		}
+		if ((!merge) && suffixed(Upper(File), ".NEIL")) {
+			auto S = Get(State); S->SetStateType("Neil");
+		}
+		LoadString(State,script,true);
 	}
 
 	void Apollo_State::Load(jcr6::JT_Dir& JD, std::string Entry, bool merge) {
+		if (!merge) Init();
 		if ((!merge) && suffixed(Upper(Entry), ".LUA")) StateType = "Lua";
+		if ((!merge) && suffixed(Upper(Entry), ".NEIL")) StateType = "Neil";
 		auto script = JD.String(Entry);
-		LoadString(script, merge);
+		LoadString(script,true);
 	}
 
 	void Apollo_State::Load(std::string State, jcr6::JT_Dir& JD, std::string Entry, bool merge) {
 		auto script = JD.String(Entry);
-		LoadString(State,script, merge);
+		if (!merge) Init(State);
 		if ((!merge) && suffixed(Upper(Entry), ".LUA")) {
 			auto S = Get(State); S->SetStateType("Lua");
 		}
+		if ((!merge) && suffixed(Upper(Entry), ".NEIL")) {
+			auto S = Get(State); S->SetStateType("Neil");
+		}
+		LoadString(State,script,true);
 
 	}
 
@@ -226,12 +296,35 @@ namespace Tricky_Apollo {
 
 	void Apollo_State::SetStateType(std::string NewState) {
 		StateType = NewState;
+		cout << "State type '" << StateName << "' set to '" << StateType << "'\n";
 	}
 
 	bool Apollo_State::HasState(std::string state) {
 		return StateMap.count(Upper(state)) > 0;
 	}
 
+	std::string Apollo_State::NameFromState(lua_State* L) {
+		std::string ret = "Couldn't fetch state";
+		luaL_loadstring(L, "return Neil.Globals.ApolloState.Name");
+		lua_call(L,0, LUA_MULTRET,0);
+		while (lua_gettop(L)) {
+			if (lua_type(L,lua_gettop(L)) == LUA_TNIL) ret = "Couldn't fetch state";
+			else if (lua_type(L, lua_gettop(L)) != LUA_TSTRING) Crash("NameFromState(<state>) failed!", "Lua link script"); return "ERROR";
+			ret = lua_tostring(L, lua_gettop(L));
+			lua_pop(L, 1);
+		}
+		return ret;
+	}
+
+
+	void Apollo_State::RequireFunction(const char* name, lua_CFunction func) {
+		cout << "DEBUG: RequireFunction(\""<<name<<"\",<cppfunction>);\n";
+		NeededFunctions.push_back({ name,func });
+	}
+
+	void Apollo_State::RequireNeil(std::string name) {
+		CoreNeilScripts.push_back({ false,"",name });
+	}
 
 	Apollo_State::~Apollo_State() {
 		std::cout << "Destroy state " << StateName << "\n";
