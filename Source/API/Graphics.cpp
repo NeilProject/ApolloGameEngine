@@ -24,3 +24,9 @@
 // Version: 20.08.27
 // EndLic
 // We get into the deep of this later!
+
+namespace Tricky_Apollo {
+	void ApolloAPIInit_Graphics() {
+
+	}
+}
