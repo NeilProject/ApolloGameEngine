@@ -152,8 +152,9 @@ int main(int n, char* args[]) {
 	Apollo_SDL_Start();
 	States_Init();
 	InitCore();
+	// Further API inits go here!
 	LookUpMainScript();
-	// TODO : The code that comes in between ;)
+	RunTheGame();
 	Apollo_SDL_End();
 	return AE_NoError;
 }
