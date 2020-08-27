@@ -32,6 +32,7 @@
 #include <core.hpp>
 #include <Crash.hpp>
 #include <States.hpp>
+#include <Identify.hpp>
 
 #include <AP_Lua_CPP.hpp>
 
@@ -99,8 +100,22 @@ namespace Tricky_Apollo {
 
 	// Let's get ready to rumble!
 	void RunTheGame() {
+		static FlowType FT = Identify::GetFlowType();
 		while (KeepLooping) {
-
+			auto* state = Apollo_State::Get(CurrentFlow);
+			switch (FT) {
+			case RegularRepeativeFlow:
+				state->RawCallByType("Apollo_Flow","nil");
+				break;
+			case SemiCallback:
+				Crash("SemiCallback flow type not yet supported!");
+				break;
+			case FullCallback:
+				Crash("Fullcallback flow type not yet supported!");
+			default:
+				Crash("Unsupported flow type", "C++", "Identify", AE_UnknownFlowType);
+				break;
+			}
 		}
 		ImmHalt(ExitCode);
 	}
