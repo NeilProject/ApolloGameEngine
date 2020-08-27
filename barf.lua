@@ -1,7 +1,7 @@
 -- <License Block>
 -- barf.lua
 -- Build Apollo Resource File
--- version: 20.08.26
+-- version: 20.08.27
 -- Copyright (C) 2020 Jeroen P. Broks
 -- This software is provided 'as-is', without any express or implied
 -- warranty.  In no event will the authors be held liable for any damages
