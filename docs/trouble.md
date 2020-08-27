@@ -17,3 +17,7 @@ Please note that the error above was only possible due to the early state of dev
 
 
 If you made a game with Apollo yourself, take good note of this information, as it's all the info Apollo can provide to get you closer to solving the issue.
+
+
+## Lua Panic!
+If the error is "Lua Panic!" that it mostly means that something went wrong when Apollo tries to call out to the scripts. Mostly this is due to an internal error to Apollo and not to errors in the script themselves (if the latter is true, it will mostly not lead to Lua Panic!) If this happens to you I may need a detailed report of what you did to see what went wrong. 
