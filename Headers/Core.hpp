@@ -28,4 +28,8 @@
 
 namespace Tricky_Apollo {
 	std::string MainScript();
+	void RunTheGame();
+	void GoToFlow(std::string Flow,std::string State="C++");
+	std::string GetCurrentFlow();
+	void InitCore();
 }

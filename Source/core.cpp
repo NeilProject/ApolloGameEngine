@@ -38,7 +38,13 @@
 
 namespace Tricky_Apollo {
 
-	std::string MainScript() {
+	using namespace std;
+	using namespace TrickyUnits;
+
+	static string CurrentFlow = "APOLLO_MAIN";
+	static bool KeepLooping = true;
+
+	string MainScript() {
 		static std::string sMainScript = "";
 		if (sMainScript != "") return sMainScript;
 		for (auto FE : JCRPackage.Entries()) {
@@ -49,4 +55,40 @@ namespace Tricky_Apollo {
 		}
 		Crash("Script Main.Neil not found in any directory\nof the main package", "C++: Apollo Core initiation","Check package: "+PackageMainFile, AE_NoMainScript);
 	}
+
+
+
+	void RunTheGame() {
+
+	}
+
+	void GoToFlow(string Flow,string State) {
+		Flow = Upper(Flow);
+		if (Flow != "APOLLO_MAIN" && (!prefixed(Flow,"FLOW_"))) CurrentFlow = "FLOW_" + Flow; else CurrentFlow = Flow;
+		if (!Apollo_State::HasState(CurrentFlow))
+			Crash("Flow \""+Flow+"\" doesn't exist",State,Apollo_State::TraceBack(State));
+	}
+
+	string GetCurrentFlow() { return CurrentFlow; }
+
+	// API
+	int APICORE_GoToFlow(lua_State* L) {
+		string f = luaL_checkstring(L, 1);
+		GoToFlow(f, Apollo_State::NameFromState(L));
+		return 0;
+	}
+
+	int APICORE_GetFlow(lua_State* L) {
+		if (lua_gettop(L) != 0) cout << "\x1b[33mWARNING!\x1b[0m " << lua_gettop(L) << " parameter(s) given to GetFlow(). None are accepted! All are ignored!";
+		lua_pushstring(L, CurrentFlow.c_str());
+		return 1;
+	}
+
+	void InitCore() {
+		Apollo_State::RequireFunction("GoToFlow",APICORE_GoToFlow);
+		Apollo_State::RequireFunction("CurrentFlow", APICORE_GetFlow);
+		Apollo_State::RequireNeil("API/Core.Neil");
+	}
+
+
 }
