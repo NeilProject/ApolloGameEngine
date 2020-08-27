@@ -1,0 +1,37 @@
+Table AGGA = LGGTTT("AGGA")
+import Apollo_Panic
+
+QuickMeta Graphics
+
+	index
+		key = key:upper()
+		If Not AGGA[key]
+			Apollo_Panic("Module Graphics does not have an element named: "..key)
+		End
+		Return AGGA[key]
+	end
+
+	newindex
+		Apollo_Panic("All elements of module Graphics are read-only! And that includes: " .. key .. "\nSo value '"..tostring(value).."' cannot be assinged to it!")
+	End
+	
+End
+
+//Init
+//	For k,v in SPAIRS(AGGA)
+//		print(type(v),k,"=",v)
+//	End
+//End
+
+Class Image
+	Var Load(String File,String Tag="")
+		// Full content comes later
+	End
+End
+
+
+Class ImageFont
+	Var Load(String File,String Tag="")
+		// Full content comes later
+	End
+End
