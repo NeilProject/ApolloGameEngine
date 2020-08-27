@@ -61,3 +61,9 @@ Well that's the idea
 
 ## void Graphics.Flip()
 Shows all stuff drawn during a drawing stage. (At the end of a drawing callback, this function is called automatically).
+
+## void Graphics.Rect(int x, int y, int w, int h)
+Draws a rectangle
+
+## void Graphics.Line(int x1, int y1, int x2, int y2)
+Draws a line

@@ -90,18 +90,9 @@ namespace Tricky_Apollo {
 	static int AGGA_Circle(lua_State*L){
 		int x, y, rad;
 		x = luaL_checkinteger(L, 1);
-		y = luaL_checkinteger(L, 2);
-		rad = luaL_checkinteger(L, 3);
+		y = luaL_checkinteger(L, 1);
+		rad = luaL_checkinteger(L, 1);
 		TQSG_Circle(x, y, rad);
-		return 0;
-	}
-
-	static int AGGA_Line(lua_State* L) {
-		int x1, x2, y1, y2;
-		x1 = luaL_checkinteger(L, 1);
-		y1 = luaL_checkinteger(L, 2);
-		x2 = luaL_checkinteger(L, 3);
-		y2 = luaL_checkinteger(L, 4);
 		return 0;
 	}
 

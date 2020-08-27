@@ -54,22 +54,22 @@ namespace Tricky_Apollo {
 		do {
 			TQSE_Poll();
 			TQSG_Cls();
-			TQMG_Color(0, 0, 255);
+			TQSG_Color(0, 0, 255);
 			Apollo_SDL_Draw("**DEATH**", 0, DY);
-			TQMG_Color(0, 255, 255);
+			TQSG_Color(0, 255, 255);
 			Apollo_SysFont.Draw("Houston! We have a problem!", 5, 5);
-			TQMG_Color(255, 255, 0);
+			TQSG_Color(255, 255, 0);
 			Apollo_SysFont.Draw(Message, 5, 30);
 			int sy = 30 + Apollo_SysFont.TextHeight(Message.c_str());
-			TQMG_Color(255, 255, 255);
+			TQSG_Color(255, 255, 255);
 			Apollo_SysFont.Draw(TraceBack, 5, sy);
 			sy += Apollo_SysFont.TextHeight(TraceBack.c_str());
-			TQMG_Color(255, 0, 255);
+			TQSG_Color(255, 0, 255);
 			string h = "State: " + State;
 			if (State == "") h += "C++";
 			Apollo_SysFont.Draw(h, 5, sy);
 
-			TQMG_Color(255, 180, 0);
+			TQSG_Color(255, 180, 0);
 			Apollo_SysFont.Draw("Hit ESCAPE to exit", 5, TQSG_ScreenHeight()-30);
 			TQSG_Flip();
 		} while ((!TQSE_Quit()) && (!TQSE_KeyHit(SDLK_ESCAPE)));
