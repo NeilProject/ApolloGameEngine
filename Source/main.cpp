@@ -50,6 +50,9 @@
 #include <core.hpp>
 #include <States.hpp>
 
+// Init
+#include "API/ApolloAPIs.hpp"
+
 using namespace TrickyUnits;
 using namespace jcr6;
 
@@ -152,7 +155,7 @@ int main(int n, char* args[]) {
 	Apollo_SDL_Start();
 	States_Init();
 	InitCore();
-	// Further API inits go here!
+	InitApolloAPIs();
 	LookUpMainScript();
 	RunTheGame();
 	Apollo_SDL_End();
