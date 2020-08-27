@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.27
+// Version: 20.08.28
 // EndLic
 // We get into the deep of this later!
 
@@ -79,11 +79,13 @@ namespace Tricky_Apollo {
 
 	static int AGGA_Rect(lua_State* L) {
 		int x, y, w, h;
+		bool open = false;
 		x = luaL_checkinteger(L, 1);
 		y = luaL_checkinteger(L, 2);
 		w = luaL_checkinteger(L, 3);
 		h = luaL_checkinteger(L, 4);
-		TQSG_Rect(x, y, w, h);
+		if (lua_gettop(L) > 4) open = lua_toboolean(L, 5);
+		TQSG_Rect(x, y, w, h, open);
 		return 0;
 	}
 
@@ -102,6 +104,7 @@ namespace Tricky_Apollo {
 		y1 = luaL_checkinteger(L, 2);
 		x2 = luaL_checkinteger(L, 3);
 		y2 = luaL_checkinteger(L, 4);
+		TQSG_Line(x1, y1, x2, y2);
 		return 0;
 	}
 
@@ -119,6 +122,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGGA_Flip", AGGA_Flip);
 		Apollo_State::RequireFunction("AGGA_Rect", AGGA_Rect);
 		Apollo_State::RequireFunction("AGGA_Circle", AGGA_Circle);
+		Apollo_State::RequireFunction("AGGA_Line", AGGA_Line);
 		Apollo_State::RequireNeil("API/Graphics.neil");
 	}
 }
