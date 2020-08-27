@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.26
+// Version: 20.08.27
 // EndLic
 
 // Internal
@@ -134,7 +134,6 @@ namespace Tricky_Apollo {
 
 	void LookUpMainScript() {
 		//cout << "\n\nInit scripting engine\n";
-		States_Init();
 		cout << "\nLooking up: Main.neil\n";
 		auto ms = MainScript();
 		cout << "\nFound: " <<ms << "\n";
@@ -151,6 +150,8 @@ int main(int n, char* args[]) {
 	CheckARF();
 	FindGameData();
 	Apollo_SDL_Start();
+	States_Init();
+	InitCore();
 	LookUpMainScript();
 	// TODO : The code that comes in between ;)
 	Apollo_SDL_End();
