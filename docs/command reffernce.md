@@ -59,3 +59,5 @@ int A=Graphics.Alpha() // Gets Alpha and assigns it to variable A
 ~~~
 Well that's the idea
 
+## void Graphics.Flip()
+Shows all stuff drawn during a drawing stage. (At the end of a drawing callback, this function is called automatically).
