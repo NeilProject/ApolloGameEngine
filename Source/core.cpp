@@ -28,6 +28,7 @@
 
 #include <QuickString.hpp>
 #include <TQSE.hpp>
+#include <TQSG.hpp>
 
 #include <Globals.hpp>
 #include <core.hpp>
@@ -106,8 +107,10 @@ namespace Tricky_Apollo {
 			auto* state = Apollo_State::Get(CurrentFlow);
 			switch (FT) {
 			case RegularRepeativeFlow:
+				TQSG_Cls();
 				TQSE_Poll();
 				state->RawCallByType("Apollo_Flow","nil");
+				TQSG_Flip();
 				break;
 			case SemiCallback:
 				Crash("SemiCallback flow type not yet supported!");
