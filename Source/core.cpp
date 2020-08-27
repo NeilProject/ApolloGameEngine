@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.26
+// Version: 20.08.27
 // EndLic
 
 #include <iostream>
@@ -43,6 +43,7 @@ namespace Tricky_Apollo {
 
 	static string CurrentFlow = "APOLLO_MAIN";
 	static bool KeepLooping = true;
+	static int ExitCode = 0;
 
 	string MainScript() {
 		static std::string sMainScript = "";
@@ -58,9 +59,6 @@ namespace Tricky_Apollo {
 
 
 
-	void RunTheGame() {
-
-	}
 
 	void GoToFlow(string Flow,string State) {
 		Flow = Upper(Flow);
@@ -72,23 +70,38 @@ namespace Tricky_Apollo {
 	string GetCurrentFlow() { return CurrentFlow; }
 
 	// API
-	int APICORE_GoToFlow(lua_State* L) {
+	static int APICORE_GoToFlow(lua_State* L) {
 		string f = luaL_checkstring(L, 1);
 		GoToFlow(f, Apollo_State::NameFromState(L));
 		return 0;
 	}
 
-	int APICORE_GetFlow(lua_State* L) {
+	static int APICORE_GetFlow(lua_State* L) {
 		if (lua_gettop(L) != 0) cout << "\x1b[33mWARNING!\x1b[0m " << lua_gettop(L) << " parameter(s) given to GetFlow(). None are accepted! All are ignored!";
 		lua_pushstring(L, CurrentFlow.c_str());
 		return 1;
 	}
 
+	static int APICORE_Quit(lua_State*L) {
+		KeepLooping = false;
+		if (lua_gettop(L) != 0) {
+			ExitCode = luaL_checknumber(L, 1);
+		}
+		return 0;
+	}
+
 	void InitCore() {
 		Apollo_State::RequireFunction("GoToFlow",APICORE_GoToFlow);
 		Apollo_State::RequireFunction("CurrentFlow", APICORE_GetFlow);
+		Apollo_State::RequireFunction("ApolloQuit", APICORE_Quit);
 		Apollo_State::RequireNeil("API/Core.Neil");
 	}
 
+	// Let's get ready to rumble!
+	void RunTheGame() {
+		while (KeepLooping) {
 
+		}
+		ImmHalt(ExitCode);
+	}
 }
