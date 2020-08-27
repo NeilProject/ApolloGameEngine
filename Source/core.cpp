@@ -27,6 +27,7 @@
 #include <iostream>
 
 #include <QuickString.hpp>
+#include <TQSE.hpp>
 
 #include <Globals.hpp>
 #include <core.hpp>
@@ -105,6 +106,7 @@ namespace Tricky_Apollo {
 			auto* state = Apollo_State::Get(CurrentFlow);
 			switch (FT) {
 			case RegularRepeativeFlow:
+				TQSE_Poll();
 				state->RawCallByType("Apollo_Flow","nil");
 				break;
 			case SemiCallback:

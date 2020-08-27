@@ -153,6 +153,8 @@
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
+    <ClCompile Include="Source\API\Events.cpp" />
+    <ClCompile Include="Source\API\Graphics.cpp" />
     <ClCompile Include="Source\core.cpp" />
     <ClCompile Include="Source\Crash.cpp" />
     <ClCompile Include="Source\Globals.cpp" />
@@ -172,6 +174,7 @@
     <ClInclude Include="Headers\Identify.hpp" />
     <ClInclude Include="Headers\SDL_Manager.hpp" />
     <ClInclude Include="Headers\States.hpp" />
+    <ClInclude Include="Source\API\ApolloAPIs.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

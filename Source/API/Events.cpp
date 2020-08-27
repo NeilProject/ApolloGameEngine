@@ -33,20 +33,26 @@ namespace Tricky_Apollo {
 	
 	static int AEA_Poll(lua_State* L) {
 		TQSE_Poll();
+		return 0;
 	}
 
 	static int AEA_KeyDown(lua_State* L) {
-		auto i = luaL_checknumber(L, 1);
-		auto r = TQSE_KeyDown(i);
-		lua_pushnumber(L, r);
+		int i = luaL_checkinteger(L, 1);		
+		auto r = TQSE_KeyDown((SDL_KeyCode)i);
+		lua_pushboolean(L, r);
 		return 1;
 	}
 
 
 	static int AEA_KeyHit(lua_State* L) {
-		auto i = luaL_checknumber(L, 1);
-		auto r = TQSE_KeyHit(i);
-		lua_pushnumber(L, r);
+		int i = luaL_checkinteger(L, 1);
+		auto r = TQSE_KeyHit((SDL_KeyCode)i);
+		lua_pushboolean(L, r);
+		return 1;
+	}
+
+	static int AEA_Terminate(lua_State* L) {
+		lua_pushboolean(L,TQSE_Quit());
 		return 1;
 	}
 
@@ -55,5 +61,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AEA_Poll", AEA_Poll);
 		Apollo_State::RequireFunction("AEA_KeyDown", AEA_KeyDown);
 		Apollo_State::RequireFunction("AEA_KeyHit", AEA_KeyHit);
+		Apollo_State::RequireFunction("AEA_Terminate", AEA_Terminate);
+		Apollo_State::RequireNeil("API/Events.neil");
 	}
 }

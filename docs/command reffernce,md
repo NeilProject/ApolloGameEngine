@@ -17,3 +17,17 @@ Notes:
 - NEVER use os.exit() provided by Lua for this. Apollo uses drivers and puts data in the memory it has to unload first. os.exit() won't take care of that. Flow.Quit() does.
 - Flow.Quit() will finish the callback that it was called in first, and possibly a few more callbacks can be called also. This is a safety pre-caution. Once called the Quit procedure cannot be undone, though.
 
+
+
+
+# Events
+These functions are used to check for events triggered by keyboard, mouse etc.
+
+## bool Events.KeyDown(keycode)
+Returns true if the key of the specific keycode has been held
+
+## bool Events.KeyHit(keycode)
+Returns true if the key of the specific keycode was hit
+
+## bool Events.Terminate()
+Returns true if the user tried to close the application

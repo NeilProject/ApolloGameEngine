@@ -1,0 +1,24 @@
+Table AEA = LGGTTT("AEA")
+import Apollo_Panic
+
+QuickMeta Events
+
+	index
+		key = key:upper()
+		If Not AEA[key]
+			Apollo_Panic("Module Events does not have an element named: "..key)
+		End
+		return AEA[key]
+	end
+
+	newindex
+		Apollo_Panic("All elements of module Events are read-only! And that includes: " .. key .. "\nSo value '"..tostring(value).."' cannot be assinged to it!")
+	End
+	
+End
+
+init
+	For k,v in SPAIRS(AEA)
+		print(type(v),k,"=",v)
+	End
+End

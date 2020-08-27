@@ -84,6 +84,12 @@
     <ClCompile Include="Source\States.cpp">
       <Filter>Source Files\Apollo</Filter>
     </ClCompile>
+    <ClCompile Include="Source\API\Events.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\API\Graphics.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -115,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="Headers\AP_Lua_CPP.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\API\ApolloAPIs.hpp">
+      <Filter>Source Files\Apollo\API</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
