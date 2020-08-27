@@ -31,3 +31,31 @@ Returns true if the key of the specific keycode was hit
 
 ## bool Events.Terminate()
 Returns true if the user tried to close the application
+
+
+
+
+# General Graphics
+These are just general graphics routines. Please note, they don't handle images and text. There are seperate classes for that!
+
+## void Graphics.Cls()
+Clears screen. Please note, this happens automatically at the start of every cycle allowing to draw. I only put it in whenever you need to step out the normal way of drawing.
+
+## void Graphics.ClsColor(int r,int g, int b)
+Sets the color to clear the screen in next time Graphics.Cls() is called.
+This also affects the color of a new screen at every new graphics cycle.
+
+## void Graphics.Color(int r,int g,int b)
+Sets the drawing color.
+
+## (int,int,int) Graphics.GetColor()
+Gets the drawing color. Please note, this function returns 3 values in one go.
+
+## int Graphics.Alpha([ int alpha ])
+Sets and gets the alpha value.
+~~~C
+Graphics.Alpha(100) // Sets Alpha to value 100
+int A=Graphics.Alpha() // Gets Alpha and assigns it to variable A
+~~~
+Well that's the idea
+
