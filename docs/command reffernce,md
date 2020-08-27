@@ -1,0 +1,19 @@
+This is just a quick command referrence. I am not teaching you here how to use the Neil scripting language (nor how the underlying Lua engine works), it's just a quick referrence.
+
+
+# Core 
+These functions will allow you to get a few things done from the very core of Apollo.
+
+## void Flow.GoToFlow(string flow) 
+Can also be called as GoToFlow(flow)
+Will switch from one flow to another. Please note, the function calling this will be completed, as well as the entire callback. Only callbacks called later will be affected.
+
+## Property String Flow.CurrentFlow
+Contains the current flow. You can also assign a new flow it it... Will have the same effect as "GoToFlow"
+
+## void Flow.Quit(int exitcode=0)
+Will end Apollo and leave an exit code if applied.
+Notes:
+- NEVER use os.exit() provided by Lua for this. Apollo uses drivers and puts data in the memory it has to unload first. os.exit() won't take care of that. Flow.Quit() does.
+- Flow.Quit() will finish the callback that it was called in first, and possibly a few more callbacks can be called also. This is a safety pre-caution. Once called the Quit procedure cannot be undone, though.
+
