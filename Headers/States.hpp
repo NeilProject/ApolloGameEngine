@@ -81,6 +81,20 @@ namespace Tricky_Apollo {
 		static void RequireFunction(const char* name, lua_CFunction func);
 		static void RequireNeil(std::string name);
 
+		/// <summary>
+		/// Calls a function within this state
+		/// </summary>
+		/// <param name="function">Function name</param>
+		/// <param name="parameters">Parameters in Lua syntax</param>
+		void RawCall(std::string function, std::string parameters);
+		static void RawCall(std::string state, std::string function, std::string parameters);
+
+		void RawNeilCall(std::string function, std::string parameters);
+		static void RawNeilCall(std::string state, std::string function, std::string parameters);
+
+		void RawCallByType(std::string function, std::string parameters);
+		static void RawCallByType(std::string state, std::string function, std::string parameters);
+
 
 		~Apollo_State();
 	};

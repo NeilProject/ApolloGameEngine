@@ -326,6 +326,38 @@ namespace Tricky_Apollo {
 		CoreNeilScripts.push_back({ false,"",name });
 	}
 
+	void Apollo_State::RawCall(std::string function, std::string parameters) {
+	std:string work = "--[[RawCall]]\nif type(" + function + ")=='function' then\n\tApollo_Crash(\"Callback error:\\n" + function + " is not a function but a \"..type(" + function + "),  Neil.Globals.ApolloState.Name, Neil.Globals.ApolloState.TraceBack)\nelse\n\tlocal s,e=xpcall(" + function + ",Apollo_Panic," + parameters + ")\nend";
+		cout << "<RAWCALL>\n" << work << "\n</RAWCALL>\n";
+		luaL_loadstring(MyState, work.c_str());
+		lua_call(MyState,0, 0);
+	}
+
+	void Apollo_State::RawCall(std::string state, std::string function, std::string parameters) {
+		Get(state)->RawCall(function, parameters);
+	}
+
+	void Apollo_State::RawNeilCall(std::string function, std::string parameters) {
+		RawCall("Neil.Globals." + function, parameters);
+	}
+
+	void Apollo_State::RawNeilCall(std::string state, std::string function, std::string parameters) {
+		RawCall(state,"Neil.Globals." + function, parameters);
+	}
+
+	void Apollo_State::RawCallByType(std::string function, std::string parameters) {
+		if (StateType == "Lua")
+			RawCall(function, parameters);
+		else if (StateType == "Neil")
+			RawNeilCall(function, parameters);
+		else
+			Crash("Unknown State Type");
+	}
+
+	void Apollo_State::RawCallByType(std::string state, std::string function, std::string parameters) {
+		Get(state)->RawCallByType(function, parameters);
+	}
+
 	Apollo_State::~Apollo_State() {
 		std::cout << "Destroy state " << StateName << "\n";
 		if (MyState == NULL)
