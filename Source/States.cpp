@@ -327,8 +327,8 @@ namespace Tricky_Apollo {
 	}
 
 	void Apollo_State::RawCall(std::string function, std::string parameters) {
-	std:string work = "--[[RawCall]]\nif type(" + function + ")=='function' then\n\tApollo_Crash(\"Callback error:\\n" + function + " is not a function but a \"..type(" + function + "),  Neil.Globals.ApolloState.Name, Neil.Globals.ApolloState.TraceBack)\nelse\n\tlocal s,e=xpcall(" + function + ",Apollo_Panic," + parameters + ")\nend";
-		cout << "<RAWCALL>\n" << work << "\n</RAWCALL>\n";
+	std:string work = "--[[RawCall]]\nif type(" + function + ")~='function' then\n\tApollo_Crash(\"Callback error:\\n" + function + " is not a function but a \"..type(" + function + "),  Neil.Globals.ApolloState.Name, Neil.Globals.ApolloState.TraceBack)\nelse\n\tlocal s,e=xpcall(" + function + ",Apollo_Panic," + parameters + ")\nend";
+		//cout << "<RAWCALL>\n" << work << "\n</RAWCALL>\n";
 		luaL_loadstring(MyState, work.c_str());
 		lua_call(MyState,0, 0);
 	}
