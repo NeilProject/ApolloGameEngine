@@ -21,6 +21,11 @@
 import GoToFlow
 import CurrentFlow
 import ApolloQuit
+import nFPS
+import sFPS
+import showFPS
+import MinTicks
+import GetMinTicks
 
 Group Flow
 	ReadOnly Delegate GoToFlow = Lua.GoToFlow
@@ -35,6 +40,31 @@ Group Flow
 		GoToFlow(value)
 	End
 
+End
+
+Group FPS
+	ReadOnly Delegate FN = nFPS
+	ReadOnly Delegate FS = sFPS
+	ReadOnly Delegate FMinTicks = MinTicks
+	ReadOnly Delegate GetMinTicks = GetMinTicks
+	Get Number N
+		return FN
+	End
+	Get String S
+		return FS
+	End
+	
+	Get Int MinTicks
+		return GetMinTicks()
+	End
+	
+	Set Int MinTicks
+		FMinTicks(value)
+	End
+	
+	ReadOnly Delegate Show = showFPS
+	
+	
 End
 
 

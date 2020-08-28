@@ -52,6 +52,7 @@
 #include "../Headers/Identify.hpp"
 #include "../Headers/ErrorCodes.hpp"
 #include "../Headers/Crash.hpp"
+#include "../Headers/States.hpp"
 
 namespace Tricky_Apollo {
 
@@ -134,6 +135,13 @@ namespace Tricky_Apollo {
         else
         LTex.Create(JCRPackage, File);
         SetTex(T, LTex);
+        return T;
+    }
+
+    void LoadTexture(std::string Tag, std::string File) {
+        if (Tag == "") Crash("This version of Load Texture does require a set tag!");
+        auto voider = LoadTex(Tag, File);
+        // Due to a bug inside C++ using LoadTex when you don't want a new Tag returned will crash your program! At least in Visual C++ it does, as I don't know about other compilers/libraries.
     }
 
     int TexHeight(std::string Tag, std::string State, std::string Traceback) {
@@ -145,6 +153,26 @@ namespace Tricky_Apollo {
         }
         auto& Tex = Texture[T];
         return Tex.Height();
+    }
+
+    void KillTex(std::string Tag) {
+        auto T = Upper(Tag);
+        if (!Texture.count(Tag)) {
+            cout << "\x1b[34mWARNING!\x1b[0m Request done to kill a texture tagged " << Tag << ". No texture with such a tag exists!";
+        } else {
+            RemTex(Tag);
+        }
+    }
+
+    bool TagExists(std::string Tag) {
+        return Texture.count(Upper(Tag));
+    }
+
+    TQSG_Image* GetTex(std::string Tag, std::string State) {
+        if (!Texture.count(Upper(Tag))) {
+            Crash("There is no image tagged: " + Tag, State, Apollo_State::TraceBack(State));
+        }
+        return &Texture[Upper(Tag)];
     }
 
     int TexWidth(std::string Tag, std::string State, std::string Traceback) {
@@ -167,6 +195,16 @@ namespace Tricky_Apollo {
         }
         auto& Tex = Texture[T];
         Tex.Draw(x, y);
+    }
+    void Apollo_SDL_Draw(std::string Tag, int x, int y, int f, std::string State, std::string Traceback) {
+        auto T = Upper(Tag);
+        if (Texture.count(T) != 1) {
+            if (T == "**DEATH**") return; // Otherwise we get a cyclic function call, recursing stuff forever until the stack blows up!
+            Crash("There is no image loaded named " + T, State, Traceback, AE_NoTextureOnTag);
+            return;
+        }
+        auto& Tex = Texture[T];
+        Tex.Draw(x, y,f);
     }
 
     void Apollo_SDL_Flip() {

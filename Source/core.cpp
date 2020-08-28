@@ -37,6 +37,7 @@
 #include <Identify.hpp>
 
 #include <AP_Lua_CPP.hpp>
+#include <SDL_Manager.hpp>
 
 
 namespace Tricky_Apollo {
@@ -47,6 +48,28 @@ namespace Tricky_Apollo {
 	static string CurrentFlow = "APOLLO_MAIN";
 	static bool KeepLooping = true;
 	static int ExitCode = 0;
+
+	static int TickStart = 0;
+	static int Ticks = 0;
+	static int Cycles = 0;
+	static int FlowMinTicks = 0;
+
+	static float FPS() {
+		if (Ticks == 0) return 0; // Prevent division by zero!
+		float avgFPS = (float)Cycles / ((float)Ticks / 1000.f);		
+		if (avgFPS > 2000000) {
+			avgFPS = 0;
+		}
+		return avgFPS;
+	}
+
+	static string sFPS() {
+		char Ret[27];
+		sprintf_s(Ret, 25, "FPS %15.2f", FPS());
+		string TrueRet = Ret;
+		return TrueRet;
+	}
+
 
 	string MainScript() {
 		static std::string sMainScript = "";
@@ -93,17 +116,60 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int APICORE_FPS(lua_State* L) {
+		lua_pushnumber(L,FPS());		
+		return 1;
+	}
+
+	static int APICORE_sFPS(lua_State* L) {
+		lua_pushstring(L, sFPS().c_str());
+		return 1;
+	}
+
+	static int APICORE_showFPS(lua_State* L) {
+		int x = luaL_checkinteger(L, 1);
+		int y = luaL_checkinteger(L, 2);
+		Apollo_SysFont.Draw(sFPS(), x, y);
+		return 0;
+	}
+
+	static int APICORE_MinTicks(lua_State* L) {
+		FlowMinTicks = luaL_checkinteger(L, 1);
+		return 0;
+	}
+
+	static int APICORE_GetMinTicks(lua_State* L) {
+		lua_pushinteger(L,FlowMinTicks);
+		return 1;
+	}
+
 	void InitCore() {
 		Apollo_State::RequireFunction("GoToFlow",APICORE_GoToFlow);
 		Apollo_State::RequireFunction("CurrentFlow", APICORE_GetFlow);
 		Apollo_State::RequireFunction("ApolloQuit", APICORE_Quit);
+		Apollo_State::RequireFunction("nFPS", APICORE_FPS);
+		Apollo_State::RequireFunction("sFPS", APICORE_FPS);
+		Apollo_State::RequireFunction("showFPS", APICORE_showFPS);
+		Apollo_State::RequireFunction("MinTicks", APICORE_MinTicks);
+		Apollo_State::RequireFunction("GetMinTicks", APICORE_MinTicks);
 		Apollo_State::RequireNeil("API/Core.Neil");
 	}
 
 	// Let's get ready to rumble!
 	void RunTheGame() {
 		static FlowType FT = Identify::GetFlowType();
+		static int old = 0;
+		TickStart = SDL_GetTicks();
 		while (KeepLooping) {
+			int CTicks = SDL_GetTicks();
+			while (FlowMinTicks && old && (CTicks - old < FlowMinTicks)) {
+				SDL_Delay(1); 
+				CTicks = SDL_GetTicks();
+			}
+			old = CTicks;
+			Ticks = CTicks - TickStart;
+			Cycles++;			
+			//cout << "Ticks = " << Ticks << ";\tTickStart = " << TickStart << ";\tCycles = " << Cycles << "; SDL_GetTicks() => " << SDL_GetTicks() << "; FPS() =>" << FPS() << "\n"; // debug
 			auto* state = Apollo_State::Get(CurrentFlow);
 			switch (FT) {
 			case RegularRepeativeFlow:

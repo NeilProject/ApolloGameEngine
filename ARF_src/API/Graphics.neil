@@ -18,6 +18,7 @@
 // 3. This notice may not be removed or altered from any source distribution.
 // End License Information
 Table AGGA = LGGTTT("AGGA")
+Table AIMG = LGGTTT("AIMG")
 import Apollo_Panic
 
 QuickMeta Graphics
@@ -42,9 +43,56 @@ End
 //	End
 //End
 
+bool AllowCImage = false
+
 Class Image
-	Var Load(String File,String Tag="")
-		// Full content comes later
+	
+	ReadOnly String Tag
+	ReadOnly Bool AutoDestruct
+	
+	Private Constructor(string ATag)
+		if !AllowCImage
+			Apollo_Panic("new Image() may not be called directly!")
+			// Is a bit awkward, but Neil does not support private constructors
+			return
+		end
+		If Prefixed(ATag,"**") || Suffixed(ATag,"**")
+			Apollo_Panic("** suffix or prefix for image tags reserved!")
+			return
+		end		
+		Tag = ATag
+	End
+	
+	Destructor
+		If AutoDestruct
+			AIMG.Kill(Tag)
+		End
+	End
+	
+	Static Var Load(String File,String Tag="")
+		AllowCImage = true
+		String NTag = AIMG.LoadTex(File,Tag)
+		var Ret = new Image(NTag)
+		AllowCImage = false
+		Return Ret
+	End
+	
+	Static Delegate KillTag = AIMG.Kill
+	
+	Void Kill()
+		AIMG.Kill(Tag)
+	end
+	
+	Void Draw(int x, int y, int frame=0)
+		AIMG.Draw(ApolloState.Name,Tag,x,y,frame)
+	End
+	
+	Get Int ScreenWidth
+		return AIMG.ScreenW
+	End
+	
+	Get Int ScreenHeight
+		return AIMG.ScreenH
 	End
 End
 

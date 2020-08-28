@@ -27,12 +27,13 @@
 
 #include <AP_Lua_CPP.hpp>
 #include <TQSG.hpp>
+#include <SDL_Manager.hpp>
 #include <States.hpp>
 
 namespace Tricky_Apollo {
 	using namespace TrickyUnits;
 
-	// General graphics features
+	// Apollo General Graphics API
 	static int AGGA_Cls(lua_State* L) {
 		TQSG_Cls();
 		return 0;
@@ -43,7 +44,7 @@ namespace Tricky_Apollo {
 		r = luaL_checkinteger(L, 1);
 		g = luaL_checkinteger(L, 2);
 		b = luaL_checkinteger(L, 3);
-		TQSG_ClsColor(r % 255, g % 255, b % 255);
+		TQSG_ClsColor(r % 256, g % 256, b % 256);
 		return 0;
 	}
 
@@ -52,7 +53,7 @@ namespace Tricky_Apollo {
 		r = luaL_checkinteger(L, 1);
 		g = luaL_checkinteger(L, 2);
 		b = luaL_checkinteger(L, 3);
-		TQSG_Color(r % 255, g % 255, b % 255);
+		TQSG_Color(r % 256, g % 256, b % 256);
 		return 0;
 	}
 
@@ -108,14 +109,71 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int AGGA_ScreenW(lua_State* L) {
+		lua_pushinteger(L,TQSG_ScreenWidth());
+		return 1;
+	}
+
+	static int AGGA_ScreenH(lua_State* L) {
+		lua_pushinteger(L, TQSG_ScreenHeight());
+		return 1;
+	}
 
 
-	// Images
+
+	// Apollo IMaGes
+	static int AIMG_Load(lua_State* L) {
+		std::string File = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		auto ret = LoadTex(Tag, File);
+		lua_pushstring(L, ret.c_str());
+		return 1;
+	}
+
+	static int AIMG_Kill(lua_State* L) {
+		std::string Tag = luaL_checkstring(L, 1);
+		KillTex(Tag);
+		return 0;
+	}
+
+	static int AIMG_Draw(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		int x = floor(luaL_checknumber(L, 3));
+		int y = floor(luaL_checknumber(L, 4));
+		int f = luaL_checknumber(L, 5);
+		//GetTex(Tag, State)->Draw(x, y, f);
+		Apollo_SDL_Draw(Tag, x, y, f,State,Apollo_State::TraceBack(State));
+		return 0;
+	}
+
+	static int AIMG_Hot(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		int x = floor(luaL_checknumber(L, 3));
+		int y = floor(luaL_checknumber(L, 4));
+		GetTex(Tag, State)->Hot(x, y);
+		return 0;
+	}
+
+	static int AIMG_HotCenter(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		GetTex(Tag, State)->HotCenter();
+	}
+
+	static int AIMG_HotBottomCenter(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		GetTex(Tag, State)->HotCenter();
+	}
 
 	// ImageFont
 
 
+	// Init
 	void ApolloAPIInit_Graphics() {
+		// General
 		Apollo_State::RequireFunction("AGGA_Cls", AGGA_Cls);
 		Apollo_State::RequireFunction("AGGA_ClsColor", AGGA_ClsColor);
 		Apollo_State::RequireFunction("AGGA_Alpha", AGGA_Alpha); 
@@ -123,6 +181,18 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGGA_Rect", AGGA_Rect);
 		Apollo_State::RequireFunction("AGGA_Circle", AGGA_Circle);
 		Apollo_State::RequireFunction("AGGA_Line", AGGA_Line);
+		Apollo_State::RequireFunction("AGGA_ScreenW", AGGA_ScreenW);
+		Apollo_State::RequireFunction("AGGA_ScreenH", AGGA_ScreenH);
+		Apollo_State::RequireFunction("AGGA_Color", AGGA_Color);
+		Apollo_State::RequireFunction("AGGA_GetColor", AGGA_GetColor);
+		// Images
+		Apollo_State::RequireFunction("AIMG_Load", AIMG_Load);
+		Apollo_State::RequireFunction("AIMG_Kill", AIMG_Kill);
+		Apollo_State::RequireFunction("AIMG_Draw", AIMG_Draw);
+		Apollo_State::RequireFunction("AIMG_Hot", AIMG_Hot);
+		Apollo_State::RequireFunction("AIMG_HotCenter", AIMG_HotCenter);
+		Apollo_State::RequireFunction("AIMG_HotBottomCenter", AIMG_HotBottomCenter);
 		Apollo_State::RequireNeil("API/Graphics.neil");
+		// Image Font
 	}
 }

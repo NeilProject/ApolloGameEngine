@@ -18,6 +18,26 @@ Notes:
 - Flow.Quit() will finish the callback that it was called in first, and possibly a few more callbacks can be called also. This is a safety pre-caution. Once called the Quit procedure cannot be undone, though.
 
 
+# FPS
+These functions calculate the FPS for you or help you in the FPS calculation. I recommend to use these only for debug purposes.
+
+## Property Number FPS.N
+Numberic variable containing the FPS
+
+## Property String FPS.S
+Converted into a string
+
+## void FPS.Show(int x,int y)
+Will draw the FPS (same way as it's returned by FPS.S) on any spot you want (during a drawing stage).
+Used font is a system font.
+
+## Property Int MinTicks
+Contains the minimal number of "ticks" (a thousandth of a second) that must minimally pass between two cycles. 
+You can change this by assinging a value.
+This is particularly a handy setting when dealing with games created for slower computers, but which would run way too fast on fast computers (without MinTicks the computer just handles stuff as fast as it can. You do not always want that).
+MinTicks is just a way to make sure your game runs just as fast on all computers.
+
+
 
 
 # Events
@@ -68,3 +88,44 @@ The "open" parameter will if set true draw a line beased rectangle. Otherwise a 
 
 ## void Graphics.Line(int x1, int y1, int x2, int y2)
 Draws a line
+
+## property int ScreenWidth
+Contains the width of the screen (or in case of a windowed game, the window)
+
+## property int ScreenHeight
+Contains the height of the screen (or in case of a windowed game, the window)
+
+
+
+# Class Image
+The class image handles loading and drawing images. It has the following members:
+
+## static Image Load(String File, [String Tag])
+
+Loads an image. The tag system can be used to give an image a tag. Tagged images will not be auto-release when the class object is destroyed, and can be used over multiple state without taxing the RAM too much.
+
+## static void KillTag(String Tag)
+
+Kills the image tied to a tag. Please note this will make all objects using this tag unuable. So use with care.
+
+## void Kill()
+
+Kills the image tied to an object. Normally you don't have to do this, as the garbage collector will do this automatically unless an image is tagged. However using this command on a tagged image will affect all other images with the same tag, so be careful. Don't use if you don't know what you are doing!
+
+## void Draw(int x, int y, int frame=0)
+
+Draws an image.
+
+## void Hot(int x,int y)
+
+Sets the "hotspot" of an image. Now names differ per engine for this, as some call it insertion point and others call it handle, an well, I've more names of this. It's basically the point from which the image is drawn.
+
+## void HotCenter()
+
+Sets the "hotspot" to the center of the image
+
+## void HotBottm()
+
+Sets the "hotspot" to the center bottom point of the image (for sprites depicting persons this is a good spot as the spot is then between their feet (when the size of the sprite is well-set that is), which is a very logical way to draw from).
+
+
