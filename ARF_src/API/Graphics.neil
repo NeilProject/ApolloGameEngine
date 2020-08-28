@@ -70,29 +70,49 @@ Class Image
 	End
 	
 	Static Var Load(String File,String Tag="")
+		//for k,v in spairs(AIMG)
+		//	print(Lua.type(v),k)
+		//End
 		AllowCImage = true
-		String NTag = AIMG.LoadTex(File,Tag)
+		String NTag = AIMG.LOAD(File,Tag)
 		var Ret = new Image(NTag)
 		AllowCImage = false
 		Return Ret
 	End
 	
-	Static Delegate KillTag = AIMG.Kill
+	Static Delegate KillTag = AIMG.KILL
 	
 	Void Kill()
-		AIMG.Kill(Tag)
+		AIMG.KILL(Tag)
 	end
 	
 	Void Draw(int x, int y, int frame=0)
-		AIMG.Draw(ApolloState.Name,Tag,x,y,frame)
+		AIMG.DRAW(ApolloState.Name,Tag,x,y,frame)
 	End
 	
-	Get Int ScreenWidth
-		return AIMG.ScreenW
+	void Hot(Int x, int y)
+		AIMG.HOT(ApolloState.Name,Tag,x,y)
+	end
+	
+	void HotCenter()
+		AIMG.HOTCENTER(ApolloState.Name,Tag)
 	End
 	
-	Get Int ScreenHeight
-		return AIMG.ScreenH
+end
+
+group Screen
+	Get Int Width
+		return AGGA.SCREENW()
+	End
+	Get Int W
+		return AGGA.SCREENW()
+	End
+	Get Int H
+		return AGGA.SCREENH()
+	End
+	
+	Get Int Height
+		return AGGA.SCREENH()
 	End
 End
 
