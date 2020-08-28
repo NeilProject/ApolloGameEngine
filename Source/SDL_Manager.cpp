@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.26
+// Version: 20.08.28
 // EndLic
 
 
@@ -45,6 +45,7 @@
 // TQSG
 #include <TQSG.hpp>
 #include <TQSE.hpp>
+#include <TQSA.hpp>
 
 
 // Apollo
@@ -67,6 +68,7 @@ namespace Tricky_Apollo {
 
     // static SDL_Texture* Tex_Death = NULL;
     static std::map<std::string, TQSG_Image> Texture;
+    static std::map<std::string, TQSA_Audio> Audio;
 
     static void Apollo_SDL_Klets(std::string Gezwets) {
         if (Apollo_SDL_Loudmouth)
@@ -168,6 +170,23 @@ namespace Tricky_Apollo {
         return Texture.count(Upper(Tag));
     }
 
+    void Apollo_SDL_LoadAudio(std::string Tag, std::string File, std::string State, std::string Traceback) {
+        Tag = Upper(Tag);
+        Audio[Tag].Load(JCRPackage, File);
+        if (!Audio[Tag].HasChunk()) {
+            Crash("Loading Audio \"" + File + "\" failed!", State, Traceback + "\n\nJCR6 reported: \"" + Get_JCR_Error_Message() + "\"");
+        }
+    }
+
+    TQSA_Audio* Apollo_SDL_Audio(std::string Tag, std::string State, std::string Traceback) {
+        Tag = Upper(Tag);
+        if (!Audio.count(Tag)) {
+            Crash("There is no audio tagged: " + Tag, State, Traceback);
+            return NULL;
+        }
+        return &Audio[Tag];
+    }
+
     TQSG_Image* GetTex(std::string Tag, std::string State) {
         if (!Texture.count(Upper(Tag))) {
             Crash("There is no image tagged: " + Tag, State, Apollo_State::TraceBack(State));
@@ -224,6 +243,10 @@ namespace Tricky_Apollo {
 
         success = TQSG_Init(Identify::WindowTitle(),Identify::WinWidth(),Identify::WinHeight(),Identify::FullScreen());
         if (!success) exit(AE_SDL_Error);
+        if (!TQSA_Init(MIX_INIT_OGG)) {
+            TQSG_Close();
+            exit(AE_SDL_Error);
+        }
         printf("SDL started succesfully\n\n");
         #ifdef Apollo_SDL_QuickTest
         // This test is will make the entire window purple, wait a few seconds and move on.
@@ -262,6 +285,7 @@ namespace Tricky_Apollo {
         //SDL_DestroyWindow(gWindow);
         //gWindow = NULL;
         printf("Terminating SDL\n");
+        TQSA_Close();
         TQSG_Close();
         printf("SDL Terminated");
     }

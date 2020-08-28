@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.26
+// Version: 20.08.28
 // EndLic
 
 
@@ -31,6 +31,7 @@
 
 #include <SDL.h>
 #include <TQSG.hpp>
+#include <TQSA.hpp>
 #include <string>
 
 namespace Tricky_Apollo {
@@ -52,6 +53,10 @@ namespace Tricky_Apollo {
 	int TexHeight(std::string Tag, std::string State = "C++", std::string Traceback = "");
 	void KillTex(std::string Tag); // RemTex requires a tag to exist, KillTex does not!
 	bool TagExists(std::string Tag);
+
+	// Audio
+	void Apollo_SDL_LoadAudio(std::string Tag, std::string File, std::string State = "C++", std::string Traceback = "");
+	TQSA_Audio* Apollo_SDL_Audio(std::string Tag, std::string State = "C++", std::string Traceback = "");
 	
 
 	// Base features
