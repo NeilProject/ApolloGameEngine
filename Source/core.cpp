@@ -162,7 +162,7 @@ namespace Tricky_Apollo {
 		TickStart = SDL_GetTicks();
 		while (KeepLooping) {
 			int CTicks = SDL_GetTicks();
-			while (FlowMinTicks && old && (CTicks - old < FlowMinTicks) && old<CTicks) {
+			while (FlowMinTicks && old && (CTicks - old < FlowMinTicks) && old<=CTicks) {
 				SDL_Delay(1); 
 				CTicks = SDL_GetTicks();
 			}
