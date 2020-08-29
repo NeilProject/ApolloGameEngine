@@ -1,3 +1,5 @@
+import Apollo_Panic
+
 Table AAUA = LGGTTT("AAUA")
 
 
@@ -29,30 +31,32 @@ Class Audio
 	Int Play(Infinity)
 		plua arg = {Infinity}
 		Switch TableTypeChain(arg)
+			case "nothing"
+				return AAUA.PLAY(Tag,-1,0,ApolloState.Name)
 			case "number"
-				return AAUA.PLAY(ATag,arg[1],0,ApolloState.Name)
+				return AAUA.PLAY(Tag,arg[1],0,ApolloState.Name)
 			case "number,number"
-				return AAUA.PLAY(ATag,arg[1],arg[2],ApolloState.Name)
+				return AAUA.PLAY(Tag,arg[1],arg[2],ApolloState.Name)
 			case "boolean"
 				int l = 0
 				if arg[1] 
 					l=-1
 				end
-				return AAUA.PLAY(ATag,-1,l,ApolloState.Name)
+				return AAUA.PLAY(Tag,-1,l,ApolloState.Name)
 			case "number,boolean"
 				int l = 0
 				if arg[2] 
 					l=-1
 				end
-				return AAUA.PLAY(ATag,arg[1],l,ApolloState.Name)
+				return AAUA.PLAY(Tag,arg[1],l,ApolloState.Name)
 			default
 				Apollo_Panic("Illegal Method Call.\nAudio.Play() received these parameters: "..TableTypeChain(arg).."\nYou intension has not been understood")
 				return 0
 		End
 	End
 	
-	Static Void Stop(int channel=-1)
-		AAUA.STOP(channel);
+	Static Void Stop(channel)
+		AAUA.STOP(channel or -1);
 	End
 	
 	

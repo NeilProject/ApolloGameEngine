@@ -59,8 +59,8 @@ namespace Tricky_Apollo {
 			TQSG_Color(0, 255, 255);
 			Apollo_SysFont.Draw("Houston! We have a problem!", 5, 5);
 			TQSG_Color(255, 255, 0);
-			Apollo_SysFont.Draw(Message, 5, 30);
-			int sy = 30 + Apollo_SysFont.TextHeight(Message.c_str());
+			Apollo_SysFont.Draw(Message, 5, 30,0,0,TQSG_ScreenWidth()-10);
+			int sy = 30 + (Apollo_SysFont.TextHeight(Message.c_str())*Apollo_SysFont.LastAutoNextCount);
 			TQSG_Color(255, 255, 255);
 			Apollo_SysFont.Draw(TraceBack, 5, sy);
 			sy += Apollo_SysFont.TextHeight(TraceBack.c_str());

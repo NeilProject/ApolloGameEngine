@@ -45,6 +45,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AAUA_Load", AAUA_LoadAudio);
 		Apollo_State::RequireFunction("AAUA_Play", AAUA_Play);
 		Apollo_State::RequireFunction("AAUA_Stop", AAUA_Stop);
+		Apollo_State::RequireNeil("API/Audio.neil");
 
 	}
 }
