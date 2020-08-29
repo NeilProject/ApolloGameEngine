@@ -100,7 +100,7 @@ namespace Tricky_Apollo {
 #ifdef Apollo_State_Debug
 				std::cout << "Adding to state: " << scr.Script << " as module " << scr.ReturnAs << "!\n";
 #endif
-				std::string tomod = "local source =\"" + TrickyUnits::bsdec(source) + "\"\n\nlocal func = load(source,\"" + scr.ReturnAs + "\")\n\n" + scr.ReturnAs + " = func()";
+				std::string tomod = "local source =\"" + TrickyUnits::bsdec(source) + "\"\n\nlocal func,err = load(source,\"" + scr.ReturnAs + "\")\n\nassert(func,\"Loading internal module '"+scr.Script+"' failed\\n\"..tostring(err))\n" + scr.ReturnAs + " = func()";
 				// std::cout << "<huh>\n" << tomod << "\n</huh>\n\n"; continue;// HUH?
 				luaL_loadstring(MyState, tomod.c_str());
 				lua_call(MyState, 0, 0);

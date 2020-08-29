@@ -203,6 +203,14 @@ namespace Tricky_Apollo {
         if (Audio.count(Tag)) Audio.erase(Tag);
     }
 
+    void RemAllAudio() {
+        for (auto& Slachtoffer : Audio) {
+            cout << "Killing audio on tag: " << Slachtoffer.first;
+            Slachtoffer.second.Kill();
+        }
+        Audio.clear();
+    }
+
     TQSG_Image* GetTex(std::string Tag, std::string State) {
         if (!Texture.count(Upper(Tag))) {
             Crash("There is no image tagged: " + Tag, State, Apollo_State::TraceBack(State));
@@ -296,6 +304,7 @@ namespace Tricky_Apollo {
         Apollo_SysFont.Kill();
         printf("Removing all loaded textures\n");
         RemAllTex();
+        RemAllAudio();
         // And flush the last things now
         //SDL_DestroyRenderer(gRenderer);
         //SDL_DestroyWindow(gWindow);
