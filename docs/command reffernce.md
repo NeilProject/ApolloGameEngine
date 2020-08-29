@@ -124,8 +124,22 @@ Sets the "hotspot" of an image. Now names differ per engine for this, as some ca
 
 Sets the "hotspot" to the center of the image
 
-## void HotBottm()
+## void HotBottom()
 
 Sets the "hotspot" to the center bottom point of the image (for sprites depicting persons this is a good spot as the spot is then between their feet (when the size of the sprite is well-set that is), which is a very logical way to draw from).
 
 
+
+
+# Class Audio
+This class handles audio
+
+## static Audio Load(String File,[String Tag])
+Loads Audio
+
+## int Play([int channel],[int/bool loops])
+Plays audio. Returns the channel used. If channel is set it will always use that channel otherwise the first free channel found.
+If "loops" is set to true or -1, sound will loop infinitely. If it is an integer value is set it will loop the number of times given.
+
+## static void Stop([int channel])
+Stops a channel from playing. When no channel is given all channels will be stopped.

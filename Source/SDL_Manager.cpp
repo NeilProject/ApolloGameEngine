@@ -170,21 +170,37 @@ namespace Tricky_Apollo {
         return Texture.count(Upper(Tag));
     }
 
-    void Apollo_SDL_LoadAudio(std::string Tag, std::string File, std::string State, std::string Traceback) {
+    std::string Apollo_SDL_LoadAudio(std::string Tag, std::string File, std::string State, std::string Traceback) {
         Tag = Upper(Tag);
+        if (Tag == "") {
+            int i = 0;
+            char NT[20];
+            do {
+                i++;
+                sprintf_s(NT, 18, "AUDIO:%08X",i);
+                Tag = NT;
+            } while (Audio.count(Tag));
+        }
         Audio[Tag].Load(JCRPackage, File);
         if (!Audio[Tag].HasChunk()) {
             Crash("Loading Audio \"" + File + "\" failed!", State, Traceback + "\n\nJCR6 reported: \"" + Get_JCR_Error_Message() + "\"");
         }
+        return Tag;
     }
 
-    TQSA_Audio* Apollo_SDL_Audio(std::string Tag, std::string State, std::string Traceback) {
+
+    TQSA_Audio* Apollo_SDL_Audio(std::string Tag, std::string State) {
         Tag = Upper(Tag);
         if (!Audio.count(Tag)) {
-            Crash("There is no audio tagged: " + Tag, State, Traceback);
+            Crash("There is no audio tagged: " + Tag, State, Apollo_State::TraceBack(State));
             return NULL;
         }
         return &Audio[Tag];
+    }
+
+    void Apollo_SDL_KillAudio(std::string Tag) {
+        Tag = Upper(Tag);
+        if (Audio.count(Tag)) Audio.erase(Tag);
     }
 
     TQSG_Image* GetTex(std::string Tag, std::string State) {

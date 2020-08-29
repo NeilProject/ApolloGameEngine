@@ -1,0 +1,59 @@
+Table AAUA = LGGTTT("AAUA")
+
+
+Bool AllowCAudio = false
+
+
+Class Audio
+	
+	ReadOnly String Tag
+	ReadOnly Bool AutoDestruct
+	
+	Constructor(string T, Bool AD)
+		if !AllowCAudio
+			Apollo_Panic("Direct object creation not allowed for the Audio Class")
+			return
+		end
+		Tag=T
+		AutoDestruct = AD
+	End
+	
+	Static Var Load(String File, String ATag="")
+		String GT = AAUA.LOAD(ATag,File,ApolloState.Name)
+		AllowCAudio = true
+		var Ret = New Audio(GT,ATag=="")
+		AllowCAudio = false
+		return Ret
+	End
+	
+	Int Play(Infinity)
+		plua arg = {Infinity}
+		Switch TableTypeChain(arg)
+			case "number"
+				return AAUA.PLAY(ATag,arg[1],0,ApolloState.Name)
+			case "number,number"
+				return AAUA.PLAY(ATag,arg[1],arg[2],ApolloState.Name)
+			case "boolean"
+				int l = 0
+				if arg[1] 
+					l=-1
+				end
+				return AAUA.PLAY(ATag,-1,l,ApolloState.Name)
+			case "number,boolean"
+				int l = 0
+				if arg[2] 
+					l=-1
+				end
+				return AAUA.PLAY(ATag,arg[1],l,ApolloState.Name)
+			default
+				Apollo_Panic("Illegal Method Call.\nAudio.Play() received these parameters: "..TableTypeChain(arg).."\nYou intension has not been understood")
+				return 0
+		End
+	End
+	
+	Static Void Stop(int channel=-1)
+		AAUA.STOP(channel);
+	End
+	
+	
+End

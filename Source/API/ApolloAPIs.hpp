@@ -7,6 +7,7 @@
 
 
 namespace Tricky_Apollo {
+	void ApolloAPIInit_Audio();
 	void ApolloAPIInit_Events();
 	void ApolloAPIInit_Graphics();
 
@@ -15,6 +16,7 @@ namespace Tricky_Apollo {
 	void InitApolloAPIs() {
 		// Refrain from saying this shouldn't be done in a header! Because I know!
 
+		ApolloAPIInit_Audio();
 		ApolloAPIInit_Events();
 		ApolloAPIInit_Graphics();
 	}

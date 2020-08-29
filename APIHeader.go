@@ -27,12 +27,14 @@ package main
 // A header for each API was senseless to me... Each API only needed 
 // one init function for the main application to call. Bit deal, huh?
 
+import "os"
 import "fmt"
 import "trickyunits/tree"
 import "trickyunits/qstr"
 import "trickyunits/qff"
 
 const WorkDir = "/Projects/Applications/VisualStudio/VC/Apollo Game Engine/Source/API"
+const ObjDir  = "/Projects/Applications/VisualStudio/VC/Apollo Game Engine/x64/Release"
 
 func main() {
 	boom:=tree.GetTree(WorkDir,false)
@@ -51,6 +53,12 @@ func main() {
 	setinit+="\t}\n"
 	output+="\n\n\n"+setinit+"\n}"
 	// fmt.Println(output) // Needed for testing, and besides, Go would crash otherwise!
+	fmt.Println("Creating ApolloAPIs.hpp");
 	qff.WriteStringToFile(WorkDir+"/ApolloAPIs.hpp",output)
-	fmt.Print("All Done!")
+	fmt.Println("Removing main.obj (would cause conflicts otherwise")
+	err:=os.Remove(ObjDir+"/main.obj")
+	if (err!=nil) {
+		fmt.Println("\aRemoval failed!\t\t",err)
+	}
+	fmt.Println("All Done!")
 }

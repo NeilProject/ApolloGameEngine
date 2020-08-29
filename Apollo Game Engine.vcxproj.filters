@@ -93,6 +93,9 @@
     <ClCompile Include="..\TQSG\TQSA.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="Source\API\Audio.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
