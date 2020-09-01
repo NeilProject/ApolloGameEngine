@@ -10,6 +10,7 @@ namespace Tricky_Apollo {
 	void ApolloAPIInit_Audio();
 	void ApolloAPIInit_Events();
 	void ApolloAPIInit_Graphics();
+	void ApolloAPIInit_Kthura();
 
 
 
@@ -19,6 +20,7 @@ namespace Tricky_Apollo {
 		ApolloAPIInit_Audio();
 		ApolloAPIInit_Events();
 		ApolloAPIInit_Graphics();
+		ApolloAPIInit_Kthura();
 	}
 
 }

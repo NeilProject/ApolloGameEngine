@@ -1,0 +1,363 @@
+// License Information:
+// ARF_src/API/Kthura.neil
+// Apollo - Kthura Linker
+// version: 20.09.01
+// Copyright (C) 2020 Jeroen P. Broks
+// This software is provided 'as-is', without any express or implied
+// warranty.  In no event will the authors be held liable for any damages
+// arising from the use of this software.
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it
+// freely, subject to the following restrictions:
+// 1. The origin of this software must not be misrepresented; you must not
+// claim that you wrote the original software. If you use this software
+// in a product, an acknowledgment in the product documentation would be
+// appreciated but is not required.
+// 2. Altered source versions must be plainly marked as such, and must not be
+// misrepresented as being the original software.
+// 3. This notice may not be removed or altered from any source distribution.
+// End License Information
+Table AKTH = LGGTTT("AKTHURA")
+import Apollo_Panic
+
+
+
+class KTHURA_Object
+	readonly int MapID
+	readonly string MapTag
+	readonly string LayerTag
+	readonly int ObjID
+	
+	void Verify()
+		AKTH.VERIFYOBJECT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID)
+	end
+	
+	table FInt
+	table FStr
+	table FBool
+	
+	public Constructor(int aID, string aMapTag, string aLayer, int aObjID)
+		MapID=aID
+		MapTag=aMapTag
+		LayerTag=aLayer
+		ObjID=aObjID
+		plua k
+		plua v
+	end
+	
+	// Receive
+	
+	Get Int ID
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ID")
+	end
+	
+	Get Int X
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"X")
+	End
+
+	Get Int Y
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"Y")
+	End
+
+	Get Int W
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"W")
+	End
+	
+	Get Int H
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"H")
+	End
+	
+	Get Int InsertX
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"INSX")
+	end
+	
+	Get Int InsX
+		return InsertX
+	End
+	
+	Get Int InsertY
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"INSY")
+	End
+	
+	Get Int InsY
+		Return InsertY
+	End
+
+	Get Int R
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"R")
+	End
+	
+	Get Int G
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"G")
+	End
+	
+	Get Int B
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"B")
+	End
+	
+	Get Int Alpha
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ALPHA")
+	End
+	
+	Get Int ScaleX
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"SCALEX")
+	End
+	
+	Get Int ScaleY
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"SCALEY")
+	End
+	
+	Get Int Dominance
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"DOMINANCE")
+	End
+	
+	Get Int Rotation
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ROTATION")
+	End
+	
+	Get Int AnimSpeed
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ANIMSPEED")
+	End
+	
+	Get Int AnimFrame
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ANIMFRAME")
+	End
+	
+	Get String Kind
+		return AKTH.GETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"KIND")
+	End
+	
+	get String Texture
+		return AKTH.GETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"TEXTURE")
+	end
+	
+	Get String Labels
+		return AKTH.GETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"LABELS")
+	end
+	
+	Get Bool Impassible
+		return AKTH.GETOBJBOOL(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"IMPASSIBLE")
+	end
+	
+	Get Bool ForcePassible
+		return AKTH.GETOBJBOOL(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"FORCEPASSIBLE")
+	end
+	
+	Get Bool Visible
+		return AKTH.GETOBJBOOL(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"VISIBLE")
+	end
+
+
+	// DEFINE
+	
+	Set Int ID
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ID", Value)
+	end
+	
+	Set Int X
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"X", Value)
+	End
+
+	Set Int Y
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"Y", Value)
+	End
+
+	Set Int W
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"W", Value)
+	End
+	
+	Set Int H
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"H", Value)
+	End
+	
+	Set Int InsertX
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"INSX", Value)
+	end
+	
+	Set Int InsX
+		InsertX = Value
+	End
+	
+	Set Int InsertY
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"INSY", Value)
+	End
+	
+	Set Int InsY
+		InsertY = Value
+	End
+
+	Set Int R
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"R", Value)
+	End
+	
+	Set Int G
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"G", Value)
+	End
+	
+	Set Int B
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"B", Value)
+	End
+	
+	Set Int Alpha
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ALPHA", Value)
+	End
+	
+	Set Int ScaleX
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"SCALEX", Value)
+	End
+	
+	Set Int ScaleY
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"SCALEY", Value)
+	End
+	
+	Set Int Dominance
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"DOMINANCE", Value)
+	End
+	
+	Set Int Rotation
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ROTATION", Value)
+	End
+	
+	Set Int AnimSpeed
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ANIMSPEED", Value)
+	End
+	
+	Set Int AnimFrame
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ANIMFRAME", Value)
+	End
+	
+	Set String Kind
+		AKTH.SETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"KIND", Value)
+	End
+	
+	Set String Texture
+		AKTH.SETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"TEXTURE", Value)
+	end
+	
+	Set String Labels
+		AKTH.SETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"LABELS", Value)
+	end
+	
+	SET Bool Impassible
+		if Value
+			AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"IMPASSIBLE", 1)
+		else
+			AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"IMPASSIBLE", 0)
+		End
+	end
+	
+	SET Bool ForcePassible
+		If Value
+			AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"FORCEPASSIBLE", 1)
+		Else
+			AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"FORCEPASSIBLE", 0)
+		End
+	end
+	
+	SET Bool Visible
+		If Value
+			AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"VISIBLE", 1)
+		Else
+			AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"VISIBLE", 0)
+		End
+		
+	end
+	
+end
+
+class KTHURA_Layer
+	readonly int MapID
+	readonly string MapTag
+	readonly string LayerTag
+	
+	public Constructor(int aID, string aMapTag, string aLayer)
+		AKTH.VERIFY(aMapTag,ApolloState.Name,aID)
+		AKTH.HASLAYER(aMapTag,ApolloState.Name,aID,aLayer)
+		MapID=aID
+		MapTag=aMapTag
+		LayerTag=aLayer
+	End
+	
+	Get Int ObjCount
+		return AKTH.COUNTOBJECTS(MapTag,ApolloState.Name,MapID,LayerTag)
+	End
+	
+	var Obj(I_want)
+		//Print("I want it all! And I want it now!")
+		Int ObjID = AKTH.VERIFYOBJECT(MapTag,ApolloState.Name,MapID,LayerTag,type(I_want),I_want)
+		//return new KTHURA_Object(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID)
+		  return new KTHURA_Object(MapID, MapTag,  LayerTag, ObjID)
+	end
+	
+	Get Table ObjEnum
+		//print("ObjEnum")
+		//print(Serialize("Invisible Kthura Module",AKTH))
+		return { AKTH.ENUMOBJECTS(MapTag,ApolloState.Name,MapID,LayerTag) }
+	End
+	
+	Get Delegate EachObject
+		int i = 0
+		table OE = ObjEnum
+		//print(Serialize("EachObject >> OE",OE))
+		var Ret()
+			i++
+			if i>#OE
+				return null
+			end
+			return Obj(OE[i])
+		end
+		return Ret
+	end
+	
+	Void Draw(int ScrollX=0, int ScrollY=0,int StartX=0,int StartY=0)
+		AKTH.DRAW(MapTag,ApolloState.Name,MapID,LayerTag,ScrollX,ScrollY,StartX,StartY)
+	End
+end
+
+class KTHURA_Map
+	readonly string Tag
+	readonly int ID
+	//readonly bool AutoDestroy
+	
+	public Constructor(string T,int aID)
+		Tag = T
+		if aID<0
+			ID=AKTH.CHECK(Tag,ApolloState.Name)
+		else
+			ID=aID
+		End
+	End
+	
+	Var Layer(string WantedLayer)
+		Print("Get:",WantedLayer," From ",Tag)
+		return new KTHURA_Layer(ID,Tag,WantedLayer)
+	End
+	
+	Get Table Layers
+		return { AKTH.LAYERS(Tag,ApolloState.Name,ID) }
+	End
+	
+	Void Draw(String LayerTag,int ScrollX=0, int ScrollY=0,int StartX=0,int StartY=0)
+		AKTH.DRAW(Tag,ApolloState.Name,ID,LayerTag,ScrollX,ScrollY,StartX,StartY)
+	End
+
+	
+End
+
+Group Kthura
+
+	var Load(string mapdir,string Tag="GAMEMAP")
+		string gtag
+		int id
+		gtag,id = AKTH.LOAD(Tag,ApolloState.Name,mapdir)
+		return new KTHURA_Map(gtag,id)
+	end
+	
+	var Map(string tag)
+		return new KTHURA_Map(tag,-1)
+	End
+	
+	var Kill(string tag)
+		AKTH.KILL(tag)
+	end
+end

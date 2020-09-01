@@ -31,6 +31,9 @@
     <Filter Include="Source Files\Apollo\API">
       <UniqueIdentifier>{afea9d3e-cf79-4c08-8e01-2f43e8dba23d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Kthura">
+      <UniqueIdentifier>{5f3b489d-0c76-4546-919d-65f458bf8a3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -96,6 +99,18 @@
     <ClCompile Include="Source\API\Audio.cpp">
       <Filter>Source Files\Apollo\API</Filter>
     </ClCompile>
+    <ClCompile Include="..\Kthura\src\Kthura_Core.cpp">
+      <Filter>Source Files\Kthura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Kthura\src\Kthura_Draw.cpp">
+      <Filter>Source Files\Kthura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Kthura\src\Kthura_SDL_Driver.cpp">
+      <Filter>Source Files\Kthura</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\API\Kthura.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -130,6 +145,18 @@
     </ClInclude>
     <ClInclude Include="Source\API\ApolloAPIs.hpp">
       <Filter>Source Files\Apollo\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Kthura\src\Kthura.hpp">
+      <Filter>Header Files\Kthura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Kthura\src\Kthura_Core.hpp">
+      <Filter>Header Files\Kthura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Kthura\src\Kthura_Draw.hpp">
+      <Filter>Header Files\Kthura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Kthura\src\Kthura_SDL_Driver.hpp">
+      <Filter>Header Files\Kthura</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

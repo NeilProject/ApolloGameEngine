@@ -143,3 +143,10 @@ If "loops" is set to true or -1, sound will loop infinitely. If it is an integer
 
 ## static void Stop([int channel])
 Stops a channel from playing. When no channel is given all channels will be stopped.
+
+
+
+# Group Kthura
+
+Now using Kthura is a bit of thing I need to cover in a separate document, due to Kthura being a bit of a complex system. Allthough I know (from experience) that Kthura completely written in script can work, and pretty fast to, I now decided to keep Kthura wholly in C++ (for more speed), but linking a system like that to a multi-state scripting engine was nasty.
+

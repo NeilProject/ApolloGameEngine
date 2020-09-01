@@ -21,11 +21,12 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.25
+// Version: 20.08.31
 // EndLic
 #pragma once
 #include <string>
 #include <ErrorCodes.hpp>
+#include <Kthura_Draw.hpp>
 
 namespace Tricky_Apollo {
 

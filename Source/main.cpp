@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.27
+// Version: 20.08.31
 // EndLic
 
 // Internal
@@ -142,8 +142,13 @@ namespace Tricky_Apollo {
 		cout << "\nFound: " <<ms << "\n";
 		Apollo_State::Load("APOLLO_MAIN", JCRPackage, ms);
 	}
+
+	static void Panic4JCR(string err) {
+		Crash(err, "C++", "JCR6 error!");
+	}
 	
 }
+
 
 using namespace Tricky_Apollo;
 
@@ -153,6 +158,7 @@ int main(int n, char* args[]) {
 	CheckARF();
 	FindGameData();
 	Apollo_SDL_Start();
+	JCRPanic = Panic4JCR;
 	States_Init();
 	InitCore();
 	InitApolloAPIs();

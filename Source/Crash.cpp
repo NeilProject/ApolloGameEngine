@@ -21,13 +21,16 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.29
+// Version: 20.08.31
 // EndLic
 
 
 // C++
 #include <iostream>
 #include <string>
+
+// lua
+#include <AP_Lua_CPP.hpp>
 
 // TQSG
 #include <TQSG.hpp>
@@ -80,7 +83,10 @@ namespace Tricky_Apollo {
 
 	void ImmHalt(int exitcode) {
 		Apollo_SDL_End();
+		if (NSKthura::KthuraDraw::DrawDriver) delete NSKthura::KthuraDraw::DrawDriver;
 		// TODO: Make sure Lua is unloaded
+		
+
 		exit(exitcode);
 	}
 

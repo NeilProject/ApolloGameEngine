@@ -83,7 +83,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_mixer-2.0.4\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\Lua Library\x64\Release;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_ttf-2.0.15\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Source;$(LibraryPath)</LibraryPath>
-    <IncludePath>E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_mixer-2.0.4\include;E:\Projects\Applications\VisualStudio\VC\TQSG;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\include;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\include;E:\Projects\Applications\VisualStudio\VC\JCR6\headers;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Headers;E:\Projects\Applications\VisualStudio\VC\TrickyUnits\Headers;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Projects\Applications\VisualStudio\VC\Kthura\src;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_mixer-2.0.4\include;E:\Projects\Applications\VisualStudio\VC\TQSG;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\include;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\include;E:\Projects\Applications\VisualStudio\VC\JCR6\headers;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Headers;E:\Projects\Applications\VisualStudio\VC\TrickyUnits\Headers;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -141,11 +141,17 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Lua.lib;sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>powershell njcr script barf.lua</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\JCR6\src\jcr6_core.cpp" />
     <ClCompile Include="..\JCR6\src\jcr6_quakepak.cpp" />
     <ClCompile Include="..\JCR6\src\jcr6_wad.cpp" />
+    <ClCompile Include="..\Kthura\src\Kthura_Core.cpp" />
+    <ClCompile Include="..\Kthura\src\Kthura_Draw.cpp" />
+    <ClCompile Include="..\Kthura\src\Kthura_SDL_Driver.cpp" />
     <ClCompile Include="..\TQSG\TQSA.cpp" />
     <ClCompile Include="..\TQSG\TQSE.cpp" />
     <ClCompile Include="..\TQSG\TQSG.cpp" />
@@ -157,6 +163,7 @@
     <ClCompile Include="Source\API\Audio.cpp" />
     <ClCompile Include="Source\API\Events.cpp" />
     <ClCompile Include="Source\API\Graphics.cpp" />
+    <ClCompile Include="Source\API\Kthura.cpp" />
     <ClCompile Include="Source\core.cpp" />
     <ClCompile Include="Source\Crash.cpp" />
     <ClCompile Include="Source\Globals.cpp" />
@@ -166,6 +173,10 @@
     <ClCompile Include="Source\States.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Kthura\src\Kthura.hpp" />
+    <ClInclude Include="..\Kthura\src\Kthura_Core.hpp" />
+    <ClInclude Include="..\Kthura\src\Kthura_Draw.hpp" />
+    <ClInclude Include="..\Kthura\src\Kthura_SDL_Driver.hpp" />
     <ClInclude Include="..\TQSG\TQSE.hpp" />
     <ClInclude Include="..\TQSG\TQSG.hpp" />
     <ClInclude Include="Headers\AP_Lua_CPP.hpp" />
