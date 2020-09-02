@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.29
+// Version: 20.09.03
 // EndLic
 
 
@@ -205,7 +205,7 @@ namespace Tricky_Apollo {
 
     void RemAllAudio() {
         for (auto& Slachtoffer : Audio) {
-            cout << "Killing audio on tag: " << Slachtoffer.first;
+            cout << "Killing audio on tag: " << Slachtoffer.first<<"\n";
             Slachtoffer.second.Kill();
         }
         Audio.clear();
@@ -239,6 +239,7 @@ namespace Tricky_Apollo {
         auto& Tex = Texture[T];
         Tex.Draw(x, y);
     }
+
     void Apollo_SDL_Draw(std::string Tag, int x, int y, int f, std::string State, std::string Traceback) {
         auto T = Upper(Tag);
         if (Texture.count(T) != 1) {
