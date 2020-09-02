@@ -39,6 +39,12 @@ Class Audio
 		AutoDestruct = AD
 	End
 	
+	Destructor
+		if AutoDestruct
+			AAUA.KILL(Tag)
+		End
+	End
+	
 	Static Var Load(String File, String ATag="")
 		String GT = AAUA.LOAD(ATag,File,ApolloState.Name)
 		AllowCAudio = true
