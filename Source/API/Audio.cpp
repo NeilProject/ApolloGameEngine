@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.31
+// Version: 20.09.03
 // EndLic
 // Lua
 #include <AP_Lua_CPP.hpp>
@@ -64,12 +64,20 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int AAUA_Kill(lua_State* L) {
+		auto Tag = luaL_checkstring(L, 1);
+		auto State = luaL_checkstring(L, 2);
+		Apollo_SDL_Audio(Tag, State)->Kill();
+		return 0;
+	}
+
 
 
 	void ApolloAPIInit_Audio() {
 		Apollo_State::RequireFunction("AAUA_Load", AAUA_LoadAudio);
 		Apollo_State::RequireFunction("AAUA_Play", AAUA_Play);
 		Apollo_State::RequireFunction("AAUA_Stop", AAUA_Stop);
+		Apollo_State::RequireFunction("AAUA_Kill", AAUA_Kill);
 		Apollo_State::RequireNeil("API/Audio.neil");
 
 	}
