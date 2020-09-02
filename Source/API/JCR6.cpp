@@ -1,7 +1,7 @@
 // Lic:
 // Source/API/JCR6.cpp
 // Apollo
-// version: 20.09.02
+// version: 20.09.03
 // Copyright (C) 2020 JCR6 access
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -75,10 +75,18 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int Apollo_JCR_EntryExists(lua_State* L) {
+		JCRCheck();
+		string Entry = luaL_checkstring(L, 3);
+		lua_pushboolean(L, JD->EntryExists(Entry));
+		return 1;
+	}
+
 	void ApolloAPIInit_JCR6() {
 		Apollo_State::RequireFunction("AJCR_Entries", Apollo_JCR6_Entries);
 		Apollo_State::RequireFunction("AJCR_LoadString", Apollo_JCR6_LoadString);
 		Apollo_State::RequireFunction("AJCR_Size", Apollo_JCR6_Size);
+		Apollo_State::RequireFunction("AJCR_EntryExists", Apollo_JCR_EntryExists);
 		Apollo_State::RequireNeil("API/JCR6.neil");
 	}
 }
