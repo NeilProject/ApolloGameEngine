@@ -156,13 +156,16 @@
     <ClCompile Include="..\TQSG\TQSE.cpp" />
     <ClCompile Include="..\TQSG\TQSG.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\ArgParse.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\Bank.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\CheckEndian.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
     <ClCompile Include="Source\API\Audio.cpp" />
+    <ClCompile Include="Source\API\APIBank.cpp" />
     <ClCompile Include="Source\API\Events.cpp" />
     <ClCompile Include="Source\API\Graphics.cpp" />
+    <ClCompile Include="Source\API\JCR6.cpp" />
     <ClCompile Include="Source\API\Kthura.cpp" />
     <ClCompile Include="Source\core.cpp" />
     <ClCompile Include="Source\Crash.cpp" />
@@ -179,6 +182,7 @@
     <ClInclude Include="..\Kthura\src\Kthura_SDL_Driver.hpp" />
     <ClInclude Include="..\TQSG\TQSE.hpp" />
     <ClInclude Include="..\TQSG\TQSG.hpp" />
+    <ClInclude Include="..\TrickyUnits\Headers\Bank.hpp" />
     <ClInclude Include="Headers\AP_Lua_CPP.hpp" />
     <ClInclude Include="Headers\Core.hpp" />
     <ClInclude Include="Headers\Crash.hpp" />

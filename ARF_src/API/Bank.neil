@@ -1,0 +1,110 @@
+// License Information:
+// ARF_src/API/Bank.neil
+// Apollo - Bank link
+// version: 20.09.02
+// Copyright (C) 2020 Jeroen P. Broks
+// This software is provided 'as-is', without any express or implied
+// warranty.  In no event will the authors be held liable for any damages
+// arising from the use of this software.
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it
+// freely, subject to the following restrictions:
+// 1. The origin of this software must not be misrepresented; you must not
+// claim that you wrote the original software. If you use this software
+// in a product, an acknowledgment in the product documentation would be
+// appreciated but is not required.
+// 2. Altered source versions must be plainly marked as such, and must not be
+// misrepresented as being the original software.
+// 3. This notice may not be removed or altered from any source distribution.
+// End License Information
+
+table ABNK = LGGTTT("ABNK")
+import Apollo_Panic
+
+
+class Bank
+	
+	static string State = ApolloState.Name
+	readonly string Tag
+	readonly bool AutoKill
+	
+	// -- Poke -- //
+	
+	void Poke(int adres,int value)
+		ABNK.POKEBYTE(State,Tag,adres,value)
+	end
+
+	void PokeChar(int adres,int value)
+		ABNK.POKECHAR(State,Tag,adres,value)
+	end
+	
+	void PokeInt32(int adres,int value)
+		ABNK.POKEINT32(State,Tag,adres,value)
+	end
+	
+	void PokeInt64(int adres,int value)
+		ABNK.POKEINT64(State,Tag,adres,value)
+	end
+
+	void PokeUInt32(int adres,int value)
+		ABNK.POKEINT32(State,Tag,adres,value)
+	end
+	
+	void PokeUInt64(int adres,int value)
+		ABNK.POKEINT64(State,Tag,adres,value)
+	end
+
+
+	// -- Peek -- //
+	int Peek(int adres)
+		return ABNK.PEEKBYTE(State,Tag,adres)
+	end
+
+	int PeekChar(int adres)
+		ABNK.PEEKCHAR(State,Tag,adres)
+	end
+	
+	int PeekInt32(int adres)
+		ABNK.PEEKINT32(State,Tag,adres)
+	end
+	
+	int PeekInt64(int adres)
+		ABNK.PEEKINT64(State,Tag,adres)
+	end
+
+	int PeekUInt32(int adres)
+		ABNK.PEEKINT32(State,Tag,adres)
+	end
+	
+	int PeekUInt64(int adres)
+		ABNK.PEEKINT64(State,Tag,adres)
+	end
+	
+	// -- Size //
+	get int Size
+		return ABNK.BANKSIZE(State,Tag)
+	end
+	
+	// -- Create & Destroy -- //
+	
+	CONSTRUCTOR(int Size,string ATag="",bool Obtain=false,ObtainAutoKill=false)
+		if Obtain
+			ABNK.BANKCHECK(State,ATag)
+			Tag=ATag
+			AutoKill=ObtainAutoKill
+		else
+			Tag = ABNK.CREATE(State,ATag,Size)
+			AutoKill = ATag==""
+		end
+	end
+	
+	DESTRUCTOR
+		if AutoKill
+			ABNK.KILL(State,Tag)
+		end
+	end
+	
+	
+
+	
+end

@@ -111,6 +111,15 @@
     <ClCompile Include="Source\API\Kthura.cpp">
       <Filter>Source Files\Apollo\API</Filter>
     </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\Bank.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\API\JCR6.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\API\APIBank.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -157,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="..\Kthura\src\Kthura_SDL_Driver.hpp">
       <Filter>Header Files\Kthura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TrickyUnits\Headers\Bank.hpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
