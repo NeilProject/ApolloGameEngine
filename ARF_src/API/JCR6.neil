@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/JCR6.neil
 // Apollo - JCR6 - Link
-// version: 20.09.02
+// version: 20.09.03
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -42,6 +42,10 @@ group JCR6
 		string Tag = AJCR.LOADBANK(State,resource,entry,ATag)
 		//print("Loadbank on tag: ",Tag)
 		return new Bank(0,Tag,true,ATag=="")
+	end
+	
+	bool EntryExists(string entry, string resource="*MPACKAGE")
+		return AJCR.ENTRYEXISTS(resource,State,entry)
 	end
 	
 end
