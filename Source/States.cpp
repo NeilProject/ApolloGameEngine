@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.29
+// Version: 20.09.03
 // EndLic
 // C++
 #include <iostream>
@@ -385,6 +385,7 @@ namespace Tricky_Apollo {
 		NeededFunctions.push_back({ "Apollo_TestAPI_Function",LuaAPITest });
 		NeededFunctions.push_back({ "Apollo_Crash",LuaAPICrash });
 		CoreLuaScripts.push_back({ true,"Neil","Neil/Neil.lua" });
-		CoreLuaScripts.push_back({ true,"Apollo_Panic","Neil/Panic.lua" });		
+		CoreLuaScripts.push_back({ true,"Apollo_Panic","Neil/Panic.lua" });
+		CoreLuaScripts.push_back({ false,"Apollo_Use","Neil/UseBindings.lua" });
 	}
 }
