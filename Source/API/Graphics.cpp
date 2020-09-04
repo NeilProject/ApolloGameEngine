@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.28
+// Version: 20.09.05
 // EndLic
 // We get into the deep of this later!
 
@@ -130,6 +130,17 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AIMG_LoadAnim(lua_State* L) {
+		std::string File = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		int w = luaL_checkinteger(L, 3);
+		int h = luaL_checkinteger(L, 4);
+		int f = luaL_checkinteger(L, 5);
+		auto ret = LoadAnimTex(Tag, File, w, h, f);
+		lua_pushstring(L, ret.c_str());
+		return 1;
+	}
+
 	static int AIMG_Kill(lua_State* L) {
 		std::string Tag = luaL_checkstring(L, 1);
 		KillTex(Tag);
@@ -160,13 +171,45 @@ namespace Tricky_Apollo {
 		std::string State = luaL_checkstring(L, 1);
 		std::string Tag = luaL_checkstring(L, 2);
 		GetTex(Tag, State)->HotCenter();
+		return 0;
 	}
 
 	static int AIMG_HotBottomCenter(lua_State* L) {
 		std::string State = luaL_checkstring(L, 1);
 		std::string Tag = luaL_checkstring(L, 2);
 		GetTex(Tag, State)->HotCenter();
+		return 0;
 	}
+
+	static int AFNT_LoadImageFont(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		std::string File = luaL_checkstring(L, 3);
+		std::string ret = LoadFont(Tag, File, State);
+		lua_pushstring(L,ret.c_str());
+		return 1;
+	}
+
+	static int AFNT_DrawText(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		std::string Txt = luaL_checkstring(L,3);
+		int x = luaL_checkinteger(L, 4);
+		int y = luaL_checkinteger(L, 5);
+		int av = luaL_checkinteger(L, 6);
+		int ah = luaL_checkinteger(L, 7);
+		bool autonext = luaL_checkinteger(L, 8) != 0;
+		APGetFont(Tag)->Draw(Txt, x, y, ah, av, autonext);
+		return 0;
+	}
+
+	static int AFNT_AssertFont(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		GotFont(true, Tag, State);
+		return 0;
+	}
+	
 
 	// ImageFont
 
@@ -192,6 +235,11 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_Hot", AIMG_Hot);
 		Apollo_State::RequireFunction("AIMG_HotCenter", AIMG_HotCenter);
 		Apollo_State::RequireFunction("AIMG_HotBottomCenter", AIMG_HotBottomCenter);
+		// Fonts
+		Apollo_State::RequireFunction("AFNT_LoadImageFont", AFNT_LoadImageFont);
+		Apollo_State::RequireFunction("AFNT_DrawText", AFNT_DrawText);
+		Apollo_State::RequireFunction("AFNT_AssertFont", AFNT_AssertFont);
+		// Link Script
 		Apollo_State::RequireNeil("API/Graphics.neil");
 		// Image Font
 	}

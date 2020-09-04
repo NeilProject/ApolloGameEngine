@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.03
+// Version: 20.09.05
 // EndLic
 // C++
 #include <iostream>
@@ -318,7 +318,7 @@ namespace Tricky_Apollo {
 
 
 	void Apollo_State::RequireFunction(const char* name, lua_CFunction func) {
-		cout << "DEBUG: RequireFunction(\""<<name<<"\",<cppfunction>);\n";
+		// cout << "DEBUG: RequireFunction(\""<<name<<"\",<cppfunction>);\n";
 		NeededFunctions.push_back({ name,func });
 	}
 
@@ -356,6 +356,11 @@ namespace Tricky_Apollo {
 
 	void Apollo_State::RawCallByType(std::string state, std::string function, std::string parameters) {
 		Get(state)->RawCallByType(function, parameters);
+	}
+
+	void Apollo_State::Kill(std::string state) {
+		state = Upper(state);
+		if (StateMap.count(state)) StateMap.erase(state);
 	}
 
 	Apollo_State::~Apollo_State() {

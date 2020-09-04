@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Core.Neil
 // Apollo Core API linkup
-// version: 20.08.28
+// version: 20.09.05
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -20,6 +20,8 @@
 
 import GoToFlow
 import CurrentFlow
+import KillFlow
+import LoadFlow
 import ApolloQuit
 import nFPS
 import sFPS
@@ -31,6 +33,8 @@ Group Flow
 	ReadOnly Delegate GoToFlow = Lua.GoToFlow
 	ReadOnly Delegate CurrentFlow = Lua.CurrentFlow
 	ReadOnly Delegate Quit = Lua.ApolloQuit
+	ReadOnly Delegate Kill = Lua.KillFlow
+	ReadOnly Delegate Load = Lua.LoadFlow
 
 	Get String Current
 		return CurrentFlow()

@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.03
+// Version: 20.09.05
 // EndLic
 
 
@@ -59,6 +59,7 @@ namespace Tricky_Apollo {
 
     using namespace TrickyUnits;
     using namespace jcr6;
+    using namespace std;
     
     bool Apollo_SDL_Loudmouth = true;
 
@@ -69,6 +70,7 @@ namespace Tricky_Apollo {
     // static SDL_Texture* Tex_Death = NULL;
     static std::map<std::string, TQSG_Image> Texture;
     static std::map<std::string, TQSA_Audio> Audio;
+    static std::map<std::string, TQSG_ImageFont> Font;
 
     static void Apollo_SDL_Klets(std::string Gezwets) {
         if (Apollo_SDL_Loudmouth)
@@ -140,10 +142,22 @@ namespace Tricky_Apollo {
         return T;
     }
 
+    std::string LoadAnimTex(std::string Tag, std::string File,int w, int h, int frames) {
+        auto T = LoadTex(Tag, File);
+        auto Tex = GetTex(Tag);
+        Tex->AltFrame(w, h, frames);
+        return T;
+    }
+
     void LoadTexture(std::string Tag, std::string File) {
         if (Tag == "") Crash("This version of Load Texture does require a set tag!");
         auto voider = LoadTex(Tag, File);
         // Due to a bug inside C++ using LoadTex when you don't want a new Tag returned will crash your program! At least in Visual C++ it does, as I don't know about other compilers/libraries.
+    }
+
+    void LoadAnimTexture(std::string Tag, std::string File, int w, int h, int frames) {
+        if (Tag == "") Crash("This version of Load Anim Texture does require a set tag!");
+        auto voider = LoadAnimTex(Tag, File, w, h, frames);
     }
 
     int TexHeight(std::string Tag, std::string State, std::string Traceback) {
@@ -168,6 +182,50 @@ namespace Tricky_Apollo {
 
     bool TagExists(std::string Tag) {
         return Texture.count(Upper(Tag));
+    }
+
+    std::string LoadFont(std::string Tag, std::string File, std::string State) {
+        static int i = 0;
+        Tag = Trim(Upper(Tag));
+        if (Tag == "") {
+            do {
+                char NT[12];
+                sprintf_s(NT, 9, "FNT%05X", i); i++;
+                Tag = NT;
+            } while (Font.count(Tag));
+        }
+        Font[Tag].LoadFont(JCRPackage, File);
+        return Tag;
+    }
+
+    void LoadImageFont(std::string Tag, std::string File, std::string State) {
+        if (Tag == "") Crash("No font tag when one was required", State, Apollo_State::TraceBack(State));
+        auto f = LoadFont(Tag, File, State);
+    }
+
+    TQSG_ImageFont* APGetFont(std::string Tag, std::string State) {
+        Tag = Upper(Trim(Tag));
+        if (!Font.count(Tag)) {
+            Crash("No font tagged \"" + Tag + "\"", State, Apollo_State::TraceBack(State)); return NULL;
+        }
+        return &Font[Tag];
+    }
+
+    bool GotFont(bool critical, std::string Tag, std::string State) {
+        bool ret = Font.count(Upper(Trim(Tag)));
+        if (critical && !ret) Crash("No font tagged \"" + Tag + "\"", State, Apollo_State::TraceBack(State)); 
+        return ret;
+    }
+
+    void RemFont() {
+        vector<string> Kill;
+        for (auto tl : Font)Kill.push_back(tl.first);
+        for (auto slachtoffer : Kill) RemFont(slachtoffer);
+    }
+
+    void RemFont(std::string Tag) {
+        Tag = Upper(Trim(Tag));
+        if (Font.count(Tag)) Font.erase(Tag);
     }
 
     std::string Apollo_SDL_LoadAudio(std::string Tag, std::string File, std::string State, std::string Traceback) {
@@ -304,6 +362,7 @@ namespace Tricky_Apollo {
         printf("Disposing SysFont\n");
         Apollo_SysFont.Kill();
         printf("Removing all loaded textures\n");
+        RemFont();
         RemAllTex();
         RemAllAudio();
         // And flush the last things now

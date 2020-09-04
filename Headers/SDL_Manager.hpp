@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.29
+// Version: 20.09.05
 // EndLic
 
 
@@ -48,11 +48,21 @@ namespace Tricky_Apollo {
 	TrickyUnits::TQSG_Image* GetTex(std::string Tag,std::string State="C++");
 	void RemTex(std::string Tag);
 	std::string LoadTex(std::string Tag, std::string File);
+	std::string LoadAnimTex(std::string Tag, std::string File, int w, int h, int frames);
 	void LoadTexture(std::string Tag, std::string File);
+	void LoadAnimTexture(std::string Tag, std::string File, int w, int h, int frames);
 	int TexWidth(std::string Tag, std::string State="C++", std::string Traceback="");
 	int TexHeight(std::string Tag, std::string State = "C++", std::string Traceback = "");
 	void KillTex(std::string Tag); // RemTex requires a tag to exist, KillTex does not!
 	bool TagExists(std::string Tag);
+
+	// Fonts
+	std::string LoadFont(std::string Tag, std::string File, std::string State = "C++");
+	void LoadImageFont(std::string Tag, std::string File, std::string State = "C++");
+	TrickyUnits::TQSG_ImageFont* APGetFont(std::string Tag, std::string State = "C++");
+	bool GotFont(bool critical, std::string Tag, std::string State = "C++");
+	void RemFont();
+	void RemFont(std::string Tag);
 
 	// Audio
 	std::string Apollo_SDL_LoadAudio(std::string Tag, std::string File, std::string State = "C++", std::string Traceback = "");

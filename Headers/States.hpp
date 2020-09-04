@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.27
+// Version: 20.09.05
 // EndLic
 #pragma once
 
@@ -94,6 +94,8 @@ namespace Tricky_Apollo {
 
 		void RawCallByType(std::string function, std::string parameters);
 		static void RawCallByType(std::string state, std::string function, std::string parameters);
+
+		static void Kill(std::string state);
 
 
 		~Apollo_State();

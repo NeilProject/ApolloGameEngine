@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.08.29
+// Version: 20.09.05
 // EndLic
 
 #include <iostream>
@@ -75,6 +75,7 @@ namespace Tricky_Apollo {
 		static std::string sMainScript = "";
 		if (sMainScript != "") return sMainScript;
 		for (auto FE : JCRPackage.Entries()) {
+			// cout << "Looking for main script >> " << FE.first << " check:" << TrickyUnits::suffixed(FE.first, "/MAIN.NEIL") << "\n";
 			if (TrickyUnits::suffixed(FE.first,"/MAIN.NEIL")) {
 				sMainScript = FE.second.Entry();
 				return sMainScript;
@@ -88,7 +89,9 @@ namespace Tricky_Apollo {
 
 	void GoToFlow(string Flow,string State) {
 		Flow = Upper(Flow);
+		cout << (Flow != "APOLLO_MAIN") << (!prefixed(Flow, "FLOW_")) << ((Flow != "APOLLO_MAIN" && (!prefixed(Flow, "FLOW_")))) << "<FlowPrefixCheck\n";
 		if (Flow != "APOLLO_MAIN" && (!prefixed(Flow,"FLOW_"))) CurrentFlow = "FLOW_" + Flow; else CurrentFlow = Flow;
+		cout << "Changing Flow: " << CurrentFlow << "\n";
 		if (!Apollo_State::HasState(CurrentFlow))
 			Crash("Flow \""+Flow+"\" doesn't exist",State,Apollo_State::TraceBack(State));
 	}
@@ -97,7 +100,7 @@ namespace Tricky_Apollo {
 
 	// API
 	static int APICORE_GoToFlow(lua_State* L) {
-		string f = luaL_checkstring(L, 1);
+		string f = Upper(luaL_checkstring(L, 1));		
 		GoToFlow(f, Apollo_State::NameFromState(L));
 		return 0;
 	}
@@ -143,6 +146,21 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int APICORE_LoadFlow(lua_State* L) {		
+		string ToFlow = luaL_checkstring(L, 1);
+		string Script = luaL_checkstring(L, 2);
+		ToFlow = Upper(ToFlow);
+		if (!prefixed(ToFlow, "FLOW_")) ToFlow = "FLOW_" + ToFlow;
+		Apollo_State::Load(ToFlow, JCRPackage, Script);
+		return 0;
+	}
+
+	static int APICORE_KillFlow(lua_State* L) {
+		string kFlow = luaL_checkstring(L, 1);
+		Apollo_State::Kill(kFlow);
+		return 0;
+	}
+
 	void InitCore() {
 		Apollo_State::RequireFunction("GoToFlow",APICORE_GoToFlow);
 		Apollo_State::RequireFunction("CurrentFlow", APICORE_GetFlow);
@@ -152,6 +170,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("showFPS", APICORE_showFPS);
 		Apollo_State::RequireFunction("MinTicks", APICORE_MinTicks);
 		Apollo_State::RequireFunction("GetMinTicks", APICORE_MinTicks);
+		Apollo_State::RequireFunction("LoadFlow", APICORE_LoadFlow);
+		Apollo_State::RequireFunction("KillFlow", APICORE_KillFlow);
 		Apollo_State::RequireNeil("API/Core.Neil");
 	}
 
