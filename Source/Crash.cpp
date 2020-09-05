@@ -37,6 +37,7 @@
 #include <TQSE.hpp>
 
 // Apollo
+#include "../Headers/States.hpp"
 #include "../Headers/Crash.hpp"
 #include "../Headers/SDL_Manager.hpp"
 
@@ -45,7 +46,12 @@ namespace Tricky_Apollo {
 	using namespace TrickyUnits;
 
 	void Crash(string Message, string State, string TraceBack, int exitcode) {
+		static int CrashedBefore = false;
 		cout << "\x1b[41;33;1mFatal Error!\x1b[0m\nError: " << Message << "\nState: " << State << "\n\n" << TraceBack << "\n";
+		if (CrashedBefore) {
+			ImmHalt(exitcode); return;
+		}
+		CrashedBefore = exitcode;
 		auto Tag = LoadTex("**DEATH**", "Pics/Death.png");
 		auto DW = TexWidth("**DEATH**");
 		auto DH = TexHeight("**DEATH**");
@@ -82,11 +88,10 @@ namespace Tricky_Apollo {
 	}
 
 	void ImmHalt(int exitcode) {
+		Apollo_State::KillAll();
 		Apollo_SDL_End();
 		if (NSKthura::KthuraDraw::DrawDriver) delete NSKthura::KthuraDraw::DrawDriver;
-		// TODO: Make sure Lua is unloaded
-		
-
+		// TODO: Make sure Lua is unloaded	
 		exit(exitcode);
 	}
 
