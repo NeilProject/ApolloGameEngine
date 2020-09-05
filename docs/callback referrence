@@ -1,0 +1,23 @@
+Apollo can support a different set of callbacks depending on the mode in which the game is running.
+Please note, wether you use Lua or Neil, all these callbacks MUST be globals or Apollo will not be able to find them.
+
+
+
+## void Apollo_Dispose()
+Mode: All
+This function is called when a state is being unloaded. If you want to make sure some closure actions must be taken care of before disposing this state, this function will make it happen. Be careful with them, they may still be called prior to exiting Apollo after errors have occured and when these functions are faulty this can lead to surprising results.
+
+## void Apollo_Draw()
+Mode: SemiCallBack, FullCallBack
+This function will allow you to draw stuff. Prior to this callback the screen is emptied, after it the screen will be shown.
+
+## void Apollo_Flow()
+Mode: RegularRepeativeFlow
+In the RegularRepeativeFlow Apollo keeps repeating this flow, only with a wait if MinTicks is set. Before calling this callback the events are scanned and the screen is cleared before and shown after. This flow gives you most power over your way of working but can also be harder if you are not fully sure of what you are doing.
+
+## void Apollo_Update()
+Mode: SemiCallBack, FullCallBack
+This will be called after the events are read out, and you can use it to put in stuff that doesn't fill the other callbacks.
+Please note, in the FullCallBack mode, the other events are handled first.
+
+
