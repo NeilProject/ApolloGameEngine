@@ -167,7 +167,7 @@ namespace Tricky_Apollo {
 				auto f = "Null";
 				if (NeededFunctions[i].name) n = NeededFunctions[i].name;
 				if (NeededFunctions[i].func) f = "Function present";
-				std::cout << i << "> Registering " << n << " F:" << f << "\n";
+				//std::cout << i << "> Registering " << n << " F:" << f << "\n"; // debug
 				lua_register(MyState, NeededFunctions[i].name, NeededFunctions[i].func); // Ugly, but works?
 			}
 			// */
@@ -363,13 +363,35 @@ namespace Tricky_Apollo {
 		if (StateMap.count(state)) StateMap.erase(state);
 	}
 
+	void Apollo_State::KillAll() {
+		vector<string> Moordenaar;
+		for (auto Slachtoffer : StateMap) Moordenaar.push_back(Slachtoffer.first);
+		for (auto Slachtoffer : Moordenaar) Kill(Slachtoffer);
+	}
+
 	Apollo_State::~Apollo_State() {
 		std::cout << "Destroy state " << StateName << "\n";
 		if (MyState == NULL)
 			std::cout << " = Nothing to destroy! State was empty!\n";
-		else
+		else {/*
+			if (StateType == "Lua") {
+				std::string function = "Apollo_Dispose";
+				std::string work = "--[[DisposeLua]]\nif not " + function + " then return end\n\nif type(" + function + ")~='function' then\n\tApollo_Crash(\"Callback error:\\n" + function + " is not a function but a \"..type(" + function + "),  Neil.Globals.ApolloState.Name, Neil.Globals.ApolloState.TraceBack)\nelse\n\tlocal s,e=xpcall(" + function + ",Apollo_Panic)\nend";
+				//cout << "<RAWCALL>\n" << work << "\n</RAWCALL>\n";
+				luaL_loadstring(MyState, work.c_str());
+				lua_call(MyState, 0, 0);
+			} else if (StateType == "Neil") {
+				std::string function = "Apollo_Dispose";
+				std::string work = "--[[DisposeNeil]]\nif not Neil.Globals.GlobalExists(\"" + function + "\") then return end\n\nif type(Neil.Globals." + function + ")~='function' then\n\tApollo_Crash(\"Callback error:\\n" + function + " is not a function but a \"..type(" + function + "),  Neil.Globals.ApolloState.Name, Neil.Globals.ApolloState.TraceBack)\nelse\n\tlocal s,e=xpcall(Neil.Globals." + function + ",Apollo_Panic)\nend";
+				cout << "<huh>\n" << work << "\n</huh>\n\n"; // debug!
+				luaL_loadstring(MyState, work.c_str());
+				lua_call(MyState, 0, 0);
+			}
+			*/
 			lua_close(MyState);
+		}
 	}
+
 
 	static int LuaAPITest(lua_State* L) {
 		std::cout << "A small step for a man\nbut a giant leap for mankind!\n";
