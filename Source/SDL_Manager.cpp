@@ -77,6 +77,10 @@ namespace Tricky_Apollo {
             printf("\x1b[31mApollo SDL>\x1b[0m %s\n", Gezwets.c_str());
     }
 
+    static void AlgehelePaniek(std::string Paniek) {
+        Crash(Paniek);
+    }
+
 
     /* Likely no longer needed
     static SDL_Texture* Tex_From_JCR(JT_Dir &JD, string entry) {
@@ -144,7 +148,7 @@ namespace Tricky_Apollo {
 
     std::string LoadAnimTex(std::string Tag, std::string File,int w, int h, int frames) {
         auto T = LoadTex(Tag, File);
-        auto Tex = GetTex(Tag);
+        auto Tex = GetTex(T);
         Tex->AltFrame(w, h, frames);
         return T;
     }
@@ -309,6 +313,21 @@ namespace Tricky_Apollo {
         Tex.Draw(x, y,f);
     }
 
+    void Apollo_SDL_Tile(std::string Tag, int x, int y, int w, int h, std::string State, std::string Traceback) {
+        Apollo_SDL_Tile(Tag, x, y, w, h, 0, State, Traceback);
+    }
+
+    void Apollo_SDL_Tile(std::string Tag, int x, int y, int w, int h, int f, std::string State, std::string Traceback) {
+        auto T = Upper(Tag);
+        if (Texture.count(T) != 1) {
+            Crash("There is no image loaded tagged " + T, State, Traceback, AE_NoTextureOnTag);
+            return;
+        }
+        auto& Tex = Texture[T];
+        Tex.Tile(x, y, w, h, f);
+
+    }
+
     void Apollo_SDL_Flip() {
         //SDL_UpdateWindowSurface(gWindow);
         TQSG_Flip();
@@ -325,6 +344,7 @@ namespace Tricky_Apollo {
         bool success = true;
 
         success = TQSG_Init(Identify::WindowTitle(),Identify::WinWidth(),Identify::WinHeight(),Identify::FullScreen());
+        TQSG_Panic = AlgehelePaniek; // Will direct most TQSG errors to the Apollo crash routine!
         if (!success) exit(AE_SDL_Error);
         if (!TQSA_Init(MIX_INIT_OGG)) {
             TQSG_Close();
