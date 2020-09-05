@@ -56,12 +56,30 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AEA_MouseX(lua_State* L) {
+		lua_pushinteger(L, TQSE_MouseX());
+		return 1;
+	}
+
+	static int AEA_MouseY(lua_State* L) {
+		lua_pushinteger(L, TQSE_MouseY());
+		return 1;
+	}
+
+	static int AEA_HideMouse(lua_State* L) { HideMouse(); return 0; }
+	static int AEA_ShowMouse(lua_State* L) { ShowMouse(); return 0; }
+
+
 
 	void ApolloAPIInit_Events(){
 		Apollo_State::RequireFunction("AEA_Poll", AEA_Poll);
 		Apollo_State::RequireFunction("AEA_KeyDown", AEA_KeyDown);
 		Apollo_State::RequireFunction("AEA_KeyHit", AEA_KeyHit);
 		Apollo_State::RequireFunction("AEA_Terminate", AEA_Terminate);
+		Apollo_State::RequireFunction("AEA_MouseX", AEA_MouseX);
+		Apollo_State::RequireFunction("AEA_MouseY", AEA_MouseY);
+		Apollo_State::RequireFunction("AEA_ShowMouse", AEA_ShowMouse);
+		Apollo_State::RequireFunction("AEA_HideMouse", AEA_HideMouse);
 		Apollo_State::RequireNeil("API/Events.neil");
 	}
 }
