@@ -96,6 +96,7 @@ namespace Tricky_Apollo {
 		static void RawCallByType(std::string state, std::string function, std::string parameters);
 
 		static void Kill(std::string state);
+		static void KillAll();
 
 
 		~Apollo_State();
