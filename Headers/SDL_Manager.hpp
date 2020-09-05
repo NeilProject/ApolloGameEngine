@@ -49,7 +49,7 @@ namespace Tricky_Apollo {
 	void RemTex(std::string Tag);
 	std::string LoadTex(std::string Tag, std::string File);
 	std::string LoadAnimTex(std::string Tag, std::string File, int w, int h, int frames);
-	void LoadTexture(std::string Tag, std::string File);
+	void LoadTexture(std::string Tag, std::string File);	
 	void LoadAnimTexture(std::string Tag, std::string File, int w, int h, int frames);
 	int TexWidth(std::string Tag, std::string State="C++", std::string Traceback="");
 	int TexHeight(std::string Tag, std::string State = "C++", std::string Traceback = "");
@@ -78,6 +78,8 @@ namespace Tricky_Apollo {
 
 	void Apollo_SDL_Draw(std::string Tag, int x, int y, std::string State = "C++", std::string Traceback = "No Traceback possible");
 	void Apollo_SDL_Draw(std::string Tag, int x, int y, int f, std::string State = "C++", std::string Traceback = "No Traceback possible");
+	void Apollo_SDL_Tile(std::string Tag, int x, int y, int w, int h,std::string State = "C++", std::string Traceback = "No Traceback possible");
+	void Apollo_SDL_Tile(std::string Tag, int x, int y, int w, int h, int f, std::string State = "C++", std::string Traceback = "No Traceback possible");
 	//void Apollo_SDL_ClsColor(int r, int g, int b);
 	//void Apollo_SDL_Cls();
 
