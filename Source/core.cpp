@@ -175,6 +175,10 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireNeil("API/Core.Neil");
 	}
 
+	static void Apollo_CallBackHandler(SDL_Event* e) {
+		Crash("The event callback routine has not yet been implemented!");
+	}
+
 	// Let's get ready to rumble!
 	void RunTheGame() {
 		static FlowType FT = Identify::GetFlowType();
@@ -199,10 +203,19 @@ namespace Tricky_Apollo {
 				TQSG_Flip();
 				break;
 			case SemiCallback:
-				Crash("SemiCallback flow type not yet supported!");
+				TQSG_Cls();
+				state->RawCallByType("Apollo_Draw", "nil");
+				TQSG_Flip();
+				TQSE_Poll();
+				state->RawCallByType("Apollo_Update", "nil");
 				break;
 			case FullCallback:
-				Crash("Fullcallback flow type not yet supported!");
+				TQSG_Cls();
+				state->RawCallByType("Apollo_Draw", "nil");
+				TQSG_Flip();
+				TQSE_Poll(Apollo_CallBackHandler);
+				state->RawCallByType("Apollo_Update", "nil");
+				break;
 			default:
 				Crash("Unsupported flow type", "C++", "Identify", AE_UnknownFlowType);
 				break;
