@@ -71,6 +71,13 @@ Class Image
 		End
 	End
 	
+	Static Var Obtain(String Tag)
+		AllowCImage = true
+		var Ret = new Image(Tag)
+		AllowCImage = false
+		return ret
+	end
+	
 	Static Var Load(String File,String Tag="")
 		//for k,v in spairs(AIMG)
 		//	print(Lua.type(v),k)
@@ -99,6 +106,11 @@ Class Image
 	Void Draw(int x, int y, int frame=0)
 		AIMG.DRAW(ApolloState.Name,Tag,x,y,frame)
 	End
+
+	Void Tile(int x, int y, int w, int h,int frame=0)
+		AIMG.TILE(ApolloState.Name,Tag,x,y,w,h,frame)
+	End
+
 	
 	void Hot(Int x, int y)
 		AIMG.HOT(ApolloState.Name,Tag,x,y)
@@ -107,6 +119,14 @@ Class Image
 	void HotCenter()
 		AIMG.HOTCENTER(ApolloState.Name,Tag)
 	End
+	
+	Get Int Width
+		return AIMG.IMGWIDTH(ApolloState.Name,Tag)
+	end
+	
+	Get Int Height
+		return AIMG.IMGHEIGHT(ApolloState.Name,Tag)
+	end
 	
 end
 
