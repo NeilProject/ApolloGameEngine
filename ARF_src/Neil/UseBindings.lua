@@ -24,9 +24,12 @@
 -- Whenever the "#use" directive (or Neil.Use) is called.
 
 
+local debug = false
+
 local LString = AJCR_LoadString
-local LEntries = AJCR_Entries
+local LEntries = AJCR_SpecEntries --AJCR_Entries
 local LFileExists = AJCR_EntryExists
+local LDirExists = AJCR_DirExists
 -- As the Lua scripts come before the Neil scripts, these original
 -- bindings still exist, before Neil destroys them for security reasons
 
@@ -35,26 +38,38 @@ function Neil.ReadFile(File)
 end
 
 function Neil.FileExists(File) 
+	if debug then print("FileExists(\""..File.."\") ") end
 	return LFileExists("*MPACKAGE",Neil.Globals.ApolloState.Name,File)
 end
 
 function Neil.DirExists(Dir)
-	local d = {LEntries("*MPACKAGE",Neil.Globals.ApolloState.Name)}
-	local DIR = Dir:upper()
-	if not (Neil.Globals.Suffixed(DIR,"/")) then DIR = DIR .. "/" end
-	for _,f in ipairs(d) do
-		if Neil.Globals.Prefixed(f:upper(),DIR) then return true end
-	end
-	return false
+	if debug then print("DirExists(\""..Dir.."\")") end	
+	--local d = {LEntries("*MPACKAGE",Neil.Globals.ApolloState.Name)}; if debug then print("Total entries (unfiltered): ",#d) end
+	--local DIR = Dir:upper()
+	--if not (Neil.Globals.Suffixed(DIR,"/")) then DIR = DIR .. "/" end
+	--if debug then print("Start for-loop") end
+	--for _,f in ipairs(d) do
+	--	if debug then print("Checking:",f,DIR,Neil.Globals.Prefixed(f:upper(),DIR)) end
+	--	if Neil.Globals.Prefixed(f:upper(),DIR) then return true end
+	--end
+	--if debug then print("Nothing found!") end
+	-- return false
+	return LDirExists("*MPACKAGE",Neil.Globals.ApolloState.Name,Dir)
 end
 
 function Neil.ReadDir(Dir)
-	local ret = {}
-	local d = {LEntries("*MPACKAGE",Neil.Globals.ApolloState.Name)}
-	local DIR = Dir:upper()
-	if not (Neil.Globals.Suffixed(DIR,"/")) then DIR = DIR .. "/" end
-	for _,f in ipairs(d) do
-		if Neil.Globals.Prefixed(f:upper(),DIR) then ret[#ret+1]=f end
-	end
+	if debug then print("ReadDir(\""..Dir.."\")") end
+	--local ret = {}
+	--local d = {LEntries("*MPACKAGE",Neil.Globals.ApolloState.Name)}; if debug then print("Total entries (unfiltered): ",#d) end
+	--local DIR = Dir:upper()
+	--if not (Neil.Globals.Suffixed(DIR,"/")) then DIR = DIR .. "/" end
+	--for _,f in ipairs(d) do
+	--	if Neil.Globals.Prefixed(f:upper(),DIR) then 
+	--		if debug then print("Approved: ",f) end
+	--		ret[#ret+1]=f 
+	--	end
+	--end
+	ret = {LEntries("*MPACKAGE",Neil.Globals.ApolloState.Name,Dir)}
+	if debug then print("Returning "..#ret.." entries") end
 	return ret
 end

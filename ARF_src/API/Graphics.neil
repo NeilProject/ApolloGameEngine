@@ -171,9 +171,17 @@ Class ImageFont
 	
 	Static Var Obtain(String NTag)
 		AllowCFont = true	
-		AFNT.ASSERTFONT(NTag)
+		AFNT.ASSERTFONT(ApolloState.Name,NTag)
 		var ret = new ImageFont("",NTag)
 		AllowCFont = false
 		return ret
+	end
+	
+	void Text(String Txt, int x, int y, int ah=0, int av=0, bool autonext=false)
+		int an=0
+		if autonext
+			an=1
+		end
+		AFNT.DRAWTEXT(ApolloState.Name,Tag,Txt,x,y,ah,av,an)
 	end
 End

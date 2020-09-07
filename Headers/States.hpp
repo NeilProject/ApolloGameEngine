@@ -86,17 +86,25 @@ namespace Tricky_Apollo {
 		/// </summary>
 		/// <param name="function">Function name</param>
 		/// <param name="parameters">Parameters in Lua syntax</param>
-		void RawCall(std::string function, std::string parameters);
-		static void RawCall(std::string state, std::string function, std::string parameters);
+		void RawCall(std::string function, std::string parameters, int retvalues = 0);
+		static void RawCall(std::string state, std::string function, std::string parameters,int retvalues=0);
 
-		void RawNeilCall(std::string function, std::string parameters);
-		static void RawNeilCall(std::string state, std::string function, std::string parameters);
+		void RawNeilCall(std::string function, std::string parameters, int retvalues = 0);
+		static void RawNeilCall(std::string state, std::string function, std::string parameters, int retvalues = 0);
 
-		void RawCallByType(std::string function, std::string parameters);
-		static void RawCallByType(std::string state, std::string function, std::string parameters);
+		void RawCallByType(std::string function, std::string parameters, int retvalues = 0);
+		static void RawCallByType(std::string state, std::string function, std::string parameters, int retvalues = 0);
 
 		static void Kill(std::string state);
 		static void KillAll();
+
+		int top();
+		int ltype(int retnum);
+		std::string stype(int retnum);
+		int GetInt(int retnum);
+		std::string  GetStr(int retnum);
+		double GetNum(int retnum);
+		bool GetBool(int retnum);
 
 
 		~Apollo_State();

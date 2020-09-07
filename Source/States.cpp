@@ -326,36 +326,36 @@ namespace Tricky_Apollo {
 		CoreNeilScripts.push_back({ false,"",name });
 	}
 
-	void Apollo_State::RawCall(std::string function, std::string parameters) {
+	void Apollo_State::RawCall(std::string function, std::string parameters,int retvalues) {
 	std:string work = "--[[RawCall]]\nif type(" + function + ")~='function' then\n\tApollo_Crash(\"Callback error:\\n" + function + " is not a function but a \"..type(" + function + "),  Neil.Globals.ApolloState.Name, Neil.Globals.ApolloState.TraceBack)\nelse\n\tlocal s,e=xpcall(" + function + ",Apollo_Panic," + parameters + ")\nend";
 		//cout << "<RAWCALL>\n" << work << "\n</RAWCALL>\n";
 		luaL_loadstring(MyState, work.c_str());
-		lua_call(MyState,0, 0);
+		lua_call(MyState,0, 0,retvalues);
 	}
 
-	void Apollo_State::RawCall(std::string state, std::string function, std::string parameters) {
-		Get(state)->RawCall(function, parameters);
+	void Apollo_State::RawCall(std::string state, std::string function, std::string parameters,int retvalues) {
+		Get(state)->RawCall(function, parameters, retvalues);
 	}
 
-	void Apollo_State::RawNeilCall(std::string function, std::string parameters) {
-		RawCall("Neil.Globals." + function, parameters);
+	void Apollo_State::RawNeilCall(std::string function, std::string parameters, int retvalues ) {
+		RawCall("Neil.Globals." + function, parameters,retvalues);
 	}
 
-	void Apollo_State::RawNeilCall(std::string state, std::string function, std::string parameters) {
-		RawCall(state,"Neil.Globals." + function, parameters);
+	void Apollo_State::RawNeilCall(std::string state, std::string function, std::string parameters, int retvalues ) {
+		RawCall(state,"Neil.Globals." + function, parameters,retvalues);
 	}
 
-	void Apollo_State::RawCallByType(std::string function, std::string parameters) {
+	void Apollo_State::RawCallByType(std::string function, std::string parameters, int retvalues) {
 		if (StateType == "Lua")
-			RawCall(function, parameters);
+			RawCall(function, parameters,retvalues);
 		else if (StateType == "Neil")
-			RawNeilCall(function, parameters);
+			RawNeilCall(function, parameters, retvalues);
 		else
 			Crash("Unknown State Type");
 	}
 
-	void Apollo_State::RawCallByType(std::string state, std::string function, std::string parameters) {
-		Get(state)->RawCallByType(function, parameters);
+	void Apollo_State::RawCallByType(std::string state, std::string function, std::string parameters, int retvalues) {
+		Get(state)->RawCallByType(function, parameters,  retvalues);
 	}
 
 	void Apollo_State::Kill(std::string state) {
@@ -367,6 +367,50 @@ namespace Tricky_Apollo {
 		vector<string> Moordenaar;
 		for (auto Slachtoffer : StateMap) Moordenaar.push_back(Slachtoffer.first);
 		for (auto Slachtoffer : Moordenaar) Kill(Slachtoffer);
+	}
+
+	int Apollo_State::top() {
+		return lua_gettop(MyState);
+	}
+
+	int Apollo_State::ltype(int retnum) {
+		return lua_type(MyState, retnum);
+	}
+
+	std::string Apollo_State::stype(int retnum) {
+		switch (ltype(retnum)) {
+		case LUA_TNIL:
+			return "nil";
+		case LUA_TBOOLEAN:
+			return "boolean";
+		case LUA_TFUNCTION:
+			return "function";
+		case LUA_TNUMBER:
+			return "number";
+		case LUA_TSTRING:
+			return "string";
+		case LUA_TLIGHTUSERDATA:
+			return "userdata";
+		default:
+			return "unknown";
+		}
+	}
+
+	int Apollo_State::GetInt(int retnum) {
+		return floor(lua_tonumber(MyState,retnum));
+	}
+
+	string Apollo_State::GetStr(int retnum) {
+		string ret = lua_tostring(MyState,retnum);
+		return ret;
+	}
+
+	double Apollo_State::GetNum(int retnum) {
+		return lua_tonumber(MyState,retnum);
+	}
+
+	bool Apollo_State::GetBool(int retnum) {
+		return lua_toboolean(MyState,retnum);
 	}
 
 	Apollo_State::~Apollo_State() {

@@ -157,8 +157,50 @@ namespace Tricky_Apollo {
 
 	static int APICORE_KillFlow(lua_State* L) {
 		string kFlow = luaL_checkstring(L, 1);
+		if (kFlow != "APOLLO_MAIN" && (!prefixed(kFlow, "FLOW_"))) kFlow = "FLOW_" + kFlow;
 		Apollo_State::Kill(kFlow);
 		return 0;
+	}
+
+	static int APICORE_LoadState(lua_State* L) {
+		string ToState = luaL_checkstring(L, 1);
+		string Script = luaL_checkstring(L, 2);
+		ToState = Upper(ToState);
+		Apollo_State::Load(ToState, JCRPackage, Script);
+		return 0;
+	}
+
+	static int APICORE_KillState(lua_State* L) {
+		string kState = luaL_checkstring(L, 1);
+		Apollo_State::Kill(kState);
+		return 0;
+	}
+
+	static int APICORE_Call(lua_State* L) {
+		string cState = luaL_checkstring(L, 1);
+		string cFunc = luaL_checkstring(L, 2);
+		string cPara = luaL_checkstring(L, 3);
+		auto s = Apollo_State::Get(cState);
+		s->RawCallByType(cFunc, cPara);
+		for (int i = 1; i <= s->top(); ++i) {
+			switch (s->ltype(i)) {
+			case LUA_TNUMBER:
+				lua_pushnumber(L, s->GetNum(i));
+				break;
+			case LUA_TBOOLEAN:
+				lua_pushboolean(L, s->GetBool(i));
+				break;
+			case LUA_TSTRING:
+				lua_pushstring(L, s->GetStr(i).c_str());				
+				break;
+			case LUA_TNIL:
+				lua_pushnil(L);
+			default:
+				Crash("Received value is of type " + s->stype(i) + ". Cannot process that type");
+				break;
+			}
+		}
+		return s->top();
 	}
 
 	void InitCore() {
@@ -172,6 +214,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("GetMinTicks", APICORE_MinTicks);
 		Apollo_State::RequireFunction("LoadFlow", APICORE_LoadFlow);
 		Apollo_State::RequireFunction("KillFlow", APICORE_KillFlow);
+		Apollo_State::RequireFunction("CallState", APICORE_Call);
 		Apollo_State::RequireNeil("API/Core.Neil");
 	}
 

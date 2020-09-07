@@ -69,6 +69,14 @@ namespace Tricky_Apollo {
 	static int AEA_HideMouse(lua_State* L) { HideMouse(); return 0; }
 	static int AEA_ShowMouse(lua_State* L) { ShowMouse(); return 0; }
 
+	static int AEA_MouseHit(lua_State* L) { lua_pushboolean(L, TQSE_MouseHit(luaL_checkinteger(L, 1))); return 1; }
+	static int AEA_MouseDown(lua_State* L) { lua_pushboolean(L, TQSE_MouseDown(luaL_checkinteger(L, 1))); return 1; }
+	static int AEA_MouseHitLeft(lua_State* L) { lua_pushboolean(L, TQSE_MouseHit(SDL_BUTTON_LEFT)); return 1; }
+	static int AEA_MouseDownLeft(lua_State* L) { lua_pushboolean(L, TQSE_MouseDown(SDL_BUTTON_LEFT)); return 1; }
+	static int AEA_MouseHitRight(lua_State* L) { lua_pushboolean(L, TQSE_MouseHit(SDL_BUTTON_RIGHT)); return 1; }
+	static int AEA_MouseDownRight(lua_State* L) { lua_pushboolean(L, TQSE_MouseDown(SDL_BUTTON_RIGHT)); return 1; }
+
+
 
 
 	void ApolloAPIInit_Events(){
@@ -80,6 +88,12 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AEA_MouseY", AEA_MouseY);
 		Apollo_State::RequireFunction("AEA_ShowMouse", AEA_ShowMouse);
 		Apollo_State::RequireFunction("AEA_HideMouse", AEA_HideMouse);
+		Apollo_State::RequireFunction("AEA_MouseDown", AEA_MouseDown);
+		Apollo_State::RequireFunction("AEA_MouseHit", AEA_MouseHit);
+		Apollo_State::RequireFunction("AEA_MouseDownLeft", AEA_MouseDownLeft);
+		Apollo_State::RequireFunction("AEA_MouseHitLeft", AEA_MouseHitLeft);
+		Apollo_State::RequireFunction("AEA_MouseDownRight", AEA_MouseDownRight);
+		Apollo_State::RequireFunction("AEA_MouseHitRight", AEA_MouseHitRight);
 		Apollo_State::RequireNeil("API/Events.neil");
 	}
 }

@@ -26,6 +26,9 @@
 // JCR6
 #include <jcr6_core.hpp>
 
+// Units
+#include <QuickString.hpp>
+
 // Apollo
 #include <Crash.hpp>
 #include <Globals.hpp>
@@ -35,6 +38,7 @@ namespace Tricky_Apollo {
 
 	using namespace std;
 	using namespace jcr6;
+	using namespace TrickyUnits;
 
 #define JCRCheck() \
 	string res = luaL_checkstring(L, 1);\
@@ -56,10 +60,42 @@ namespace Tricky_Apollo {
 		int c = 0;
 		for (auto& e : JD->Entries()) {
 			c++;
+			cout << c << ":" << e.second.Entry() << "\n";
 			lua_pushstring(L, e.second.Entry().c_str());
+		}		
+		return c;
+	}
+
+	static int Apollo_JCR6_SpecEntries(lua_State* L) {
+		JCRCheck();
+		string lookfor = Upper(luaL_checkstring(L, 3));
+		int c = 0;
+		for (auto& e : JD->Entries()) {
+			if (prefixed(e.first, lookfor)) {
+				c++;
+				cout << c << ":" << e.second.Entry() << "\n";
+				lua_pushstring(L, e.second.Entry().c_str());
+			}
 		}
 		return c;
 	}
+
+
+
+	static int Apollo_JCR6_DirExists(lua_State* L) {
+		JCRCheck();
+		string LookFor = Upper(luaL_checkstring(L, 3));
+		for (auto& e : JD->Entries()) {
+			if (prefixed(e.first, LookFor)) {
+				lua_pushboolean(L, true); 
+				return 1;
+			}
+		}
+		lua_pushboolean(L, false);
+		return 1;
+	}
+
+	
 
 	static int Apollo_JCR6_LoadString(lua_State* L) {
 		JCRCheck();
@@ -84,9 +120,11 @@ namespace Tricky_Apollo {
 
 	void ApolloAPIInit_JCR6() {
 		Apollo_State::RequireFunction("AJCR_Entries", Apollo_JCR6_Entries);
+		Apollo_State::RequireFunction("AJCR_SpecEntries", Apollo_JCR6_SpecEntries);
 		Apollo_State::RequireFunction("AJCR_LoadString", Apollo_JCR6_LoadString);
 		Apollo_State::RequireFunction("AJCR_Size", Apollo_JCR6_Size);
 		Apollo_State::RequireFunction("AJCR_EntryExists", Apollo_JCR_EntryExists);
+		Apollo_State::RequireFunction("AJCR_DirExists", Apollo_JCR6_DirExists);
 		Apollo_State::RequireNeil("API/JCR6.neil");
 	}
 }
