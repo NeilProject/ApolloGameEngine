@@ -32,6 +32,8 @@
 #include <ArgParse.h>
 #include <QuickStream.hpp>
 #include <QuickString.hpp>
+#include <Dirry.hpp>
+#include <TQSE.hpp>
 
 // Lua
 
@@ -78,9 +80,18 @@ namespace Tricky_Apollo {
 		cout << "Validated: " << ARFile << "\n\n";
 	}
 
+	void ApolloConfigFile() {
+		GINIE RConfig;		
+		RConfig.FromFile(Dirry("$AppSupport$/Apollo.ini"));
+		if (RConfig.Value("Apollo", "Home") != "")
+			DirryVar("Home", RConfig.Value("Apollo", "Home"));
+	}
+
 	void CLI_Args(int n, char* args[]) {
 		FlagConfig Flag = {};
 		AddFlag_Bool(Flag, "v", false); // Version		
+		AddFlag_String(Flag, "h", Dirry("$Home$"));
+		AddFlag_String(Flag, "sg", Dirry("$Save$"));
 		printf("Parsing %d parameter(s)\n", n);
 		CLI_Config = ParseArg(n, args, Flag);
 		if (ParseArgReport() != "") {
@@ -88,6 +99,8 @@ namespace Tricky_Apollo {
 			exit(AE_CLI_Arg_Error);
 		}
 		cout << "Executable: " << CLI_Config.myexe << "\n";
+		DirryVar("Home", CLI_Config.string_flags["h"]);
+		DirryVar("Save", CLI_Config.string_flags["h"]);
 	}
 
 	void FindGameData() {
@@ -154,6 +167,7 @@ using namespace Tricky_Apollo;
 
 int main(int n, char* args[]) {
 	printf("Apollo Game Engine\nWritten by Jeroen P. Broks\nBuild date: %s\n(c) Jeroen P. Broks\nReleased under the terms of the GPL3\n\n",__DATE__);
+	//TQSE_Init();  TQSE_ShowKeyNames(); return 0; // debug
 	CLI_Args(n, args);
 	CheckARF();
 	FindGameData();

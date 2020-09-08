@@ -158,6 +158,7 @@
     <ClCompile Include="..\TrickyUnits\Source\ArgParse.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\Bank.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\CheckEndian.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\Dirry.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
@@ -183,6 +184,8 @@
     <ClInclude Include="..\TQSG\TQSE.hpp" />
     <ClInclude Include="..\TQSG\TQSG.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\Bank.hpp" />
+    <ClInclude Include="..\TrickyUnits\Headers\Dirry.hpp" />
+    <ClInclude Include="..\TrickyUnits\Headers\QuickString.hpp" />
     <ClInclude Include="Headers\AP_Lua_CPP.hpp" />
     <ClInclude Include="Headers\Core.hpp" />
     <ClInclude Include="Headers\Crash.hpp" />

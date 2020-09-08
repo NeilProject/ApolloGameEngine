@@ -120,6 +120,9 @@
     <ClCompile Include="Source\API\APIBank.cpp">
       <Filter>Source Files\Apollo\API</Filter>
     </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\Dirry.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -168,6 +171,12 @@
       <Filter>Header Files\Kthura</Filter>
     </ClInclude>
     <ClInclude Include="..\TrickyUnits\Headers\Bank.hpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TrickyUnits\Headers\Dirry.hpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TrickyUnits\Headers\QuickString.hpp">
       <Filter>Header Files\Tricky%27s Units</Filter>
     </ClInclude>
   </ItemGroup>

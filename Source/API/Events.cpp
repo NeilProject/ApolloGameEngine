@@ -75,14 +75,16 @@ namespace Tricky_Apollo {
 	static int AEA_MouseDownLeft(lua_State* L) { lua_pushboolean(L, TQSE_MouseDown(SDL_BUTTON_LEFT)); return 1; }
 	static int AEA_MouseHitRight(lua_State* L) { lua_pushboolean(L, TQSE_MouseHit(SDL_BUTTON_RIGHT)); return 1; }
 	static int AEA_MouseDownRight(lua_State* L) { lua_pushboolean(L, TQSE_MouseDown(SDL_BUTTON_RIGHT)); return 1; }
-
+	static int AEA_KeyByName(lua_State* L) { lua_pushnumber(L, SDL_GetKeyFromName(luaL_checkstring(L, 1))); return 1; }
+	static int AEA_KeyName(lua_State* L) { lua_pushstring(L, SDL_GetKeyName(1)); return 1; }
 
 
 
 	void ApolloAPIInit_Events(){
 		Apollo_State::RequireFunction("AEA_Poll", AEA_Poll);
 		Apollo_State::RequireFunction("AEA_KeyDown", AEA_KeyDown);
-		Apollo_State::RequireFunction("AEA_KeyHit", AEA_KeyHit);
+		Apollo_State::RequireFunction("AEA_KeyHit", AEA_KeyHit);		
+		Apollo_State::RequireFunction("AEA_KeyByName", AEA_KeyByName);
 		Apollo_State::RequireFunction("AEA_Terminate", AEA_Terminate);
 		Apollo_State::RequireFunction("AEA_MouseX", AEA_MouseX);
 		Apollo_State::RequireFunction("AEA_MouseY", AEA_MouseY);
@@ -94,6 +96,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AEA_MouseHitLeft", AEA_MouseHitLeft);
 		Apollo_State::RequireFunction("AEA_MouseDownRight", AEA_MouseDownRight);
 		Apollo_State::RequireFunction("AEA_MouseHitRight", AEA_MouseHitRight);
+		Apollo_State::RequireFunction("AEA_KeyName", AEA_KeyName);
 		Apollo_State::RequireNeil("API/Events.neil");
 	}
 }
