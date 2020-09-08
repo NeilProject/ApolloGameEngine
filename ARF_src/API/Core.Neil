@@ -31,7 +31,7 @@ import GetMinTicks
 import LoadState
 import KillState
 import CallState
-import KillState
+import HasState
 
 Group Flow
 	ReadOnly Delegate GoToFlow = Lua.GoToFlow
@@ -56,7 +56,7 @@ Group State
 	ReadOnly Delegate Call = CallState
 	ReadOnly Delegate Has  =  HasState
 	
-	void LoadNew(string State,string File)
+	static void LoadNew(string State,string File)
 		if not Has(State)
 			Load(State,File)
 		end
