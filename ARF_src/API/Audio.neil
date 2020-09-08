@@ -29,6 +29,7 @@ Class Audio
 	
 	ReadOnly String Tag
 	ReadOnly Bool AutoDestruct
+	Static Bool Chat=false
 	
 	Constructor(string T, Bool AD)
 		if !AllowCAudio
@@ -41,6 +42,9 @@ Class Audio
 	
 	Destructor
 		if AutoDestruct
+			if Chat
+				Print("Destroyed Audio: ",Tag)
+			end
 			AAUA.KILL(Tag)
 		End
 	End
@@ -52,9 +56,12 @@ Class Audio
 		AllowCAudio = false
 		return Ret
 	End
-	
-	Int Play(Infinity)
-		plua arg = {Infinity}
+		
+	//Int Play(Infinity) // Infinity appears to be broken (when this code was written), so this will have to do!
+	Int Play(a,b,c)
+		//plua arg = {Infinity}
+		plua arg={a,b,c}
+		// c has to make sure the third argument is not defined, and the switch statement below would always detect that!
 		Switch TableTypeChain(arg)
 			case "nothing"
 				return AAUA.PLAY(Tag,-1,0,ApolloState.Name)
