@@ -180,27 +180,31 @@ namespace Tricky_Apollo {
 		string cState = luaL_checkstring(L, 1);
 		string cFunc = luaL_checkstring(L, 2);
 		string cPara = luaL_checkstring(L, 3);
+		bool cWantRet = luaL_optinteger(L, 4,0);
 		auto s = Apollo_State::Get(cState);
 		s->RawCallByType(cFunc, cPara);
-		for (int i = 1; i <= s->top(); ++i) {
-			switch (s->ltype(i)) {
-			case LUA_TNUMBER:
-				lua_pushnumber(L, s->GetNum(i));
-				break;
-			case LUA_TBOOLEAN:
-				lua_pushboolean(L, s->GetBool(i));
-				break;
-			case LUA_TSTRING:
-				lua_pushstring(L, s->GetStr(i).c_str());				
-				break;
-			case LUA_TNIL:
-				lua_pushnil(L);
-			default:
-				Crash("Received value is of type " + s->stype(i) + ". Cannot process that type");
-				break;
+		if (cWantRet) {
+			for (int i = 1; i <= s->top(); ++i) {
+				switch (s->ltype(i)) {
+				case LUA_TNUMBER:
+					lua_pushnumber(L, s->GetNum(i));
+					break;
+				case LUA_TBOOLEAN:
+					lua_pushboolean(L, s->GetBool(i));
+					break;
+				case LUA_TSTRING:
+					lua_pushstring(L, s->GetStr(i).c_str());
+					break;
+				case LUA_TNIL:
+					lua_pushnil(L);
+				default:
+					Crash("Received value is of type " + s->stype(i) + ". Cannot process that type");
+					break;
+				}
 			}
+			return s->top();
 		}
-		return s->top();
+		return 0;
 	}
 
 	int APICORE_HasState(lua_State* L) {
