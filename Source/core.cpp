@@ -203,6 +203,12 @@ namespace Tricky_Apollo {
 		return s->top();
 	}
 
+	int APICORE_HasState(lua_State* L) {
+		string cState = luaL_checkstring(L, 1);
+		lua_pushboolean(L,Apollo_State::HasState(cState));
+		return 1;
+	}
+
 	void InitCore() {
 		Apollo_State::RequireFunction("GoToFlow",APICORE_GoToFlow);
 		Apollo_State::RequireFunction("CurrentFlow", APICORE_GetFlow);
@@ -215,6 +221,9 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("LoadFlow", APICORE_LoadFlow);
 		Apollo_State::RequireFunction("KillFlow", APICORE_KillFlow);
 		Apollo_State::RequireFunction("CallState", APICORE_Call);
+		Apollo_State::RequireFunction("LoadState", APICORE_LoadState);
+		Apollo_State::RequireFunction("KillState", APICORE_KillState);
+		Apollo_State::RequireFunction("HasState", APICORE_HasState);
 		Apollo_State::RequireNeil("API/Core.Neil");
 	}
 

@@ -28,6 +28,10 @@ import sFPS
 import showFPS
 import MinTicks
 import GetMinTicks
+import LoadState
+import KillState
+import CallState
+import KillState
 
 Group Flow
 	ReadOnly Delegate GoToFlow = Lua.GoToFlow
@@ -45,6 +49,20 @@ Group Flow
 	End
 
 End
+
+Group State
+	ReadOnly Delegate Load = LoadState
+	ReadOnly Delegate Kill = KillState
+	ReadOnly Delegate Call = CallState
+	ReadOnly Delegate Has  =  HasState
+	
+	void LoadNew(string State,string File)
+		if not Has(State)
+			Load(State,File)
+		end
+	end
+	
+end
 
 Group FPS
 	ReadOnly Delegate FN = nFPS
