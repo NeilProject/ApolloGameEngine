@@ -195,5 +195,5 @@ MyClass.Hi()
 
 # One final note
 
-Macros defined in Neil will NOT affect .lua files in anyway and cannoy be called from Lua files either. This is because Macros are no identifiers or anything, but just stuff Neil uses for its own translations. All macros are first substituted with their respective defintions, and then the new script will translate. Since Lua doesn't have a similar step and Neil leaving Lua files the way they are, nothing will happen if imported Neil scripts contain macros.  Constant and readonly variables will just work the way they should.
+Macros defined in Neil will NOT affect .lua files in anyway and cannot be called from Lua files either. This is because Macros are no identifiers or anything, but just stuff Neil uses for its own translations. All macros are first substituted with their respective defintions, and then the new script will translate. Since Lua doesn't have a similar step and Neil leaving Lua files the way they are, nothing will happen if imported Neil scripts contain macros.  Constant and readonly variables will just work the way they should.
 
