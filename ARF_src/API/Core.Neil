@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Core.Neil
 // Apollo Core API linkup
-// version: 20.09.05
+// version: 20.09.09
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -32,6 +32,14 @@ import LoadState
 import KillState
 import CallState
 import HasState
+import PKGDir
+import PlanToKill
+
+Group Core
+	Get String PKGDir 
+		Return Lua.PKGDir()
+	End
+end
 
 Group Flow
 	ReadOnly Delegate GoToFlow = Lua.GoToFlow
@@ -55,6 +63,7 @@ Group State
 	ReadOnly Delegate Kill = KillState
 	ReadOnly Delegate Call = CallState
 	ReadOnly Delegate Has  =  HasState
+	ReadOnly Delegate PlanToKill = Lua.PlanToKill
 	
 	static void LoadNew(string State,string File)
 		if not Has(State)
@@ -70,10 +79,10 @@ Group FPS
 	ReadOnly Delegate FMinTicks = MinTicks
 	ReadOnly Delegate GetMinTicks = GetMinTicks
 	Get Number N
-		return FN
+		return FN()
 	End
 	Get String S
-		return FS
+		return FS()
 	End
 	
 	Get Int MinTicks
@@ -88,6 +97,32 @@ Group FPS
 	
 	
 End
+
+
+QuickMeta ISGET
+
+	index
+		string mkey
+		switch key:upper()
+			case "INT" "INTEGER"
+				mkey = "Integer"
+			case "STRING" "STR"
+				mkey = "String"
+			case "BOOL" "BOOLEAN"
+				mkey = "Bool"
+			default
+				Lua.Apollo_Panic("Unknown ISGET member: "..key)
+			end
+		var TISGET(string state,string variable)
+			return Lua["INTERSTATE_Get"..mkey](ApolloState.Name,state,variable)
+		end
+		return TISGET
+	end
+	
+	newindex
+		Lua.Apollo_Panic("ISGET is read-only!")
+	end
+end
 
 
 //Init

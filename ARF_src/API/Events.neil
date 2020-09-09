@@ -36,8 +36,8 @@ QuickMeta Events
 	
 End
 
-init
-	For k,v in SPAIRS(AEA)
-		print(type(v),k,"=",v)
-	End
-End
+//init
+//	For k,v in SPAIRS(AEA)
+//		print(type(v),k,"=",v)
+//	End
+//End

@@ -1,7 +1,7 @@
 // Lic:
 // Source/API/JCR6.cpp
 // Apollo
-// version: 20.09.03
+// version: 20.09.09
 // Copyright (C) 2020 JCR6 access
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages

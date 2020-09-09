@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.05
+// Version: 20.09.09
 // EndLic
 // We get into the deep of this later!
 
@@ -235,7 +235,7 @@ namespace Tricky_Apollo {
 	static int AFNT_DrawText(lua_State* L) {
 		std::string State = luaL_checkstring(L, 1);
 		std::string Tag = luaL_checkstring(L, 2);
-		std::string Txt = luaL_checkstring(L,3);
+		std::string Txt = luaL_checkstring(L,3);	
 		int x = luaL_checkinteger(L, 4);
 		int y = luaL_checkinteger(L, 5);
 		int av = luaL_checkinteger(L, 6);
@@ -251,7 +251,20 @@ namespace Tricky_Apollo {
 		GotFont(true, Tag, State);
 		return 0;
 	}
+
+	static int AFNT_Fix(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		APGetFont(Tag,State)->Fixed = luaL_checkinteger(L, 3);
+		return 0;
+	}
 	
+	static int AFNT_GFix(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		lua_pushboolean(L, APGetFont(Tag, State)->Fixed);
+		return 1;
+	}
 
 	// ImageFont
 
@@ -286,6 +299,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AFNT_LoadImageFont", AFNT_LoadImageFont);
 		Apollo_State::RequireFunction("AFNT_DrawText", AFNT_DrawText);
 		Apollo_State::RequireFunction("AFNT_AssertFont", AFNT_AssertFont);
+		Apollo_State::RequireFunction("AFNT_Fix", AFNT_Fix);
+		Apollo_State::RequireFunction("AFNT_GFix", AFNT_GFix);
 		// Link Script
 		Apollo_State::RequireNeil("API/Graphics.neil");
 		// Image Font

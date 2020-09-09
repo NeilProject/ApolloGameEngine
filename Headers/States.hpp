@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.05
+// Version: 20.09.09
 // EndLic
 #pragma once
 
@@ -100,11 +100,18 @@ namespace Tricky_Apollo {
 
 		int top();
 		int ltype(int retnum);
+		/*
 		std::string stype(int retnum);
 		int GetInt(int retnum);
 		std::string  GetStr(int retnum);
 		double GetNum(int retnum);
 		bool GetBool(int retnum);
+		*/
+
+		std::string FetchString(std::string call, bool stauto = true);
+		int FetchInt(std::string call, bool stauto = true);
+		double FetchNumber(std::string call, bool stauto = true);
+		bool FetchBoolean(std::string call, bool stauto = true);
 
 
 		~Apollo_State();

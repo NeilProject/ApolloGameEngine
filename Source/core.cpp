@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.05
+// Version: 20.09.09
 // EndLic
 
 #include <iostream>
@@ -53,6 +53,8 @@ namespace Tricky_Apollo {
 	static int Ticks = 0;
 	static int Cycles = 0;
 	static int FlowMinTicks = 0;
+
+	static vector<string> StatesToBeKilled;
 
 	static float FPS() {
 		if (Ticks == 0) return 0; // Prevent division by zero!
@@ -176,6 +178,11 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int APICORE_PlanToKill(lua_State* L) {
+		string kState = luaL_checkstring(L, 1);
+		StatesToBeKilled.push_back(kState);
+	}
+
 	static int APICORE_Call(lua_State* L) {
 		string cState = luaL_checkstring(L, 1);
 		string cFunc = luaL_checkstring(L, 2);
@@ -184,6 +191,7 @@ namespace Tricky_Apollo {
 		auto s = Apollo_State::Get(cState);
 		s->RawCallByType(cFunc, cPara);
 		if (cWantRet) {
+			/*
 			for (int i = 1; i <= s->top(); ++i) {
 				switch (s->ltype(i)) {
 				case LUA_TNUMBER:
@@ -203,15 +211,46 @@ namespace Tricky_Apollo {
 				}
 			}
 			return s->top();
+			*/
 		}
 		return 0;
 	}
 
-	int APICORE_HasState(lua_State* L) {
+	static int APICORE_HasState(lua_State* L) {
 		string cState = luaL_checkstring(L, 1);
 		lua_pushboolean(L,Apollo_State::HasState(cState));
 		return 1;
 	}
+
+	static int APICORE_PKGDir(lua_State* L) {
+		lua_pushstring(L, ExtractDir(PackageMainFile).c_str());
+		return 1;
+	}
+
+	static int INTERSTATE_GetBool(lua_State* L) {
+		string cState = luaL_checkstring(L, 1);
+		string fState = luaL_checkstring(L, 2);
+		string fVar = luaL_checkstring(L, 3);
+		lua_pushboolean(L, Apollo_State::Get(fState, cState)->FetchBoolean(fVar));
+		return 1;
+	}
+
+	static int INTERSTATE_GetInteger(lua_State* L) {
+		string cState = luaL_checkstring(L, 1);
+		string fState = luaL_checkstring(L, 2);
+		string fVar = luaL_checkstring(L, 3);
+		lua_pushinteger(L, Apollo_State::Get(fState, cState)->FetchInt(fVar));
+		return 1;
+	}
+
+	static int INTERSTATE_GetString(lua_State* L) {
+		string cState = luaL_checkstring(L, 1);
+		string fState = luaL_checkstring(L, 2);
+		string fVar = luaL_checkstring(L, 3);
+		lua_pushstring(L, Apollo_State::Get(fState, cState)->FetchString(fVar).c_str());
+		return 1;
+	}
+
 
 	void InitCore() {
 		Apollo_State::RequireFunction("GoToFlow",APICORE_GoToFlow);
@@ -227,7 +266,12 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("CallState", APICORE_Call);
 		Apollo_State::RequireFunction("LoadState", APICORE_LoadState);
 		Apollo_State::RequireFunction("KillState", APICORE_KillState);
+		Apollo_State::RequireFunction("PlanToKill", APICORE_PlanToKill);
 		Apollo_State::RequireFunction("HasState", APICORE_HasState);
+		Apollo_State::RequireFunction("PKGDir", APICORE_PKGDir);
+		Apollo_State::RequireFunction("INTERSTATE_getInteger", INTERSTATE_GetInteger);
+		Apollo_State::RequireFunction("INTERSTATE_getString", INTERSTATE_GetString);
+		Apollo_State::RequireFunction("INTERSTATE_getBool", INTERSTATE_GetBool);
 		Apollo_State::RequireNeil("API/Core.Neil");
 	}
 
@@ -276,6 +320,11 @@ namespace Tricky_Apollo {
 				Crash("Unsupported flow type", "C++", "Identify", AE_UnknownFlowType);
 				break;
 			}
+			for (auto s : StatesToBeKilled) {
+				cout << "Executing planned kill: " << s << "\n";
+				Apollo_State::Kill(s);
+			}
+			StatesToBeKilled.clear();
 		}
 		ImmHalt(ExitCode);
 	}

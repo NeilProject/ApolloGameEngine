@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Graphics.neil
 // Apollo - Graphics Linkup
-// version: 20.09.05
+// version: 20.09.09
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -183,5 +183,17 @@ Class ImageFont
 			an=1
 		end
 		AFNT.DRAWTEXT(ApolloState.Name,Tag,Txt,x,y,ah,av,an)
+	end
+	
+	set bool Fixed 
+		if value
+			AFNT.FIX(ApolloState.Name,Tag,1)
+		else
+			AFNT.FIX(ApolloState.Name,Tag,0)
+		end
+	end
+	
+	get bool Fixed
+		return AFNT.GFIX(ApolloState.Name,Tag)
 	end
 End

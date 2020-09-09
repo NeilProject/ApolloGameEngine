@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.05
+// Version: 20.09.09
 // EndLic
 // C++
 #include <iostream>
@@ -377,6 +377,11 @@ namespace Tricky_Apollo {
 		return lua_type(MyState, retnum);
 	}
 
+
+
+
+
+	/*
 	std::string Apollo_State::stype(int retnum) {
 		switch (ltype(retnum)) {
 		case LUA_TNIL:
@@ -411,6 +416,36 @@ namespace Tricky_Apollo {
 
 	bool Apollo_State::GetBool(int retnum) {
 		return lua_toboolean(MyState,retnum);
+	}
+	*/
+
+#define Fetch() \
+	std:string work;\
+	if (stauto && StateType == "Neil")\
+		work = "return Neil.Globals." + call;\
+	else\
+		work = "return " + call;\
+	luaL_loadstring(MyState, work.c_str());\
+	lua_call(MyState, 0, 0, retvalues);
+
+	std::string Apollo_State::FetchString(std::string call, bool stauto) {
+		Fetch();
+		return lua_tostring(MyState, -1);
+	}
+
+	int Apollo_State::FetchInt(std::string call, bool stauto) {
+		Fetch();
+		return lua_tointeger(MyState, -1);
+	}
+
+	double Apollo_State::FetchNumber(string call, bool stauto) {
+		Fetch();
+		return (double)lua_tonumber(MyState, -1);
+	}
+
+	bool Apollo_State::FetchBoolean(std::string call, bool stauto) {
+		Fetch();
+		return lua_toboolean(MyState, -1);
 	}
 
 	Apollo_State::~Apollo_State() {
