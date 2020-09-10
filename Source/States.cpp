@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.09
+// Version: 20.09.10
 // EndLic
 // C++
 #include <iostream>
@@ -426,7 +426,7 @@ namespace Tricky_Apollo {
 	else\
 		work = "return " + call;\
 	luaL_loadstring(MyState, work.c_str());\
-	lua_call(MyState, 0, 0, retvalues);
+	lua_call(MyState, 0, 1, retvalues);
 
 	std::string Apollo_State::FetchString(std::string call, bool stauto) {
 		Fetch();
