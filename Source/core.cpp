@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.09
+// Version: 20.09.10
 // EndLic
 
 #include <iostream>
@@ -251,6 +251,16 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int APICORE_Ticks(lua_State* L) {
+		lua_pushinteger(L,(int)SDL_GetTicks());
+		return 1;
+	}
+
+	static int APICORE_Shell(lua_State* L) {
+		lua_pushinteger(L,system(luaL_checkstring(L, 1)));
+		return 1;
+	}
+
 
 	void InitCore() {
 		Apollo_State::RequireFunction("GoToFlow",APICORE_GoToFlow);
@@ -269,9 +279,11 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("PlanToKill", APICORE_PlanToKill);
 		Apollo_State::RequireFunction("HasState", APICORE_HasState);
 		Apollo_State::RequireFunction("PKGDir", APICORE_PKGDir);
-		Apollo_State::RequireFunction("INTERSTATE_getInteger", INTERSTATE_GetInteger);
-		Apollo_State::RequireFunction("INTERSTATE_getString", INTERSTATE_GetString);
-		Apollo_State::RequireFunction("INTERSTATE_getBool", INTERSTATE_GetBool);
+		Apollo_State::RequireFunction("Ticks", APICORE_Ticks);
+		Apollo_State::RequireFunction("Shell", APICORE_Shell);
+		Apollo_State::RequireFunction("INTERSTATE_GetInteger", INTERSTATE_GetInteger);
+		Apollo_State::RequireFunction("INTERSTATE_GetString", INTERSTATE_GetString);
+		Apollo_State::RequireFunction("INTERSTATE_GetBool", INTERSTATE_GetBool);
 		Apollo_State::RequireNeil("API/Core.Neil");
 	}
 
