@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.09
+// Version: 20.09.10
 // EndLic
 // We get into the deep of this later!
 
@@ -238,8 +238,8 @@ namespace Tricky_Apollo {
 		std::string Txt = luaL_checkstring(L,3);	
 		int x = luaL_checkinteger(L, 4);
 		int y = luaL_checkinteger(L, 5);
-		int av = luaL_checkinteger(L, 6);
-		int ah = luaL_checkinteger(L, 7);
+		int ah = luaL_checkinteger(L, 6);
+		int av = luaL_checkinteger(L, 7);
 		bool autonext = luaL_checkinteger(L, 8) != 0;
 		APGetFont(Tag)->Draw(Txt, x, y, ah, av, autonext);
 		return 0;
