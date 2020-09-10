@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Core.Neil
 // Apollo Core API linkup
-// version: 20.09.09
+// version: 20.09.10
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -27,6 +27,7 @@ import nFPS
 import sFPS
 import showFPS
 import MinTicks
+import Ticks
 import GetMinTicks
 import LoadState
 import KillState
@@ -78,6 +79,7 @@ Group FPS
 	ReadOnly Delegate FS = sFPS
 	ReadOnly Delegate FMinTicks = MinTicks
 	ReadOnly Delegate GetMinTicks = GetMinTicks
+	
 	Get Number N
 		return FN()
 	End
@@ -88,10 +90,14 @@ Group FPS
 	Get Int MinTicks
 		return GetMinTicks()
 	End
-	
+		
 	Set Int MinTicks
 		FMinTicks(value)
 	End
+	
+	get int Ticks
+		return Lua.Ticks()
+	end
 	
 	ReadOnly Delegate Show = showFPS
 	
@@ -124,6 +130,8 @@ QuickMeta ISGET
 	end
 end
 
+
+global delegate Shell = Lua.Shell
 
 //Init
 //	Print("DEBUG! Salut monde!") // Test output!
