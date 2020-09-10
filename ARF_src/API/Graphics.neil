@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Graphics.neil
 // Apollo - Graphics Linkup
-// version: 20.09.09
+// version: 20.09.10
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -119,6 +119,10 @@ Class Image
 	void HotCenter()
 		AIMG.HOTCENTER(ApolloState.Name,Tag)
 	End
+	
+	void HotBottomCenter()
+		AIMG.HOTBOTTOMCENTER(ApolloState.Name,Tag)
+	end
 	
 	Get Int Width
 		return AIMG.IMGWIDTH(ApolloState.Name,Tag)
