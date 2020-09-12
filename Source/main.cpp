@@ -29,6 +29,7 @@
 #include <stdio.h>
 
 // Tricky's Units
+#include <cpcd.h>
 #include <ArgParse.h>
 #include <QuickStream.hpp>
 #include <QuickString.hpp>
@@ -116,6 +117,8 @@ namespace Tricky_Apollo {
 			exit(AE_NoPackage);
 		}
 		cout << "Game package: " << PackageMainFile << "\n";
+		cd(ExtractDir(PackageMainFile).c_str());
+		cout << "Work dir: " << ExtractDir(PackageMainFile) << "\n";
 		cout << "Analyzing: " << PackageMainFile << "\n";
 		JCRPackage = jcr6::Dir(PackageMainFile);
 		if (Get_JCR_Error_Message() != "Ok") {
