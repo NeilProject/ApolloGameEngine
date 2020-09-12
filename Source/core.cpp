@@ -261,6 +261,8 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	
+
 
 	void InitCore() {
 		Apollo_State::RequireFunction("GoToFlow",APICORE_GoToFlow);
