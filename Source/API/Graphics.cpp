@@ -70,7 +70,7 @@ namespace Tricky_Apollo {
 
 	static int AGGA_GetColor(lua_State* L) {
 		Uint8 r = 0, g = 0, b = 0;
-		TQSG_GetColor(&r, &b, &b);
+		TQSG_GetColor(&r, &g, &b);
 		lua_Integer rr = r, rg = g, rb = b;
 		lua_pushinteger(L,rr);
 		lua_pushinteger(L,rg);

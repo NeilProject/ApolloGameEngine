@@ -52,7 +52,10 @@ RPGChar = setmetatable({},{
 					what = what:upper()
 					if what=="STAT" then 
 						PreciseWanted[sf("%s.STAT",char)] = PreciseWanted[sf("%s.STAT",char)] or setmetatable({},{
-							__index = function(s,stat) return RPGGetStatValue(char,stat) end,
+							__index = function(s,stat) 
+								-- Neil.Globals.cout("Asking for stat ",stat," of char ",char,"\n") -- debug
+								return RPGGetStatValue(char,stat) 
+							end,
 							__newindex = function(s,stat,value) RPGSetStatValue(char,stat,value) end
 						})
 						return PreciseWanted[sf("%s.STAT",char)] 
@@ -62,6 +65,8 @@ RPGChar = setmetatable({},{
 							__newindex = function(s,stat,value) RPGSetStatScript(char,stat,value) end
 						})
 						return PreciseWanted[sf("%s.STATSCRIPT",char)]
+					elseif what=="STATLIST" then
+						return RPGGetAllStats(char)
 					elseif what=="POINTS" then
 						PreciseWanted[sf("%s.POINTS",char)] = PreciseWanted[sf("%s.POINTS",char)] or setmetatable({},{
 							__newindex = function() error("Read only field assigned") end,

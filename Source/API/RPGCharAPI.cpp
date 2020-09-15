@@ -23,6 +23,9 @@
 // 
 // Version: 20.09.15
 // EndLic
+
+#undef blabbermouth
+
 #include <AP_Lua_CPP.hpp>
 #include <RPGStat.hpp>
 #include <States.hpp>
@@ -60,6 +63,7 @@ namespace Tricky_Apollo {
 	static int RPGCreate(lua_State* L) {
 		std::string ch = luaL_checkstring(L, 1);
 		if (Character::Map.count(ch)) Character::Map.erase(ch);
+		Character::CreateChar(ch);
 		Character::Map[ch].Name = luaL_optstring(L, 2, ch.c_str());
 		return 0;
 	}
@@ -74,7 +78,11 @@ namespace Tricky_Apollo {
 	static int RPGSetStatValue(lua_State* L) {
 		std::string ch = luaL_checkstring(L, 1);
 		std::string stat = luaL_checkstring(L, 2);
-		Character::Map[ch].GetStat(stat)->Value(luaL_checkinteger(L, 3));
+		auto value = luaL_checkinteger(L, 3);
+		Character::Map[ch].GetStat(stat)->Value(value);
+#ifdef blabbermouth
+		cout << "CHAR: " << ch << "; Defined stat: " << stat << "; value is now " << Character::Map[ch].GetStat(stat)->Value() << "; Value must be: "<<value<<"! \n";
+#endif
 		return 0;
 	}
 
@@ -175,6 +183,12 @@ namespace Tricky_Apollo {
 		Character::Map[ch].GetStat(stat)->Script(value);
 	}
 
+	static int RPGGetAllStats(lua_State* L) {
+		std::string ch = luaL_checkstring(L, 1);
+		lua_pushstring(L, Character::Map[ch].StatList().c_str());
+		return 1;
+	}
+
 
 	void ApolloAPIInit_RPGCharAPI() {
 		Character::Panic = RPGError;
@@ -184,13 +198,14 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("RPGGetStatValue", RPGGetStatValue);
 		Apollo_State::RequireFunction("RPGSetStatValue", RPGSetStatValue);
 		Apollo_State::RequireFunction("RPGSetPoints", RPGSetPoints);
-		Apollo_State::RequireFunction("RPGGetPoints", RPGSetPoints);
+		Apollo_State::RequireFunction("RPGGetPoints", RPGGetPoints);
 		Apollo_State::RequireFunction("RPGGetData", RPGGetData);
 		Apollo_State::RequireFunction("RPGSetData", RPGSetData);
 		Apollo_State::RequireFunction("RPGKillList", RPGKillList);
 		Apollo_State::RequireFunction("RPGListCount", RPGListCount);
 		Apollo_State::RequireFunction("RPGSetStatScript", RPGSetStatScript);
 		Apollo_State::RequireFunction("RPGSetPartyMax", RPGSetPartyMax);
+		Apollo_State::RequireFunction("RPGGetAllStats", RPGGetAllStats);
 		Apollo_State::RequireLua("API/RPGStat.lua");
 	}
 
