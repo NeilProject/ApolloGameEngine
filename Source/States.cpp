@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.10
+// Version: 20.09.14
 // EndLic
 // C++
 #include <iostream>
@@ -324,6 +324,10 @@ namespace Tricky_Apollo {
 
 	void Apollo_State::RequireNeil(std::string name) {
 		CoreNeilScripts.push_back({ false,"",name });
+	}
+
+	void Apollo_State::RequireLua(std::string name) {
+		CoreLuaScripts.push_back({ false,"",name });
 	}
 
 	void Apollo_State::RawCall(std::string function, std::string parameters,int retvalues) {

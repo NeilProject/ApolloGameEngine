@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.10
+// Version: 20.09.14
 // EndLic
 #pragma once
 
@@ -80,6 +80,7 @@ namespace Tricky_Apollo {
 		/// <param name="func"></param>
 		static void RequireFunction(const char* name, lua_CFunction func);
 		static void RequireNeil(std::string name);
+		static void RequireLua(std::string name);
 
 		/// <summary>
 		/// Calls a function within this state

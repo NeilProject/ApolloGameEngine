@@ -7,24 +7,26 @@
 
 
 namespace Tricky_Apollo {
+	//void ApolloAPIInit_APIBank();
 	void ApolloAPIInit_Audio();
-	void ApolloAPIInit_Bank();
 	void ApolloAPIInit_Events();
 	void ApolloAPIInit_Graphics();
 	void ApolloAPIInit_JCR6();
 	void ApolloAPIInit_Kthura();
-
+	void ApolloAPIInit_RPGCharAPI();
+	 
 
 
 	void InitApolloAPIs() {
 		// Refrain from saying this shouldn't be done in a header! Because I know!
 
+		//ApolloAPIInit_APIBank();
 		ApolloAPIInit_Audio();
-		ApolloAPIInit_Bank();
 		ApolloAPIInit_Events();
 		ApolloAPIInit_Graphics();
 		ApolloAPIInit_JCR6();
 		ApolloAPIInit_Kthura();
+		ApolloAPIInit_RPGCharAPI();
 	}
 
 }

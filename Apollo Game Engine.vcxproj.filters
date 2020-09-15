@@ -34,6 +34,9 @@
     <Filter Include="Header Files\Kthura">
       <UniqueIdentifier>{5f3b489d-0c76-4546-919d-65f458bf8a3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\JCR6">
+      <UniqueIdentifier>{5162b0e6-4aee-457a-9593-1cb3c1a3373d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -123,6 +126,15 @@
     <ClCompile Include="..\TrickyUnits\Source\Dirry.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\RPGStat.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\RPGSave.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\API\RPGCharAPI.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -178,6 +190,15 @@
     </ClInclude>
     <ClInclude Include="..\TrickyUnits\Headers\QuickString.hpp">
       <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TrickyUnits\Headers\RPGStat.hpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TrickyUnits\Headers\RPGSave.hpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClInclude>
+    <ClInclude Include="..\JCR6\headers\jcr6_core.hpp">
+      <Filter>Header Files\JCR6</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -162,12 +162,15 @@
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\RPGSave.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\RPGStat.cpp" />
     <ClCompile Include="Source\API\Audio.cpp" />
     <ClCompile Include="Source\API\APIBank.cpp" />
     <ClCompile Include="Source\API\Events.cpp" />
     <ClCompile Include="Source\API\Graphics.cpp" />
     <ClCompile Include="Source\API\JCR6.cpp" />
     <ClCompile Include="Source\API\Kthura.cpp" />
+    <ClCompile Include="Source\API\RPGCharAPI.cpp" />
     <ClCompile Include="Source\core.cpp" />
     <ClCompile Include="Source\Crash.cpp" />
     <ClCompile Include="Source\Globals.cpp" />
@@ -177,6 +180,7 @@
     <ClCompile Include="Source\States.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\JCR6\headers\jcr6_core.hpp" />
     <ClInclude Include="..\Kthura\src\Kthura.hpp" />
     <ClInclude Include="..\Kthura\src\Kthura_Core.hpp" />
     <ClInclude Include="..\Kthura\src\Kthura_Draw.hpp" />
@@ -186,6 +190,8 @@
     <ClInclude Include="..\TrickyUnits\Headers\Bank.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\Dirry.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\QuickString.hpp" />
+    <ClInclude Include="..\TrickyUnits\Headers\RPGSave.hpp" />
+    <ClInclude Include="..\TrickyUnits\Headers\RPGStat.hpp" />
     <ClInclude Include="Headers\AP_Lua_CPP.hpp" />
     <ClInclude Include="Headers\Core.hpp" />
     <ClInclude Include="Headers\Crash.hpp" />
