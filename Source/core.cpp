@@ -261,6 +261,18 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int APICORE_WaitMinTicks(lua_State* L) {
+		static int old = 0;
+		int CTicks = SDL_GetTicks();
+		if (FlowMinTicks == 0) return 0;
+		while (FlowMinTicks && old && (CTicks - old < FlowMinTicks) && old <= CTicks) {
+			SDL_Delay(1);
+			CTicks = SDL_GetTicks();
+		}
+		old = CTicks;
+		return 0;
+	}
+
 
 
 	void InitCore() {
@@ -282,6 +294,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("PKGDir", APICORE_PKGDir);
 		Apollo_State::RequireFunction("Ticks", APICORE_Ticks);
 		Apollo_State::RequireFunction("Shell", APICORE_Shell);
+		Apollo_State::RequireFunction("WaitMinTicks", APICORE_WaitMinTicks);
 		Apollo_State::RequireFunction("INTERSTATE_GetInteger", INTERSTATE_GetInteger);
 		Apollo_State::RequireFunction("INTERSTATE_GetString", INTERSTATE_GetString);
 		Apollo_State::RequireFunction("INTERSTATE_GetBool", INTERSTATE_GetBool);
