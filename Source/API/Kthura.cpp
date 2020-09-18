@@ -108,7 +108,7 @@ namespace Tricky_Apollo {
 			} while (Maps.count(Tag));			
 		}
 		Maps[Tag].TexDir = &JCRPackage;
-		Maps[Tag].Load(JCRPackage, Prefix);
+		Maps[Tag].Load(JCRPackage, Prefix);		
 		cout << "Kthura map " << Prefix << " loaded onto slot \"" << Tag << "\"; Map ID: " << Maps[Tag].ID() << "\n";
 		lua_pushstring(L,Tag.c_str());
 		lua_pushinteger(L, Maps[Tag].ID());
@@ -303,6 +303,22 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Kthura_GetTags(lua_State* L) {
+		qVerify();
+		string Layer = Upper(luaL_checkstring(L, 4));
+		if (!Maps[Tag].Layers.count(Layer)) {
+			Crash("Cannot get the object tags from a non-existent layer: " + Layer, State, Apollo_State::TraceBack(State));
+			return 0;
+		}
+		lua_pushstring(L, Maps[Tag].Layer(Layer)->TagList().c_str());
+		return 1;		
+	}
+
+	static int Kthura_RemapAllLayers(lua_State* L) {
+		qVerify();
+		Maps[Tag].Remap();
+	}
+
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
 		Kthura_Draw_SDL_Driver::Init();
@@ -318,8 +334,10 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_GetObjStr", Kthura_GetObjStr);
 		Apollo_State::RequireFunction("AKTHURA_SetObjStr", Kthura_SetObjStr);
 		Apollo_State::RequireFunction("AKTHURA_GetObjBool", Kthura_GetObjBool);
-		Apollo_State::RequireFunction("AKTHURA_EnumObjects", Kthura_EnumObjects);
+		Apollo_State::RequireFunction("AKTHURA_EnumObjects", Kthura_EnumObjects);		
 		Apollo_State::RequireFunction("AKTHURA_Draw", Kthura_Draw);
+		Apollo_State::RequireFunction("AKTHURA_GetTags", Kthura_GetTags); 
+		Apollo_State::RequireFunction("AKTHURA_RemapAllLayers", Kthura_RemapAllLayers);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }
