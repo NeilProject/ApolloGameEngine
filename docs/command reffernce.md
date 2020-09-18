@@ -31,12 +31,15 @@ Converted into a string
 Will draw the FPS (same way as it's returned by FPS.S) on any spot you want (during a drawing stage).
 Used font is a system font.
 
-## Property Int MinTicks
+## Property Int FPS.MinTicks
 Contains the minimal number of "ticks" (a thousandth of a second) that must minimally pass between two cycles. 
 You can change this by assinging a value.
 This is particularly a handy setting when dealing with games created for slower computers, but which would run way too fast on fast computers (without MinTicks the computer just handles stuff as fast as it can. You do not always want that).
 MinTicks is just a way to make sure your game runs just as fast on all computers.
 
+## void FPS.WaitMinTicks()
+Will wait a certain number of ticks based on how MinTicks is set and how much time has passed since the last FPS.WaitMinTicks() call. If the function was never used before, then the start of the application counts as the "last time".
+Please note this function will ignore the settings the normal engine flow uses, and vice versa.
 
 
 
@@ -51,6 +54,21 @@ Returns true if the key of the specific keycode was hit
 
 ## bool Events.Terminate()
 Returns true if the user tried to close the application
+
+## int Events.MouseX()
+Returns current X position of the mouse pointer
+
+## int Events.MouseY()
+Returns current Y position of the mouse pointer
+
+## int Events.MouseDown(int buttoncode)
+True if mouse button is held.
+Buttoncode 1 = left and 2 = right, other codes can be applicable if you have a more luxurous mouse.
+
+## int Events.MouseHit(int buttoncode)
+True if the mose button is hit
+
+
 
 
 
@@ -148,5 +166,5 @@ Stops a channel from playing. When no channel is given all channels will be stop
 
 # Group Kthura
 
-Now using Kthura is a bit of thing I need to cover in a separate document, due to Kthura being a bit of a complex system. Allthough I know (from experience) that Kthura completely written in script can work, and pretty fast to, I now decided to keep Kthura wholly in C++ (for more speed), but linking a system like that to a multi-state scripting engine was nasty.
+Now using Kthura is a bit of thing I need to cover in a separate document, due to Kthura being a bit of a complex system. Allthough I know (from experience) that Kthura completely written in script can work, and pretty fast too, I now decided to keep Kthura wholly in C++ (for more speed), but linking a system like that to a multi-state scripting engine was nasty.
 
