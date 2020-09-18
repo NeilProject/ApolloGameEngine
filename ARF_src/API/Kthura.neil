@@ -284,7 +284,7 @@ class KTHURA_Layer
 	
 	var Obj(I_want)
 		//Print("I want it all! And I want it now!")
-		Int ObjID = AKTH.VERIFYOBJECT(MapTag,ApolloState.Name,MapID,LayerTag,type(I_want),I_want)
+		Int ObjID = AKTH.VERIFYOBJECT(MapTag,ApolloState.Name,MapID,LayerTag,Lua.type(I_want),I_want)
 		//return new KTHURA_Object(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID)
 		  return new KTHURA_Object(MapID, MapTag,  LayerTag, ObjID)
 	end
@@ -312,6 +312,13 @@ class KTHURA_Layer
 	Void Draw(int ScrollX=0, int ScrollY=0,int StartX=0,int StartY=0)
 		AKTH.DRAW(MapTag,ApolloState.Name,MapID,LayerTag,ScrollX,ScrollY,StartX,StartY)
 	End
+	
+	get string TagList
+		string ret = AKTH.GETTAGS(MapTag,ApolloState.Name,MapID,LayerTag)
+		print("Taglist: ",ret)
+		return ret
+	end
+
 end
 
 class KTHURA_Map
@@ -337,14 +344,21 @@ class KTHURA_Map
 		return { AKTH.LAYERS(Tag,ApolloState.Name,ID) }
 	End
 	
+	void Remap()
+	//	     RemapAllLayers
+		AKTH.REMAPALLLAYERS(Tag,ApolloState.Name,ID)
+	end
+	
 	Void Draw(String LayerTag,int ScrollX=0, int ScrollY=0,int StartX=0,int StartY=0)
+		//print("Pindapoepchinees: ",tag,LayerTag,scrollx,scrolly,startx,starty)
 		AKTH.DRAW(Tag,ApolloState.Name,ID,LayerTag,ScrollX,ScrollY,StartX,StartY)
 	End
+	
 
 	
 End
 
-Group Kthura
+group Kthura
 
 	var Load(string mapdir,string Tag="GAMEMAP")
 		string gtag
@@ -355,7 +369,7 @@ Group Kthura
 	
 	var Map(string tag)
 		return new KTHURA_Map(tag,-1)
-	End
+	end
 	
 	var Kill(string tag)
 		AKTH.KILL(tag)
