@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.14
+// Version: 20.09.19
 // EndLic
 
 // Internal
@@ -93,6 +93,7 @@ namespace Tricky_Apollo {
 		AddFlag_Bool(Flag, "v", false); // Version		
 		AddFlag_String(Flag, "h", Dirry("$Home$"));
 		AddFlag_String(Flag, "sg", Dirry("$Save$"));
+		AddFlag_Bool(Flag, "nfs", false); // If set no full screen ever!
 		printf("Parsing %d parameter(s)\n", n);
 		CLI_Config = ParseArg(n, args, Flag);
 		if (ParseArgReport() != "") {
@@ -102,6 +103,7 @@ namespace Tricky_Apollo {
 		cout << "Executable: " << CLI_Config.myexe << "\n";
 		DirryVar("Home", CLI_Config.string_flags["h"]);
 		DirryVar("Save", CLI_Config.string_flags["h"]);
+		if (CLI_Config.bool_flags["nfs"]) NeverFullScreen = true;
 	}
 
 	void FindGameData() {
