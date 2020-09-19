@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.05
+// Version: 20.09.19
 // EndLic
 
 
@@ -40,6 +40,7 @@ namespace Tricky_Apollo {
 	/// </summary>
 	extern bool Apollo_SDL_Loudmouth;
 	extern TrickyUnits::TQSG_ImageFont Apollo_SysFont;
+	extern bool NeverFullScreen;
 	
 	
 	

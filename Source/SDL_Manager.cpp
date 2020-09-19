@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.05
+// Version: 20.09.19
 // EndLic
 
 
@@ -62,6 +62,7 @@ namespace Tricky_Apollo {
     using namespace std;
     
     bool Apollo_SDL_Loudmouth = true;
+    bool NeverFullScreen = false;
 
     static bool Begun_SDL = false;
     TQSG_ImageFont Apollo_SysFont;
@@ -343,7 +344,7 @@ namespace Tricky_Apollo {
         //Initialization flag
         bool success = true;
 
-        success = TQSG_Init(Identify::WindowTitle(),Identify::WinWidth(),Identify::WinHeight(),Identify::FullScreen());
+        success = TQSG_Init(Identify::WindowTitle(),Identify::WinWidth(),Identify::WinHeight(),Identify::FullScreen() && (!NeverFullScreen));
         TQSG_Panic = AlgehelePaniek; // Will direct most TQSG errors to the Apollo crash routine!
         if (!success) exit(AE_SDL_Error);
         if (!TQSA_Init(MIX_INIT_OGG)) {
