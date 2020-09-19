@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.01
+// Version: 20.09.19
 // EndLic
 // C++
 #include <iostream>
@@ -319,6 +319,28 @@ namespace Tricky_Apollo {
 		Maps[Tag].Remap();
 	}
 
+	static int Kthura_MapMetaFields(lua_State* L) {
+		qVerify();
+		std::string ret = "";
+		for (auto& it : Maps[Tag].MetaData) {
+			if (ret != "") ret += ";";
+			ret += it.first;
+		}
+		lua_pushstring(L, ret.c_str());
+		return 1;
+	}
+
+	static int Kthura_MapMeta(lua_State* L) {
+		qVerify();
+		std::string fld = luaL_checkstring(L, 4);
+		if (!Maps[Tag].MetaData.count(fld)) {
+			lua_pushstring(L, "");
+		} else {
+			lua_pushstring(L, Maps[Tag].MetaData[fld].c_str());
+		}
+		return 1;
+	}
+
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
 		Kthura_Draw_SDL_Driver::Init();
@@ -338,6 +360,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_Draw", Kthura_Draw);
 		Apollo_State::RequireFunction("AKTHURA_GetTags", Kthura_GetTags); 
 		Apollo_State::RequireFunction("AKTHURA_RemapAllLayers", Kthura_RemapAllLayers);
+		Apollo_State::RequireFunction("AKTHURA_MapMetaFields", Kthura_MapMetaFields);
+		Apollo_State::RequireFunction("AKTHURA_MapMeta", Kthura_MapMeta);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }

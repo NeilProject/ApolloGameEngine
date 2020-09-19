@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Kthura.neil
 // Apollo - Kthura Linker
-// version: 20.09.01
+// version: 20.09.19
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -325,6 +325,7 @@ class KTHURA_Map
 	readonly string Tag
 	readonly int ID
 	//readonly bool AutoDestroy
+	readonly table Meta
 	
 	public Constructor(string T,int aID)
 		Tag = T
@@ -333,7 +334,17 @@ class KTHURA_Map
 		else
 			ID=aID
 		End
-	End
+		string MIndex(s,string key)
+			return AKTH.MAPMETA(Tag,ApolloState.Name,ID,key)
+		end
+		void MNewIndex(s,string key, string value)
+			Lua.error(sprintf("Value '%s' cannot be assinged to Kthura MetaData field '%s', since it's read-only!",value,key))
+		end
+		int MLen(s)
+			return #self.MetaFields
+		end
+		Meta = Lua.setmetatable({},{["__index"]=MIndex, ["__newindex"]=MNewIndex,["__len"]=MLen})
+	end
 	
 	Var Layer(string WantedLayer)
 		Print("Get:",WantedLayer," From ",Tag)
@@ -353,6 +364,10 @@ class KTHURA_Map
 		//print("Pindapoepchinees: ",tag,LayerTag,scrollx,scrolly,startx,starty)
 		AKTH.DRAW(Tag,ApolloState.Name,ID,LayerTag,ScrollX,ScrollY,StartX,StartY)
 	End
+	
+	get table MetaFields
+		return Split(AKTH.MAPMETAFIELDS(Tag,ApolloState.Name,ID),";")
+	end
 	
 
 	
