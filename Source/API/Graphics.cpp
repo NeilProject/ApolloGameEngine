@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.10
+// Version: 20.09.19
 // EndLic
 // We get into the deep of this later!
 
@@ -85,7 +85,7 @@ namespace Tricky_Apollo {
 	}
 
 	static int AGGA_Flip(lua_State* L) {
-		TQSG_Flip;
+		TQSG_Flip();
 		return 0;
 	}
 
@@ -266,6 +266,23 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AFNT_TxtW(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		std::string Txt = luaL_checkstring(L, 3);
+		lua_pushinteger(L, APGetFont(Tag, State)->TextWidth(Txt.c_str()));
+		return 1;
+	}
+
+	static int AFNT_TxtH(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		std::string Txt = luaL_checkstring(L, 3);
+		lua_pushinteger(L, APGetFont(Tag, State)->TextHeight(Txt.c_str()));
+		return 1;
+	}
+
+
 	// ImageFont
 
 
@@ -301,6 +318,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AFNT_AssertFont", AFNT_AssertFont);
 		Apollo_State::RequireFunction("AFNT_Fix", AFNT_Fix);
 		Apollo_State::RequireFunction("AFNT_GFix", AFNT_GFix);
+		Apollo_State::RequireFunction("AFNT_TxtW", AFNT_TxtW);
+		Apollo_State::RequireFunction("AFNT_TxtH", AFNT_TxtH);
 		// Link Script
 		Apollo_State::RequireNeil("API/Graphics.neil");
 		// Image Font
