@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.14
+// Version: 20.09.19
 // EndLic
 // C++
 #include <iostream>
@@ -453,10 +453,11 @@ namespace Tricky_Apollo {
 	}
 
 	Apollo_State::~Apollo_State() {
-		std::cout << "Destroy state " << StateName << "\n";
-		if (MyState == NULL)
+		std::cout << "Destroying state " << StateName << " -> " << MyState << "\n";
+		if (MyState == NULL) {
 			std::cout << " = Nothing to destroy! State was empty!\n";
-		else {/*
+			return;
+		} else {/*
 			if (StateType == "Lua") {
 				std::string function = "Apollo_Dispose";
 				std::string work = "--[[DisposeLua]]\nif not " + function + " then return end\n\nif type(" + function + ")~='function' then\n\tApollo_Crash(\"Callback error:\\n" + function + " is not a function but a \"..type(" + function + "),  Neil.Globals.ApolloState.Name, Neil.Globals.ApolloState.TraceBack)\nelse\n\tlocal s,e=xpcall(" + function + ",Apollo_Panic)\nend";
@@ -472,6 +473,7 @@ namespace Tricky_Apollo {
 			}
 			*/
 			lua_close(MyState);
+			MyState = NULL;
 		}
 	}
 
