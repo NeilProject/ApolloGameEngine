@@ -192,8 +192,6 @@ namespace Tricky_Apollo {
 		lua_pushstring(L, Tag.c_str());
 		//cout << "Returning from loadbank... Tag:" << Tag << "\n";
 		return 1;
-
-
 	}
 
 	static int Apollo_BankCheck(lua_State* L) {

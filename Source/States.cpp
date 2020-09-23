@@ -362,8 +362,16 @@ namespace Tricky_Apollo {
 		Get(state)->RawCallByType(function, parameters,  retvalues);
 	}
 
+	void Apollo_State::Kill() {
+		if (MyState) {
+			lua_close(MyState);
+			MyState = NULL;
+		}
+	}
+
 	void Apollo_State::Kill(std::string state) {
 		state = Upper(state);
+		StateMap[state].Kill();
 		if (StateMap.count(state)) StateMap.erase(state);
 	}
 
@@ -471,9 +479,9 @@ namespace Tricky_Apollo {
 				luaL_loadstring(MyState, work.c_str());
 				lua_call(MyState, 0, 0);
 			}
-			*/
 			lua_close(MyState);
 			MyState = NULL;
+			*/
 		}
 	}
 

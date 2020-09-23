@@ -150,6 +150,7 @@
     <ClCompile Include="..\JCR6\src\jcr6_quakepak.cpp" />
     <ClCompile Include="..\JCR6\src\jcr6_wad.cpp" />
     <ClCompile Include="..\Kthura\src\Kthura_Core.cpp" />
+    <ClCompile Include="..\Kthura\src\Kthura_Dijkstra.cpp" />
     <ClCompile Include="..\Kthura\src\Kthura_Draw.cpp" />
     <ClCompile Include="..\Kthura\src\Kthura_SDL_Driver.cpp" />
     <ClCompile Include="..\TQSG\TQSA.cpp" />
@@ -158,6 +159,8 @@
     <ClCompile Include="..\TrickyUnits\Source\ArgParse.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\Bank.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\CheckEndian.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\Dijkstra.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\dim2.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\Dirry.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
@@ -183,11 +186,13 @@
     <ClInclude Include="..\JCR6\headers\jcr6_core.hpp" />
     <ClInclude Include="..\Kthura\src\Kthura.hpp" />
     <ClInclude Include="..\Kthura\src\Kthura_Core.hpp" />
+    <ClInclude Include="..\Kthura\src\Kthura_Dijkstra.hpp" />
     <ClInclude Include="..\Kthura\src\Kthura_Draw.hpp" />
     <ClInclude Include="..\Kthura\src\Kthura_SDL_Driver.hpp" />
     <ClInclude Include="..\TQSG\TQSE.hpp" />
     <ClInclude Include="..\TQSG\TQSG.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\Bank.hpp" />
+    <ClInclude Include="..\TrickyUnits\Headers\dim2.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\Dirry.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\QuickString.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\RPGSave.hpp" />

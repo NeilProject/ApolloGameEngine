@@ -135,6 +135,15 @@
     <ClCompile Include="Source\API\RPGCharAPI.cpp">
       <Filter>Source Files\Apollo\API</Filter>
     </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\dim2.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Kthura\src\Kthura_Dijkstra.cpp">
+      <Filter>Source Files\Kthura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\Dijkstra.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -199,6 +208,12 @@
     </ClInclude>
     <ClInclude Include="..\JCR6\headers\jcr6_core.hpp">
       <Filter>Header Files\JCR6</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TrickyUnits\Headers\dim2.hpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Kthura\src\Kthura_Dijkstra.hpp">
+      <Filter>Header Files\Kthura</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

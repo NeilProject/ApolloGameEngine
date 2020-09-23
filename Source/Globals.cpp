@@ -27,10 +27,12 @@
 #include <string>
 #include <ArgParse.h>
 #include <jcr6_core.hpp>
+#include <Kthura.hpp>
 
 namespace Tricky_Apollo {
 	 TrickyUnits::ParsedArg CLI_Config;
 	 std::string PackageMainFile="";
 	 jcr6::JT_Dir JCRPackage;
 	 jcr6::JT_Dir ARF;
+	 std::map<std::string, NSKthura::Kthura> Maps;
 }

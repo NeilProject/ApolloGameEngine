@@ -40,6 +40,7 @@
 #include "../Headers/States.hpp"
 #include "../Headers/Crash.hpp"
 #include "../Headers/SDL_Manager.hpp"
+#include "../Headers/Globals.hpp"
 
 namespace Tricky_Apollo {
 	using namespace std;
@@ -88,10 +89,11 @@ namespace Tricky_Apollo {
 	}
 
 	void ImmHalt(int exitcode) {
+		Maps.clear();
+		if (NSKthura::KthuraDraw::DrawDriver) delete NSKthura::KthuraDraw::DrawDriver;
+		if (NSKthura::Kthura::PathFinder) delete NSKthura::Kthura::PathFinder;
 		Apollo_State::KillAll();
 		Apollo_SDL_End();
-		if (NSKthura::KthuraDraw::DrawDriver) delete NSKthura::KthuraDraw::DrawDriver;
-		// TODO: Make sure Lua is unloaded	
 		exit(exitcode);
 	}
 
