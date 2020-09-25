@@ -148,6 +148,11 @@ class KTHURA_Object
 	end
 
 
+	get bool NotMovingThen0
+		return AKTH.GETOBJBOOL(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"NOTMOVINGTHEN0")
+	end
+
+
 	// DEFINE
 	
 	Set Int ID
@@ -263,6 +268,15 @@ class KTHURA_Object
 		End
 		
 	end
+
+	set bool NotMovingThen0
+		if Value
+			AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"NOTMOVINGTHEN0", 1)
+		else
+			AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"NOTMOVINGTHEN0", 0)
+		end
+	end
+
 	
 	void WalkTo(a,b,c)
 		static delegate t = Lua.type
@@ -375,7 +389,10 @@ class KTHURA_Layer
 	get bool AnythingMoving
 		return AKTH.ANYTHINGMOVING(MapTag,ApolloState.Name,MapID,LayerTag)
 	end
-
+	
+	void Kill(objid)
+		AKTH.KILLOBJECT(MapTag,ApolloState.Name,MapID,LayerTag,lua.type(objid),objid)
+	end
 end
 
 class KTHURA_Map
@@ -404,7 +421,7 @@ class KTHURA_Map
 	end
 	
 	Var Layer(string WantedLayer)
-		Print("Get:",WantedLayer," From ",Tag)
+		//Print("Get:",WantedLayer," From ",Tag)
 		return new KTHURA_Layer(ID,Tag,WantedLayer)
 	End
 	
