@@ -87,6 +87,13 @@ Class Audio
 		End
 	End
 	
+	static Var Obtain(String Tag)
+		AllowCAudio = true
+		var Ret = New Audio(Tag,false)
+		AllowCAudio = false
+		return ret
+	End
+	
 	Static ReadOnly Delegate ChannelPlaying = AAUA.CHANNELPLAYING
 	
 	Static Void Stop(channel)
