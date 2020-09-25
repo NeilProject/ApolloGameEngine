@@ -113,6 +113,7 @@ namespace Tricky_Apollo {
 			} while (Maps.count(Tag));			
 		}
 		Maps[Tag].TexDir = &JCRPackage;
+		Maps[Tag].KillMap();
 		Maps[Tag].Load(JCRPackage, Prefix);		
 		cout << "Kthura map " << Prefix << " loaded onto slot \"" << Tag << "\"; Map ID: " << Maps[Tag].ID() << "\n";
 		lua_pushstring(L,Tag.c_str());
@@ -322,6 +323,8 @@ namespace Tricky_Apollo {
 			ret = obj->Impassible();
 			qCase("FORCEPASSIBLE", obj->ForcePassible());
 			qCase("VISIBLE", obj->Visible());
+			qCase("NOTINMOTIONTHEN0", obj->NotInMotionThen0());
+			qCase("NOTMOVINGTHEN0", obj->NotInMotionThen0());
 		} else {
 			Crash("Unknown Object Boolean field: " + ObjKey, State, Apollo_State::TraceBack(State));
 		}
@@ -356,6 +359,8 @@ namespace Tricky_Apollo {
 		qStCs("IMPASSIBLE") obj->Impassible(value!=0);
 		qStCs("FORCEPASSIBLE") obj->ForcePassible(value != 0);
 		qStCs("VISBLE") obj->Visible(value != 0);
+		qStCs("NOTINMOTIONTHEN0") obj->NotInMotionThen0(value != 0);
+		qStCs("NOTMOVINGTHEN0") obj->NotInMotionThen0(value != 0);
 		else {
 			Crash("Could not write to Object Integer/Boolean field: " + ObjKey, State, Apollo_State::TraceBack(State));
 		}
@@ -462,6 +467,13 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int Kthura_KillObject(lua_State* L) {
+		qObjVerify();
+		Maps[Tag].Layer(Layer)->Kill(obj);
+		return 0;
+	}
+
+
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
 		Kthura::PathFinder = new Kthura_Dijkstra();
@@ -493,6 +505,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_MoveToObj", Kthura_MoveToObject);
 		Apollo_State::RequireFunction("AKTHURA_DumpDom", Kthura_DumpDom);
 		Apollo_State::RequireFunction("AKTHURA_AnythingMoving", Kthura_AnyThingMoving);
+		Apollo_State::RequireFunction("AKTHURA_KillObject", Kthura_KillObject);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }
