@@ -1,0 +1,40 @@
+Table ASGM = LGGTTT("ASGM")
+
+quickmeta SaveGameData
+	newindex
+		Lua.assert(lua.type(key)=="string","SaveGame.DATA[<"..lua.type(key)..">]????? Key must be a string!")
+		ASGM.SETDATA(key:upper(),tostring(value))
+	end
+	
+	index
+		Lua.assert(lua.type(key)=="string","SaveGame.DATA[<"..lua.type(key)..">]????? Key must be a string!")
+		return ASGM.GETDATA(key:upper())
+	end
+	
+	len
+		return ASGM.COUNTDATA()
+	end
+	
+	
+end
+
+quickmeta SaveGame
+
+	index
+		Lua.assert(lua.type(key)=="string","SaveGame[<"..lua.type(key)..">]????? Key must be a string!")		
+		Key = Key:upper()
+		if Key=="DATA"
+			return SaveGameData
+		end
+		assert(ASGM[key],"SaveGame does not have a member named \""..key.."\"!")
+		return ASGM[Key]
+	end
+	
+	newindex
+		Lua.assert(lua.type(key)=="string","SaveGame[<"..lua.type(key)..">]????? Key must be a string!")		
+		Key = Key:upper()
+		Lua.error("All SaveGame members are read-only!")
+	end
+		
+
+end

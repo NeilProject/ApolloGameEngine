@@ -52,6 +52,10 @@ namespace Tricky_Apollo {
 		return s;
 	}
 
+	std::string Identify::ProjectData(std::string Key) {
+		return ConfigData.Value("Project",Key);
+	}
+
 	bool Identify::FullScreen() { return Upper(ConfigData.Value("Window", "FullScreen")) == "YES"; }
 
 	int Identify::WinHeight() {

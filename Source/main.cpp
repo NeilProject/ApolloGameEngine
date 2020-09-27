@@ -82,10 +82,11 @@ namespace Tricky_Apollo {
 	}
 
 	void ApolloConfigFile() {
-		GINIE RConfig;		
+		GINIE RConfig;
+		cout << "Apollo Core Config: " << Dirry("$AppSupport$/Apollo.ini") << endl;
 		RConfig.FromFile(Dirry("$AppSupport$/Apollo.ini"));
 		if (RConfig.Value("Apollo", "Home") != "")
-			DirryVar("Home", RConfig.Value("Apollo", "Home"));
+			DirryVar("Home", RConfig.Value("Apollo", "Home"));		
 	}
 
 	void CLI_Args(int n, char* args[]) {
@@ -101,8 +102,11 @@ namespace Tricky_Apollo {
 			exit(AE_CLI_Arg_Error);
 		}
 		cout << "Executable: " << CLI_Config.myexe << "\n";
-		DirryVar("Home", CLI_Config.string_flags["h"]);
-		DirryVar("Save", CLI_Config.string_flags["h"]);
+		if (CLI_Config.string_flags["h"] != "") {
+			cout << "Overriding home due to flag: " << CLI_Config.string_flags["h"] << endl;
+			DirryVar("Home", CLI_Config.string_flags["h"]);
+			DirryVar("Save", CLI_Config.string_flags["h"]);
+		}
 		if (CLI_Config.bool_flags["nfs"]) NeverFullScreen = true;
 	}
 
@@ -172,7 +176,8 @@ using namespace Tricky_Apollo;
 
 int main(int n, char* args[]) {
 	printf("Apollo Game Engine\nWritten by Jeroen P. Broks\nBuild date: %s\n(c) Jeroen P. Broks\nReleased under the terms of the GPL3\n\n",__DATE__);
-	//TQSE_Init();  TQSE_ShowKeyNames(); return 0; // debug
+	//TQSE_Init();  TQSE_ShowKeyNames(); return 0; // debug	
+	ApolloConfigFile();
 	CLI_Args(n, args);
 	CheckARF();
 	FindGameData();

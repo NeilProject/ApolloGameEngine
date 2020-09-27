@@ -308,6 +308,7 @@ namespace Tricky_Apollo {
 			qCase("TAG", obj->Tag());
 			qCase("KIND", obj->Kind());
 			qCase("LABELS", obj->Labels());
+			qCase("WIND", obj->Wind());
 		} else {
 			Crash("Unknown Object String field: " + ObjKey, State, Apollo_State::TraceBack(State));
 		}
@@ -376,6 +377,7 @@ namespace Tricky_Apollo {
 		qStCs("TAG") obj->Tag(value);
 		qStCs("KIND") Crash("Kthura Object Field 'Kind' is read-only!", State, Apollo_State::TraceBack(State));
 		qStCs("LABELS") obj->Labels(value);
+		qStCs("WIND") obj->Wind(value);
 		else {
 			Crash("Could not write to Object String field: " + ObjKey, State, Apollo_State::TraceBack(State));
 		}
@@ -473,6 +475,18 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Kthura_GetWind(lua_State* L) {
+		qObjVerify();
+		lua_pushstring(L, obj->Wind().c_str());
+		return 1;
+	}
+	
+	static int Kthura_SetWind(lua_State* L) {
+		qObjVerify();
+		obj->Wind(luaL_checkstring(L, 7));
+		return 0;
+	}
+
 
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
@@ -506,6 +520,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_DumpDom", Kthura_DumpDom);
 		Apollo_State::RequireFunction("AKTHURA_AnythingMoving", Kthura_AnyThingMoving);
 		Apollo_State::RequireFunction("AKTHURA_KillObject", Kthura_KillObject);
+		Apollo_State::RequireFunction("AKTHURA_GetWind", Kthura_GetWind);
+		Apollo_State::RequireFunction("AKTHURA_SetWind", Kthura_SetWind);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }

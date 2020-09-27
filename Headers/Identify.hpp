@@ -45,6 +45,7 @@ namespace Tricky_Apollo {
 		static std::string MetaData(std::string key);
 		static std::string EngineData(std::string key);
 		static std::string WindowTitle();
+		static std::string ProjectData(std::string Key);
 		static bool FullScreen();		
 		static int WinHeight();
 		static int WinWidth();

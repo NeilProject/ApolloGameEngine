@@ -27,12 +27,15 @@
 #include <jcr6_core.hpp>
 
 // Units
+#include <Dirry.hpp>
 #include <QuickString.hpp>
+#include <RPGSave.hpp>
 
 // Apollo
 #include <Crash.hpp>
 #include <Globals.hpp>
 #include <States.hpp>
+#include <Identify.hpp>
 
 namespace Tricky_Apollo {
 
@@ -118,7 +121,99 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	// Savegames
+	static map<string, string> SaveGameData;
+	static string SaveGameFile{ "" };
+	static string SaveDir{ "" };
+	
+	static int Apollo_SG_Assign(lua_State* L) {
+		SaveGameFile = luaL_checkstring(L, 1);
+		cout << "Savegame assigned to file: " << SaveGameFile << endl;
+		return 0;
+	}
+
+	static int Apollo_SG_Clear(lua_State* L) {
+		cout << "Cleared savegame!";
+		SaveGameData.clear();
+		return 0;
+	}
+
+	static int Apollo_SG_SetData(lua_State* L) {
+		auto Key = Upper(luaL_checkstring(L, 1));
+		SaveGameData[Key] = luaL_checkstring(L, 2);
+		return 0;
+	}
+
+	static int Apollo_SG_GetData(lua_State* L) {
+		auto Key = Upper(luaL_checkstring(L, 1));
+		cout << "SG> Set: " << Key << endl;
+		lua_pushstring(L,SaveGameData[Key].c_str());
+		return 1;
+	}
+
+	static int Apollo_SG_DataFields(lua_State* L) {
+		string ret{ "" };
+		for (auto it : SaveGameData) {
+			if (ret.size()) ret += ";";
+			ret += it.first;
+		}
+		lua_pushstring(L, ret.c_str());
+		return 1;
+	}
+
+	static int Apollo_SG_Save(lua_State* L) {
+		cout << "Savegame write request received\n";
+		if (SaveGameFile == "") Crash("Trying to save a savegame file without a name");
+		if (SaveDir == "") SaveDir = Dirry("$Home$/ApolloGameData/"+Identify::ProjectData("ID")+"/SaveGame");
+		string cmd{ "OpenURL MD \""+SaveDir+"\"" };
+		cout << "chkexe: " << cmd << endl;
+		cout << "Directory check: " << SaveDir << endl;
+		auto exc = system(cmd.c_str());
+		auto secu = false;
+		if (exc) {
+			lua_pushstring(L, std::string("Checking/Creating Savegame dir " + SaveDir + " failed! (" + to_string(exc) + ")").c_str()); // A more elegant solution may come later!
+			return 1;
+		}
+		cout << "Saving: " << SaveDir << "/" << SaveGameFile << endl;
+		jcr6::JT_Create JCR(SaveDir + "/"+ SaveGameFile);
+		for (auto& it : SaveGameData) {
+			if (it.first == "*PARTY") {
+				cout << "= Adding party!";
+				RPGSave(&JCR, "PARTY/");
+				JCR.AddString("HEAD/PARTY", "Present");
+			}else if(it.first=="*SECU") {
+				secu = Upper(it.second) == "YES";
+			} else if (prefixed(it.first,"*")){
+				Crash("Invalid save game request!", "C++:SAVEGAME", it.first);
+			} else {
+				cout << "= Adding data entry: " << it.first << endl;
+				if (it.first == "HEAD")
+					JCR.AddString("HEAD/" + it.first, it.second);
+				else
+					JCR.AddString("DATA/" + it.first, it.second);
+			}
+		}
+		if (secu) {
+			string mksec{ "" };
+			for (auto& it : SaveGameData) {
+				if (!prefixed(it.first, "*")) {
+					if (mksec.size()) mksec += "\n";
+					mksec += hashmd5("DATA/"+it.first) + ":" + hashmd5(it.second);
+				}
+			}
+			JCR.AddString("HEAD/SECU", mksec);
+		}
+		JCR.AddString("HEAD/ID.INI", "[SaveGame]\nID=" + Identify::ProjectData("ID") + "\nEngine=Apollo\nSub=GameCPSDL\nGameSig=" + Identify::ProjectData("SIG"));
+		cout << "Finishing saving\n";
+		JCR.Close();
+		cout << "Saving complete\n";
+		return 0;
+	}
+
+	// Init
+
 	void ApolloAPIInit_JCR6() {
+		// JCR6 General
 		Apollo_State::RequireFunction("AJCR_Entries", Apollo_JCR6_Entries);
 		Apollo_State::RequireFunction("AJCR_SpecEntries", Apollo_JCR6_SpecEntries);
 		Apollo_State::RequireFunction("AJCR_LoadString", Apollo_JCR6_LoadString);
@@ -126,5 +221,14 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AJCR_EntryExists", Apollo_JCR_EntryExists);
 		Apollo_State::RequireFunction("AJCR_DirExists", Apollo_JCR6_DirExists);
 		Apollo_State::RequireNeil("API/JCR6.neil");
+
+		// SaveGames
+		Apollo_State::RequireFunction("ASGM_Assign", Apollo_SG_Assign);
+		Apollo_State::RequireFunction("ASGM_Clear", Apollo_SG_Clear);
+		Apollo_State::RequireFunction("ASGM_SetData", Apollo_SG_SetData);
+		Apollo_State::RequireFunction("ASGM_GetData", Apollo_SG_GetData);
+		Apollo_State::RequireFunction("ASGM_DataFields", Apollo_SG_DataFields);
+		Apollo_State::RequireFunction("ASGM_Save", Apollo_SG_Save);
+		Apollo_State::RequireNeil("API/SaveGame.neil");
 	}
 }

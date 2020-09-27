@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Kthura.neil
 // Apollo - Kthura Linker
-// version: 20.09.19
+// version: 20.09.27
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -130,6 +130,10 @@ class KTHURA_Object
 	get String Texture		
 		return AKTH.GETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"TEXTURE")
 	end
+
+	get string Wind
+		return AKTH.GETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"WIND")
+	end
 	
 	Get String Labels
 		return AKTH.GETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"LABELS")
@@ -235,10 +239,14 @@ class KTHURA_Object
 		AKTH.SETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"KIND", Value)
 	End
 	
-	Set String Texture
-		
+	Set String Texture		
 		AKTH.SETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"TEXTURE", Value)
 	end
+
+	set String Wind
+		AKTH.SETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"WIND", Value)
+	end
+
 	
 	Set String Labels
 		AKTH.SETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"LABELS", Value)
