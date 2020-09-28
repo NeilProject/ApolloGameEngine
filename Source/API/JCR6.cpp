@@ -29,6 +29,7 @@
 // Units
 #include <Dirry.hpp>
 #include <QuickString.hpp>
+#include <QuickStream.hpp>
 #include <RPGSave.hpp>
 
 // Apollo
@@ -210,6 +211,37 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Apollo_SG_Exists(lua_State* L) {
+		string f = luaL_checkstring(L, 1);
+		if (SaveDir == "") SaveDir = Dirry("$Home$/ApolloGameData/" + Identify::ProjectData("ID") + "/SaveGame");
+		lua_pushboolean(L, FileExists(SaveDir+"/"+f));
+		return 1;
+	}
+
+	static int Apollo_SG_Head(lua_State* L) {
+		string ret = "";
+		string f = luaL_checkstring(L, 1);
+		if (SaveDir == "") SaveDir = Dirry("$Home$/ApolloGameData/" + Identify::ProjectData("ID") + "/SaveGame");
+		string ff = SaveDir + "/" + f;
+		bool bestrict = luaL_optinteger(L, 2, 0);
+		if (!FileExists(ff)) {
+			if (bestrict) Crash("Couldn't retreive the header of non-existent savegame: " + f);
+			lua_pushstring(L, "");
+			lua_pushstring(L, "File not found");
+			return 2;
+		}
+		if (Recognize(ff) == "NONE") {
+			if (bestrict) Crash("Savegame unrecognized: " + f);
+			lua_pushstring(L, "");
+			lua_pushstring(L, "Savegame unrecognized");
+			return 2;
+		}
+		auto sg = Dir(ff);
+		if (sg.EntryExists("HEAD/HEAD")) ret = sg.String("HEAD/HEAD");
+		lua_pushstring(L, ret.c_str());
+		return 1;
+	}
+
 	// Init
 
 	void ApolloAPIInit_JCR6() {
@@ -229,6 +261,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("ASGM_GetData", Apollo_SG_GetData);
 		Apollo_State::RequireFunction("ASGM_DataFields", Apollo_SG_DataFields);
 		Apollo_State::RequireFunction("ASGM_Save", Apollo_SG_Save);
+		Apollo_State::RequireFunction("ASGM_Exists", Apollo_SG_Exists);
+		Apollo_State::RequireFunction("ASGM_GetHeader", Apollo_SG_Head);
 		Apollo_State::RequireNeil("API/SaveGame.neil");
 	}
 }
