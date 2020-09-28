@@ -115,7 +115,9 @@ RPGChar = setmetatable({},{
 												iindex = iindex + 1
 												if iindex>=size then return nil end
 												return RPGListGet(char,list,iindex)
-											end										
+											end
+										elseif index:upper()=="LEN" or index:upper()=="COUNT" then
+											return RPGListCount(char,list)
 										else
 											error("Unknown manipulation command!")
 										end
