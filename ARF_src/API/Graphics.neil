@@ -111,6 +111,10 @@ Class Image
 		AIMG.TILE(ApolloState.Name,Tag,x,y,w,h,frame)
 	End
 
+	Void Stretch(int x, int y, int w, int h,int frame=0)
+		AIMG.STRETCH(ApolloState.Name,Tag,x,y,w,h,frame)
+	End
+
 	
 	void Hot(Int x, int y)
 		AIMG.HOT(ApolloState.Name,Tag,x,y)

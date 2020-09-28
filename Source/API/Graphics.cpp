@@ -184,6 +184,22 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int AIMG_Stretch(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		int x = floor(luaL_checknumber(L, 3));
+		int y = floor(luaL_checknumber(L, 4));
+		int w = floor(luaL_checknumber(L, 5));
+		int h = floor(luaL_checknumber(L, 6));
+		int f = luaL_checknumber(L, 7);
+		//GetTex(Tag, State)->Draw(x, y, f);
+		// std::cout << "Tile(" << x << "," << y << "," << w << "," << h << "," << f << ");\n";
+		Apollo_SDL_Stretch(Tag, x, y, w, h, f, State, Apollo_State::TraceBack(State));
+		if (TQSG_GetError() != "") Crash(TQSG_GetError(), State, Apollo_State::TraceBack(State));
+		return 0;
+	}
+
+
 	static int AIMG_ImgWidth(lua_State* L) {
 		std::string State = luaL_checkstring(L, 1);
 		std::string Tag = luaL_checkstring(L, 2);
@@ -305,6 +321,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_Load", AIMG_Load);
 		Apollo_State::RequireFunction("AIMG_LoadAnim", AIMG_LoadAnim);
 		Apollo_State::RequireFunction("AIMG_Kill", AIMG_Kill);
+		Apollo_State::RequireFunction("AIMG_Stretch", AIMG_Stretch);
 		Apollo_State::RequireFunction("AIMG_Draw", AIMG_Draw);
 		Apollo_State::RequireFunction("AIMG_Tile", AIMG_Tile);
 		Apollo_State::RequireFunction("AIMG_Hot", AIMG_Hot);

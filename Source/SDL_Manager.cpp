@@ -329,6 +329,20 @@ namespace Tricky_Apollo {
 
     }
 
+    void Apollo_SDL_Stretch(std::string Tag, int x, int y, int w, int h, std::string State, std::string Traceback) {
+        Apollo_SDL_Stretch(Tag, x, y, w, h, 0, State, Traceback);
+    }
+
+    void Apollo_SDL_Stretch(std::string Tag, int x, int y, int w, int h, int f, std::string State, std::string Traceback) {
+        auto T = Upper(Tag);
+        if (Texture.count(T) != 1) {
+            Crash("There is no image loaded tagged " + T, State, Traceback, AE_NoTextureOnTag);
+            return;
+        }
+        auto& Tex = Texture[T];
+        Tex.StretchDraw(x, y, w, h, f);
+    }
+
     void Apollo_SDL_Flip() {
         //SDL_UpdateWindowSurface(gWindow);
         TQSG_Flip();
