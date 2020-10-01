@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.10.01
+// Version: 20.10.02
 // EndLic
 // C++
 #include <iostream>
