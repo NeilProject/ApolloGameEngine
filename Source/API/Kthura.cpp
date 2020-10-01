@@ -207,6 +207,7 @@ namespace Tricky_Apollo {
 		string actortag = luaL_checkstring(L, 7);
 		//auto actor = KthuraActor::Spawn(Maps[Tag].Layer(Layer), x,y);
 		//actor->Tag(actortag);
+		cout << "Spawning actor '" << actortag << "' on spot (" << x << "," << y << ") on layer '" << Layer << "'\n";
 		Maps[Tag].Layer(Layer)->Spawn(actortag, x, y);
 		Maps[Tag].Layer(Layer)->RemapTags();
 		return 0;
@@ -217,6 +218,7 @@ namespace Tricky_Apollo {
 		auto x = luaL_checkinteger(L, 7);
 		auto y = luaL_checkinteger(L, 8);
 		auto real = luaL_optinteger(L, 9, 1);
+		cout << "Actor " << obj->Tag() << " is walking to (" << x << "," << y << ")   (real:" << real << ")  Layer:" << obj->GetParent()->GetCreationName() << "\n";
 		obj->WalkTo(x, y,real);
 		return 0;
 	}

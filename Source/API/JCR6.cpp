@@ -147,7 +147,8 @@ namespace Tricky_Apollo {
 
 	static int Apollo_SG_GetData(lua_State* L) {
 		auto Key = Upper(luaL_checkstring(L, 1));
-		cout << "SG> Set: " << Key << endl;
+		cout << "SG> Get: " << Key << endl;
+		cout << "SG> Got: \"" << SaveGameData[Key] << "\"\n";
 		lua_pushstring(L,SaveGameData[Key].c_str());
 		return 1;
 	}
@@ -211,6 +212,28 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Apollo_SG_Load(lua_State* L) {
+		cout << "LoadGame write request received\n";
+		if (SaveGameFile == "") Crash("Trying to load a savegame file without a name");
+		if (SaveDir == "") SaveDir = Dirry("$Home$/ApolloGameData/" + Identify::ProjectData("ID") + "/SaveGame");
+		string ff = SaveDir + "/" + SaveGameFile;
+		if (!FileExists(ff)) Crash("Trying to load non-existent savegame file: " + ff);
+		auto JCR = Dir(ff);		
+		for (auto& ientry : JCR.Entries()) {
+			auto ename = ientry.first;
+			if (prefixed(ename, "DATA/")) {
+				// TODO: cut dir and get data
+				auto dname = right(ename, ename.size() - 5);
+				SaveGameData[dname] = JCR.String(ename);
+			} else if (ename == "HEAD/PARTY") {
+				if (JCR.String("HEAD/PARTY") == "Present") {
+					RPGLoad(&JCR, "PARTY/");
+				}
+			}
+		}
+		return 0;
+	}
+
 	static int Apollo_SG_Exists(lua_State* L) {
 		string f = luaL_checkstring(L, 1);
 		if (SaveDir == "") SaveDir = Dirry("$Home$/ApolloGameData/" + Identify::ProjectData("ID") + "/SaveGame");
@@ -261,6 +284,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("ASGM_GetData", Apollo_SG_GetData);
 		Apollo_State::RequireFunction("ASGM_DataFields", Apollo_SG_DataFields);
 		Apollo_State::RequireFunction("ASGM_Save", Apollo_SG_Save);
+		Apollo_State::RequireFunction("ASGM_Load", Apollo_SG_Load);
 		Apollo_State::RequireFunction("ASGM_Exists", Apollo_SG_Exists);
 		Apollo_State::RequireFunction("ASGM_GetHeader", Apollo_SG_Head);
 		Apollo_State::RequireNeil("API/SaveGame.neil");

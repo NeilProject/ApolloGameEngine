@@ -17,6 +17,7 @@
 // misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 // End License Information
+
 Table ASGM = LGGTTT("ASGM")
 
 quickmeta SaveGameData
@@ -27,7 +28,7 @@ quickmeta SaveGameData
 	
 	index
 		Lua.assert(lua.type(key)=="string","SaveGame.DATA[<"..lua.type(key)..">]????? Key must be a string!")
-		return ASGM.GETDATA(key:upper())
+		return ASGM.GETDATA(key:upper()) or Lua.error("Retrieving SaveGame Data failed! > "..key)
 	end
 	
 	len

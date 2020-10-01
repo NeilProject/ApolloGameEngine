@@ -290,12 +290,12 @@ class KTHURA_Object
 		static delegate t = Lua.type
 		if t(a)=="number" and t(b)=="number"
 			int r = 0
-			if c==true
+			if c!=false
 				r = 1
 			end
-			AKTH.WalkTo(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,a,b,r)
+			AKTH.WALKTO(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,a,b,r)
 		elseif t(a)=="string"
-			AKTH.WalkToObj(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,a)
+			AKTH.WALKTOOBJ(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,a)
 		else
 			Lua.error("Invalid WalkTo request!")
 		end
@@ -385,7 +385,8 @@ class KTHURA_Layer
 	void Spawn(string Actor,a,b)
 		static delegate t = Lua.type
 		if t(a)=="number" and t(b)=="number"
-			AKTH.SPAWNSPOT(MapTag,ApolloState.Name,MapID,LayerTag,"string",Actor,a,b)
+			//             1      2                3     4        5 6 7
+			AKTH.SPAWNSPOT(MapTag,ApolloState.Name,MapID,LayerTag,a,b,Actor)
 		elseif t(a)=="string"
 			AKTH.SPAWNOBJTAG(MapTag,ApolloState.Name,MapID,LayerTag,"string",a,Actor)
 		else
