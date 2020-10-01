@@ -213,6 +213,14 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Kthura_HasTag(lua_State* L) {
+		qVerify();
+		string Layer = luaL_checkstring(L, 4);
+		string OTag = luaL_checkstring(L, 5);
+		lua_pushboolean(L, Maps[Tag].Layer(Layer)->HasTag(OTag));
+		return 1;
+	}
+
 	static int Kthura_WalkTo(lua_State* L) {
 		qObjActor();
 		auto x = luaL_checkinteger(L, 7);
@@ -361,7 +369,7 @@ namespace Tricky_Apollo {
 		// Booleans will be handled as INT
 		qStCs("IMPASSIBLE") obj->Impassible(value!=0);
 		qStCs("FORCEPASSIBLE") obj->ForcePassible(value != 0);
-		qStCs("VISBLE") obj->Visible(value != 0);
+		qStCs("VISIBLE") obj->Visible(value != 0);
 		qStCs("NOTINMOTIONTHEN0") obj->NotInMotionThen0(value != 0);
 		qStCs("NOTMOVINGTHEN0") obj->NotInMotionThen0(value != 0);
 		else {
@@ -489,6 +497,49 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Kthura_IsInZone(lua_State*L){
+		qObjVerify();
+		lua_pushboolean(L, obj->IsInZone(luaL_checkstring(L, 7)));
+		return 1;
+	}
+
+	static int Kthura_ShowByLabel(lua_State* L) {
+		qVerify();
+		string Layer = luaL_checkstring(L, 4);
+		string Label = luaL_checkstring(L, 5);
+		Maps[Tag].Layer(Layer)->ShowByLabel(Label);
+	}
+
+	static int Kthura_HideByLabel(lua_State* L) {
+		qVerify();
+		string Layer = luaL_checkstring(L, 4);
+		string Label = luaL_checkstring(L, 5);		
+		Maps[Tag].Layer(Layer)->HideByLabel(Label);
+	}
+
+
+	static int Kthura_ShowButLabel(lua_State* L) {
+		qVerify();
+		string Layer = luaL_checkstring(L, 4);
+		string Label = luaL_checkstring(L, 5);
+		//cout << "Hiding everything except label \"" << Label << "\" on Layer: " << Layer << "\n";
+		Maps[Tag].Layer(Layer)->ShowButLabel(Label);
+	}
+
+	static int Kthura_HideButLabel(lua_State* L) {
+		qVerify();
+		string Layer = luaL_checkstring(L, 4);
+		string Label = luaL_checkstring(L, 5);
+		Maps[Tag].Layer(Layer)->HideButLabel(Label);
+	}
+
+	static int Kthura_LabelMapDump(lua_State* L) {
+		qVerify();
+		string Layer = luaL_checkstring(L, 4);
+		lua_pushstring(L, Maps[Tag].Layer(Layer)->LabelMapDump().c_str());
+		return 1;
+	}
+
 
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
@@ -524,6 +575,13 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_KillObject", Kthura_KillObject);
 		Apollo_State::RequireFunction("AKTHURA_GetWind", Kthura_GetWind);
 		Apollo_State::RequireFunction("AKTHURA_SetWind", Kthura_SetWind);
+		Apollo_State::RequireFunction("AKTHURA_HasTag", Kthura_HasTag);
+		Apollo_State::RequireFunction("AKTHURA_IsInZone", Kthura_IsInZone);
+		Apollo_State::RequireFunction("AKTHURA_ShowByLabel", Kthura_ShowByLabel);
+		Apollo_State::RequireFunction("AKTHURA_HideByLabel", Kthura_HideByLabel);
+		Apollo_State::RequireFunction("AKTHURA_ShowButLabel", Kthura_ShowButLabel);
+		Apollo_State::RequireFunction("AKTHURA_HideButLabel", Kthura_HideButLabel);
+		Apollo_State::RequireFunction("AKTHURA_LabelMapDump", Kthura_LabelMapDump);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }

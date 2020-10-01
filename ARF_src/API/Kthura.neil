@@ -311,7 +311,10 @@ class KTHURA_Object
 			Lua.error("Invalid MoveTo request!")
 		end
 	end
-
+	
+	bool IsInZone(string zone)
+		return AKTH.ISINZONE(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,zone)
+	end
 	
 end
 
@@ -402,6 +405,33 @@ class KTHURA_Layer
 	void Kill(objid)
 		AKTH.KILLOBJECT(MapTag,ApolloState.Name,MapID,LayerTag,lua.type(objid),objid)
 	end
+	
+	bool HasTag(string tag)
+		return AKTH.HASTAG(MapTag,ApolloState.Name,MapID,LayerTag,tag)
+	end
+	
+	void ShowByLabel(string label)
+		AKTH.SHOWBYLABEL(MapTag,ApolloState.Name,MapID,LayerTag,label)
+	end
+
+	void HideByLabel(string label)
+		AKTH.HIDEBYLABEL(MapTag,ApolloState.Name,MapID,LayerTag,label)
+	end
+
+	void ShowButLabel(string label)
+		AKTH.SHOWBUTLABEL(MapTag,ApolloState.Name,MapID,LayerTag,label)
+	end
+
+	void HideButLabel(string label)
+		print("Hide But Label:",label)
+		AKTH.HIDEBUTLABEL(MapTag,ApolloState.Name,MapID,LayerTag,label)
+	end
+	
+	get string LabelMapDump
+		return AKTH.LABELMAPDUMP(MapTag,ApolloState.Name,MapID,LayerTag)
+	end
+
+
 end
 
 class KTHURA_Map
