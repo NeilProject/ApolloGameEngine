@@ -371,6 +371,10 @@ namespace Tricky_Apollo {
 
 	void Apollo_State::Kill(std::string state) {
 		state = Upper(state);
+		if (!StateMap.count(state)) {
+			cout << "HUH! Kill request, non-existent state: " << state << endl;
+			return;
+		}
 		StateMap[state].Kill();
 		if (StateMap.count(state)) StateMap.erase(state);
 	}
@@ -378,7 +382,7 @@ namespace Tricky_Apollo {
 	void Apollo_State::KillAll() {
 		vector<string> Moordenaar;
 		for (auto Slachtoffer : StateMap) Moordenaar.push_back(Slachtoffer.first);
-		for (auto Slachtoffer : Moordenaar) Kill(Slachtoffer);
+		for (auto Slachtoffer : Moordenaar) if (StateMap.count(Slachtoffer)) Kill(Slachtoffer);
 	}
 
 	int Apollo_State::top() {
