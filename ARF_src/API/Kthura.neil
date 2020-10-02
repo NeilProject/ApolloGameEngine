@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Kthura.neil
 // Apollo - Kthura Linker
-// version: 20.10.02
+// version: 20.10.03
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -316,6 +316,10 @@ class KTHURA_Object
 		return AKTH.ISINZONE(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,zone)
 	end
 	
+	bool PixInObj(int x, int y)
+		return AKTH.PIXINOBJ(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,x,y)
+	end
+	
 end
 
 class KTHURA_Layer
@@ -341,6 +345,7 @@ class KTHURA_Layer
 		//return new KTHURA_Object(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID)
 		  return new KTHURA_Object(MapID, MapTag,  LayerTag, ObjID)
 	end
+	
 	
 	Get Table ObjEnum
 		//print("ObjEnum")
@@ -370,6 +375,10 @@ class KTHURA_Layer
 		string ret = AKTH.GETTAGS(MapTag,ApolloState.Name,MapID,LayerTag)
 		print("Taglist: ",ret)
 		return ret
+	end
+	
+	get table TagListArray
+		return Split(TagList,",")
 	end
 	
 	get string DomDump
@@ -430,7 +439,13 @@ class KTHURA_Layer
 	get string LabelMapDump
 		return AKTH.LABELMAPDUMP(MapTag,ApolloState.Name,MapID,LayerTag)
 	end
-
+	
+	bool PixInObj(I_want,int x, int y)
+		if Lua.type(I_want)=="string" && (!HasTag(I_want))
+			return false
+		end
+		return Obj(I_want).PixInObj(I_want,x,y)
+	end
 
 end
 

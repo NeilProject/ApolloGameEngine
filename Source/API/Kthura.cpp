@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.10.02
+// Version: 20.10.03
 // EndLic
 // C++
 #include <iostream>
@@ -540,6 +540,14 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int Kthura_PixInObj(lua_State* L) {
+		qObjVerify();
+		auto x = luaL_checkinteger(L, 7);
+		auto y = luaL_checkinteger(L, 7);
+		lua_pushboolean(L, obj->PixInObj(x, y));
+		return 1;
+	}
+
 
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
@@ -582,6 +590,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_ShowButLabel", Kthura_ShowButLabel);
 		Apollo_State::RequireFunction("AKTHURA_HideButLabel", Kthura_HideButLabel);
 		Apollo_State::RequireFunction("AKTHURA_LabelMapDump", Kthura_LabelMapDump);
+		Apollo_State::RequireFunction("AKTHURA_PixInObj", Kthura_PixInObj);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }
