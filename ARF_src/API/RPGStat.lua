@@ -1,7 +1,7 @@
 -- <License Block>
 -- ARF_src/API/RPGStat.lua
 -- RPG Stat Link up
--- version: 20.10.01
+-- version: 20.10.06
 -- Copyright (C) 2020 Jeroen P. Broks
 -- This software is provided 'as-is', without any express or implied
 -- warranty.  In no event will the authors be held liable for any damages
