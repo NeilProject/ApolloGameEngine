@@ -284,7 +284,14 @@ class KTHURA_Object
 			AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"NOTMOVINGTHEN0", 0)
 		end
 	end
-
+	
+	get bool Walking
+		return AKTH.GETOBJBOOL(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"WALKING")
+	end
+	
+	void StopWalking()
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"WALKING", 0)
+	end
 	
 	void WalkTo(a,b,c)
 		static delegate t = Lua.type

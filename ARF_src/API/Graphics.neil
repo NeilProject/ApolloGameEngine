@@ -97,6 +97,18 @@ Class Image
 		Return Ret
 	End
 	
+	static Bool TagExists(string Tag)
+		return AIMG.TAGEXISTS(Tag)
+	end
+	
+	Static Var LoadNew(string File,String Tag)
+		if TagExists(Tag)
+			return Obtain(tag)
+		else
+			return Load(File,Tag)
+		end
+	end
+	
 	Static Delegate KillTag = AIMG.KILL
 	
 	Void Kill()

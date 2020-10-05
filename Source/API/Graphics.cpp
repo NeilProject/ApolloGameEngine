@@ -152,6 +152,14 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AIMG_TagExists(lua_State* L) {
+		std::string Tag = luaL_checkstring(L, 1);
+		lua_pushboolean(L, TagExists(Tag));
+		return 1;
+	}
+
+
+
 	static int AIMG_Kill(lua_State* L) {
 		std::string Tag = luaL_checkstring(L, 1);
 		KillTex(Tag);
@@ -329,6 +337,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_HotBottomCenter", AIMG_HotBottomCenter);
 		Apollo_State::RequireFunction("AIMG_ImgHeight", AIMG_ImgHeight);
 		Apollo_State::RequireFunction("AIMG_ImgWidth", AIMG_ImgWidth);
+		Apollo_State::RequireFunction("AIMG_TagExists", AIMG_TagExists);
 		// Fonts
 		Apollo_State::RequireFunction("AFNT_LoadImageFont", AFNT_LoadImageFont);
 		Apollo_State::RequireFunction("AFNT_DrawText", AFNT_DrawText);

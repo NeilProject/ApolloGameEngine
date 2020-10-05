@@ -47,7 +47,10 @@ RPGChar = setmetatable({},{
 	__index = function(s,char)
 		if char:upper()=="CREATE" then return RPGCreate end
 		CharsWantedBefore[char] = CharsWantedBefore[char] or setmetatable({},{
-			__newindex = function() error("No new data may be appointed to characters in this manner") end,
+			__newindex = function(s,k,v) 
+				if k:upper()=="NAME" then RPGSetChName(char,v) end
+				error("No new data may be appointed to characters in this manner") 
+			end,
 			__index = function(s,what)
 					what = what:upper()
 					if what=="STAT" then 
@@ -59,6 +62,8 @@ RPGChar = setmetatable({},{
 							__newindex = function(s,stat,value) RPGSetStatValue(char,stat,value) end
 						})
 						return PreciseWanted[sf("%s.STAT",char)] 
+					elseif what=="NAME" then
+						return RPGGetChName(char)
 					elseif what=="STATSCRIPT" then
 						PreciseWanted[sf("%s.STATSCRIPT",char)] = PreciseWanted[sf("%s.STATSCRIPT",char)] or setmetatable({},{
 							__index = function(s,stat) error("Reading a write-only value") end,

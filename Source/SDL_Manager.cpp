@@ -121,9 +121,10 @@ namespace Tricky_Apollo {
             Apollo_SDL_Klets("Request to replace texture " + T + ", but I gotta dispose the old texture first!");
         }
         */
-        Texture[Upper(Tag)] = Tex;
-        
+        Texture[Upper(Tag)] = Tex;        
     }
+
+
 
     string LoadTex(std::string Tag, std::string File) {
         static unsigned int cnt=0;
