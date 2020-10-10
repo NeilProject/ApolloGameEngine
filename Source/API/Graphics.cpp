@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.10.06
+// Version: 20.10.10
 // EndLic
 // We get into the deep of this later!
 
@@ -127,6 +127,17 @@ namespace Tricky_Apollo {
 
 	static int AGGA_ScreenH(lua_State* L) {
 		lua_pushinteger(L, TQSG_ScreenHeight());
+		return 1;
+	}
+
+	static int AGGA_SetAlpha(lua_State* L) {
+		int a = luaL_checkinteger(L, 1);
+		TQSG_SetAlpha(a);
+		return 0;
+	}
+
+	static int AGGA_GetAlpha(lua_State* L) {
+		lua_pushinteger(L, TQSG_GetAlpha());
 		return 1;
 	}
 
@@ -325,6 +336,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGGA_Color", AGGA_Color);
 		Apollo_State::RequireFunction("AGGA_GetColor", AGGA_GetColor);
 		Apollo_State::RequireFunction("AGGA_Scale", AGGA_Scale);
+		Apollo_State::RequireFunction("AGGA_SetAlpha", AGGA_SetAlpha);
+		Apollo_State::RequireFunction("AGGA_GetAlpha", AGGA_GetAlpha);
 		// Images
 		Apollo_State::RequireFunction("AIMG_Load", AIMG_Load);
 		Apollo_State::RequireFunction("AIMG_LoadAnim", AIMG_LoadAnim);
