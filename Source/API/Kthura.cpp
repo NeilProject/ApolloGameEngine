@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.10.06
+// Version: 20.10.10
 // EndLic
 // C++
 #include <iostream>
@@ -547,6 +547,17 @@ namespace Tricky_Apollo {
 		auto x = luaL_checkinteger(L, 7);
 		auto y = luaL_checkinteger(L, 7);
 		lua_pushboolean(L, obj->PixInObj(x, y));
+		return 1;
+	}
+
+	static int Kthura_NewObj(lua_State* L) {
+		qVerify();
+		string Layer = luaL_checkstring(L, 4);
+		string Kind = luaL_checkstring(L, 5);
+		string Tag = luaL_optstring(L, 6, "");
+		auto obj = Maps[Tag].Layer(Layer)->RNewObject(Kind);
+		if (Tag.size()) obj->Tag(Tag);
+		lua_pushinteger(L,obj->ID());
 		return 1;
 	}
 
