@@ -545,7 +545,7 @@ namespace Tricky_Apollo {
 	static int Kthura_PixInObj(lua_State* L) {
 		qObjVerify();
 		auto x = luaL_checkinteger(L, 7);
-		auto y = luaL_checkinteger(L, 7);
+		auto y = luaL_checkinteger(L, 8);
 		lua_pushboolean(L, obj->PixInObj(x, y));
 		return 1;
 	}
@@ -554,10 +554,32 @@ namespace Tricky_Apollo {
 		qVerify();
 		string Layer = luaL_checkstring(L, 4);
 		string Kind = luaL_checkstring(L, 5);
-		string Tag = luaL_optstring(L, 6, "");
+		string OTag = luaL_optstring(L, 6, "");
 		auto obj = Maps[Tag].Layer(Layer)->RNewObject(Kind);
-		if (Tag.size()) obj->Tag(Tag);
+		if (Tag.size()) obj->Tag(OTag);
+		Maps[Tag].Layer(Layer)->TotalRemap();
 		lua_pushinteger(L,obj->ID());
+		return 1;
+	}
+
+	static int Kthura_GetData(lua_State* L) {
+		qObjVerify();
+		string DataTag = luaL_checkstring(L, 7);
+		lua_pushstring(L, obj->MetaData(DataTag).c_str());
+		return 1;
+	}
+
+	static int Kthura_SetData(lua_State* L) {
+		qObjVerify();
+		string DataTag = luaL_checkstring(L, 7);
+		string DataValue = luaL_checkstring(L, 8);
+		obj->MetaData(DataTag, DataValue);
+		return 0;
+	}
+
+	static int Kthura_ObjPixArea(lua_State* L) {
+		qObjVerify();
+		lua_pushstring(L, obj->PixArea().c_str());
 		return 1;
 	}
 
@@ -604,6 +626,10 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_HideButLabel", Kthura_HideButLabel);
 		Apollo_State::RequireFunction("AKTHURA_LabelMapDump", Kthura_LabelMapDump);
 		Apollo_State::RequireFunction("AKTHURA_PixInObj", Kthura_PixInObj);
+		Apollo_State::RequireFunction("AKTHURA_NewObj", Kthura_NewObj);
+		Apollo_State::RequireFunction("AKTHURA_GetData", Kthura_GetData);
+		Apollo_State::RequireFunction("AKTHURA_SetData", Kthura_SetData);
+		Apollo_State::RequireFunction("AKTHURA_ObjPixArea", Kthura_ObjPixArea);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }

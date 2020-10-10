@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Kthura.neil
 // Apollo - Kthura Linker
-// version: 20.10.06
+// version: 20.10.10
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -36,6 +36,8 @@ class KTHURA_Object
 	table FStr
 	table FBool
 	
+	readonly table Data
+	
 	public Constructor(int aID, string aMapTag, string aLayer, int aObjID)
 		MapID=aID
 		MapTag=aMapTag
@@ -43,6 +45,17 @@ class KTHURA_Object
 		ObjID=aObjID
 		plua k
 		plua v
+		
+		string DataIndex(ignore,string key)
+			return AKTH.GETDATA(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,key)
+		end
+		
+		void DataNewIndex(ignore,string key,string value)
+			AKTH.SETDATA(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,key,value)
+		end
+		
+		lua.setmetatable(Data,{["__index"]=DataIndex,["__newindex"]=DataNewIndex})
+		
 	end
 	
 	// Receive
@@ -327,6 +340,12 @@ class KTHURA_Object
 		return AKTH.PIXINOBJ(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,x,y)
 	end
 	
+	get string PixArea
+		return AKTH.OBJPIXAREA(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID)
+	end
+	
+	
+	
 end
 
 class KTHURA_Layer
@@ -452,6 +471,12 @@ class KTHURA_Layer
 			return false
 		end
 		return Obj(I_want).PixInObj(I_want,x,y)
+	end
+	
+	var NewObject(string nkind,ntag)
+		ntag = ntag or ""
+		int i = AKTH.NEWOBJ(MapTag,ApolloState.Name,MapID,LayerTag,nkind,ntag)
+		return obj(i)
 	end
 
 end
