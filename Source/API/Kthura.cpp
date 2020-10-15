@@ -577,6 +577,12 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Kthura_DumpObjectData(lua_State* L) {
+		qObjVerify();
+		lua_pushstring(L, obj->DumpData().c_str());
+		return 1;
+	}
+
 	static int Kthura_ObjPixArea(lua_State* L) {
 		qObjVerify();
 		lua_pushstring(L, obj->PixArea().c_str());
@@ -630,6 +636,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_GetData", Kthura_GetData);
 		Apollo_State::RequireFunction("AKTHURA_SetData", Kthura_SetData);
 		Apollo_State::RequireFunction("AKTHURA_ObjPixArea", Kthura_ObjPixArea);
+		Apollo_State::RequireFunction("AKTHURA_DumpObjectData", Kthura_DumpObjectData);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }

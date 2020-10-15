@@ -47,17 +47,27 @@ class KTHURA_Object
 		plua v
 		
 		string DataIndex(ignore,string key)
-			return AKTH.GETDATA(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,key)
+			//return AKTH.GETDATA(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,key)
+			return AKTH.GETDATA(aMapTag,ApolloState.Name,aID,LayerTag,"number",aObjID,key)
 		end
 		
 		void DataNewIndex(ignore,string key,string value)
-			AKTH.SETDATA(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,key,value)
+			//AKTH.SETDATA(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,key,value)
+			AKTH.SETDATA(aMapTag,ApolloState.Name,aID,LayerTag,"number",aObjID,key,value)
 		end
 		
 		lua.setmetatable(Data,{["__index"]=DataIndex,["__newindex"]=DataNewIndex})
 		
 	end
 	
+	void SetData(string key,string value)
+		AKTH.SETDATA(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,key,value)
+	end
+	
+	string GetData(string key)
+		return AKTH.GETDATA(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,key)
+	end
+		
 	// Receive
 	
 	Get Int ID
@@ -263,6 +273,21 @@ class KTHURA_Object
 	
 	Set String Labels
 		AKTH.SETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"LABELS", Value)
+	end
+	
+	get string Tag
+		return AKTH.GETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"TAG")
+	end
+	
+	set string Tag
+		AKTH.SETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"TAG", Value)
+	end
+	
+	get table DumpData
+		print("DumpDataCall!")
+		string r = AKTH.DUMPOBJECTDATA(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID)
+		print(r)
+		return Split(r,"\n")
 	end
 	
 	SET Bool Impassible
@@ -476,7 +501,7 @@ class KTHURA_Layer
 	var NewObject(string nkind,ntag)
 		ntag = ntag or ""
 		int i = AKTH.NEWOBJ(MapTag,ApolloState.Name,MapID,LayerTag,nkind,ntag)
-		return obj(i)
+		return obj(ntag)
 	end
 
 end
