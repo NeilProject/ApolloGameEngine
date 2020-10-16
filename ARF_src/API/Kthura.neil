@@ -574,4 +574,12 @@ group Kthura
 	var Kill(string tag)
 		AKTH.KILL(tag)
 	end
+	
+	void AutoReMap(bool value)
+		if value
+			AKTH.AUTOREMAP(1)
+		else
+			AKTH.AUTOREMAP(0)
+		end
+	end
 end

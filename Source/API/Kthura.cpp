@@ -589,6 +589,11 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int Kthura_AutoRemap(lua_State* L) {
+		Kthura::AutoMap = luaL_checkinteger(L, 1);
+		return 0;
+	}
+
 
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
@@ -637,6 +642,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_SetData", Kthura_SetData);
 		Apollo_State::RequireFunction("AKTHURA_ObjPixArea", Kthura_ObjPixArea);
 		Apollo_State::RequireFunction("AKTHURA_DumpObjectData", Kthura_DumpObjectData);
+		Apollo_State::RequireFunction("AKTHURA_AutoReMap", Kthura_AutoRemap);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }
