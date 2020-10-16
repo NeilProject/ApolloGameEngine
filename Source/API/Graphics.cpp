@@ -254,7 +254,7 @@ namespace Tricky_Apollo {
 	static int AIMG_HotBottomCenter(lua_State* L) {
 		std::string State = luaL_checkstring(L, 1);
 		std::string Tag = luaL_checkstring(L, 2);
-		GetTex(Tag, State)->HotCenter();
+		GetTex(Tag, State)->HotBottomCenter();
 		return 0;
 	}
 
