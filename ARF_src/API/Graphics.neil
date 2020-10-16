@@ -147,6 +147,7 @@ Class Image
 	Get Int Height
 		return AIMG.IMGHEIGHT(ApolloState.Name,Tag)
 	end
+		
 	
 end
 
@@ -223,6 +224,21 @@ Class ImageFont
 	
 	int TextHeight(string txt)
 		return AFNT.TXTH(ApolloState.Name,Tag,Txt)
+	end
+	
+	void DarkText(String Txt, int x, int y, int ah=0, int av=0, bool autonext=false)
+		int r
+		int g
+		int b
+		r,g,b = Graphics.GetColor()
+		Graphics.Color(0,0,0)
+		for ix=x-1,x+1
+			for iy=y-1,y+1
+				Text(Txt,ix,iy,ah,av,autonext)
+			end
+		end
+		Graphics.Color(r,g,b)
+		Text(Txt,x,y,ah,av,autonext)
 	end
 
 end
