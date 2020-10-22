@@ -149,6 +149,20 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int RPGListHas(lua_State* L) {
+		std::string ch = luaL_checkstring(L, 1);
+		std::string list = luaL_checkstring(L, 2);
+		std::string needle = luaL_checkstring(L, 3);
+		bool ignorecase = luaL_optinteger(L, 4, 0);
+		bool ret = false;
+		for(auto &D : Character::Map[ch].GetList(list)->List){
+			ret = ret || D == needle;
+			if (ignorecase) ret = ret || Upper(D) == Upper(needle);
+		}
+		lua_pushboolean(L, ret);
+		return 1;
+	}
+
 	static int RPGListGet(lua_State* L) {
 		std::string ch = luaL_checkstring(L, 1);
 		std::string list = luaL_checkstring(L, 2);
@@ -174,7 +188,7 @@ namespace Tricky_Apollo {
 		std::string value = luaL_checkstring(L, 3);		
 		Character::Map[ch].GetList(list)->List.push_back(value);
 		return 0;
-	}
+	}	
 
 	static int RPGSetStatScript(lua_State* L) {
 		std::string ch = luaL_checkstring(L, 1);
@@ -214,6 +228,10 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("RPGSetData", RPGSetData);
 		Apollo_State::RequireFunction("RPGKillList", RPGKillList);
 		Apollo_State::RequireFunction("RPGListCount", RPGListCount);
+		Apollo_State::RequireFunction("RPGListHas", RPGListHas);
+		Apollo_State::RequireFunction("RPGListAdd", RPGListAdd);
+		Apollo_State::RequireFunction("RPGListGet", RPGListGet);
+		Apollo_State::RequireFunction("RPGListSet", RPGListSet);
 		Apollo_State::RequireFunction("RPGSetStatScript", RPGSetStatScript);
 		Apollo_State::RequireFunction("RPGSetPartyMax", RPGSetPartyMax);
 		Apollo_State::RequireFunction("RPGGetAllStats", RPGGetAllStats);
