@@ -27,6 +27,7 @@
 #include <iostream>
 
 #include <QuickString.hpp>
+#include <Platform.hpp>
 #include <TQSE.hpp>
 #include <TQSG.hpp>
 
@@ -278,6 +279,12 @@ namespace Tricky_Apollo {
 	//	return 1;
 	//}
 
+	static int APICORE_Platform(lua_State* L) {
+		bool g = luaL_optinteger(L, 1, 1);
+		lua_pushstring(L, Platform(g).c_str());
+		return 1;
+	}
+
 
 
 	void InitCore() {
@@ -301,6 +308,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("PKGDir", APICORE_PKGDir);
 		Apollo_State::RequireFunction("Ticks", APICORE_Ticks);
 		Apollo_State::RequireFunction("Shell", APICORE_Shell);
+		Apollo_State::RequireFunction("Platform", APICORE_Platform);
 		Apollo_State::RequireFunction("WaitMinTicks", APICORE_WaitMinTicks);
 		Apollo_State::RequireFunction("INTERSTATE_GetInteger", INTERSTATE_GetInteger);
 		Apollo_State::RequireFunction("INTERSTATE_GetString", INTERSTATE_GetString);
