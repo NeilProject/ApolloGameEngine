@@ -189,13 +189,13 @@ namespace Tricky_Apollo {
 		string actortag = luaL_checkstring(L, 7);
 		//auto actor = KthuraActor::Spawn(Maps[Tag].Layer(Layer), obj);
 		//actor->Tag(actortag);		
-		cout << "Spawning actor '" << actortag << "' on spot '" << obj->Tag() << ".\n";
+		//cout << "Spawning actor '" << actortag << "' on spot '" << obj->Tag() << "'.\n";
 		Maps[Tag].Layer(Layer)->Spawn(obj, actortag);
-		cout << "Remapping\n";
+		//cout << "Remapping\n";
 		Maps[Tag].Layer(Layer)->RemapTags();
-		cout << "Final Checkup\n";
-		cout << "<Tags>" << Maps[Tag].Layer(Layer)->TagList() << "</Tags>\n";
-		for (auto &dbg : Maps[Tag].Layer(Layer)->Objects) { cout << "ObjCheck: " << dbg.ID() << ": " << dbg.Kind() << " " << dbg.Tag() << "!\n"; }
+		//cout << "Final Checkup\n";
+		//cout << "<Tags>" << Maps[Tag].Layer(Layer)->TagList() << "</Tags>\n";
+		// for (auto &dbg : Maps[Tag].Layer(Layer)->Objects) { cout << "ObjCheck: " << dbg.ID() << ": " << dbg.Kind() << " " << dbg.Tag() << "!\n"; }
 		return 0;
 	}
 
