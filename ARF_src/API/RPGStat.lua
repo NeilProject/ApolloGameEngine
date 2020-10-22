@@ -123,6 +123,12 @@ RPGChar = setmetatable({},{
 											end
 										elseif index:upper()=="LEN" or index:upper()=="COUNT" then
 											return RPGListCount(char,list)
+										elseif index:upper()=="HAS" then
+											local ib = { [true]=1, [false]=0 }
+											local function chkhas(needle,ignorecase)
+												return RPGListHas(char,list,needle,ib[ignorecase==true])
+											end
+											return chkhas
 										else
 											error("Unknown manipulation command!")
 										end
