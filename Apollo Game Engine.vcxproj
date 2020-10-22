@@ -163,6 +163,7 @@
     <ClCompile Include="..\TrickyUnits\Source\dim2.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\Dirry.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\Platform.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\RPGSave.cpp" />

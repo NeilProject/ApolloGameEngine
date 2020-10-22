@@ -144,6 +144,9 @@
     <ClCompile Include="..\TrickyUnits\Source\Dijkstra.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\Platform.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">

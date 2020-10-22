@@ -36,11 +36,20 @@ import HasState
 import PKGDir
 import PlanToKill
 import WaitMinTicks
+// import Platform
 
 Group Core
 	Get String PKGDir 
 		Return Lua.PKGDir()
 	End
+	
+	get String Platform
+		return Lua.Platform()
+	end
+	
+	get string FullPlatform
+		return Lua.Platform(0)
+	end
 end
 
 Group Flow
