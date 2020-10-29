@@ -206,7 +206,16 @@
     <ClInclude Include="Headers\Identify.hpp" />
     <ClInclude Include="Headers\SDL_Manager.hpp" />
     <ClInclude Include="Headers\States.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Source\API\ApolloAPIs.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Apollo Game Engine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
+    <Image Include="icon\icon1.ico" />
+    <Image Include="Icon\rocket.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
