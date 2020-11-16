@@ -44,6 +44,7 @@
 #include <jcr6_core.hpp>
 #include <jcr6_quakepak.hpp>
 #include <jcr6_wad.hpp>
+#include <jcr6_jxsda.hpp>
 
 // Apollo
 #include <ErrorCodes.hpp>
@@ -64,6 +65,7 @@ namespace Tricky_Apollo {
 		cout << "\n\nStarting up JCR6\n";
 		init_JCR6();
 		init_quakepak();
+		init_jxsda();
 		InitWAD();
 		string ARFile = StripExt(CLI_Config.myexe) + ".arf";
 		if (!FileExists(ARFile)) { cout << "ERROR! " << ARFile << " not found!\n"; exit(AE_ARF_NotFound); }

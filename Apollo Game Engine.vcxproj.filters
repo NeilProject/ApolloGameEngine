@@ -147,6 +147,12 @@
     <ClCompile Include="..\TrickyUnits\Source\Platform.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\JXSDA.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
+    <ClCompile Include="..\JCR6\src\jcr6_jxsda.cpp">
+      <Filter>Source Files\JCR6</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">

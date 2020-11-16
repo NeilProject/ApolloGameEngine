@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\JCR6\src\jcr6_core.cpp" />
+    <ClCompile Include="..\JCR6\src\jcr6_jxsda.cpp" />
     <ClCompile Include="..\JCR6\src\jcr6_quakepak.cpp" />
     <ClCompile Include="..\JCR6\src\jcr6_wad.cpp" />
     <ClCompile Include="..\Kthura\src\Kthura_Core.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="..\TrickyUnits\Source\dim2.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\Dirry.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\JXSDA.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\Platform.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />

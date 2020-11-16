@@ -582,4 +582,7 @@ group Kthura
 			AKTH.AUTOREMAP(0)
 		end
 	end
+	
 end
+
+// Everything Ok?

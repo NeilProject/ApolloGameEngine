@@ -17,7 +17,8 @@
 -- misrepresented as being the original software.
 -- 3. This notice may not be removed or altered from any source distribution.
 -- </License Block>
-local PackAs = "Store"
+-- local PackAs = "Store"
+local PackAs = "jxsda"
 local dir = "E:/Projects/Applications/VisualStudio/VC/Apollo Game Engine/" -- Of course this may need to be adapted based on your own system settings
 
 JLS.Output("FATSTORAGE:Store") -- Might be "lzma" or "zlib" later depending on how things go here.
