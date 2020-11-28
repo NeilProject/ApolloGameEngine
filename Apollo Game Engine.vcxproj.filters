@@ -153,6 +153,9 @@
     <ClCompile Include="..\JCR6\src\jcr6_jxsda.cpp">
       <Filter>Source Files\JCR6</Filter>
     </ClCompile>
+    <ClCompile Include="..\JCR6\src\jcr6_zlib.cpp">
+      <Filter>Source Files\JCR6</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -243,5 +246,8 @@
     <Image Include="icon\icon1.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
