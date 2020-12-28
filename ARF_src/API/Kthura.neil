@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Kthura.neil
 // Apollo - Kthura Linker
-// version: 20.10.10
+// version: 20.12.25
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -502,6 +502,13 @@ class KTHURA_Layer
 		ntag = ntag or ""
 		int i = AKTH.NEWOBJ(MapTag,ApolloState.Name,MapID,LayerTag,nkind,ntag)
 		return obj(ntag)
+	end
+	
+	bool Blocked(int X, int Y, a)
+		static table b2i
+		b2i[false] = 0
+		b2i[true] = 1
+		return AKTH.BLOCKED(MapTag,ApolloState.Name,MapID,LayerTag,X,Y,b2i[a!=false])
 	end
 
 end

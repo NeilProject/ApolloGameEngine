@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.10.10
+// Version: 20.12.27
 // EndLic
 // C++
 #include <iostream>
@@ -552,13 +552,32 @@ namespace Tricky_Apollo {
 
 	static int Kthura_NewObj(lua_State* L) {
 		qVerify();
-		string Layer = luaL_checkstring(L, 4);
-		string Kind = luaL_checkstring(L, 5);
-		string OTag = luaL_optstring(L, 6, "");
-		auto obj = Maps[Tag].Layer(Layer)->RNewObject(Kind);
+		string
+			Layer = luaL_checkstring(L, 4),
+			Kind = luaL_checkstring(L, 5),
+			OTag = luaL_optstring(L, 6, "");
+		auto
+			obj = Maps[Tag].Layer(Layer)->RNewObject(Kind);
 		if (Tag.size()) obj->Tag(OTag);
 		Maps[Tag].Layer(Layer)->TotalRemap();
-		lua_pushinteger(L,obj->ID());
+		lua_pushinteger(L, obj->ID());
+		return 1;
+	}
+
+	static int Kthura_Blocked(lua_State* L) {
+		qVerify();
+		string
+			Layer = luaL_checkstring(L, 4);
+		int
+			X = luaL_checkinteger(L, 5),
+			Y = luaL_checkinteger(L, 6),
+			Pix = luaL_optinteger(L, 7, 1); // Boolean not supported for some odd reason nobody understands. You'd say C converts booleans to numbers anyway, but when Lua delivers a boolean stuff crashes, so I need a workaround with my glue script!
+		auto
+			Lay = Maps[Tag].Layer(Layer);
+		if (Pix)
+			lua_pushboolean(L, Lay->BlockedPix(X, Y));
+		else
+			lua_pushboolean(L, Lay->Blocked(X, Y));
 		return 1;
 	}
 
@@ -643,6 +662,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_ObjPixArea", Kthura_ObjPixArea);
 		Apollo_State::RequireFunction("AKTHURA_DumpObjectData", Kthura_DumpObjectData);
 		Apollo_State::RequireFunction("AKTHURA_AutoReMap", Kthura_AutoRemap);
+		Apollo_State::RequireFunction("AKTHURA_Blocked", Kthura_Blocked);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }
