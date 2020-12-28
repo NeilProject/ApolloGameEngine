@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/JCR6.neil
 // Apollo - JCR6 - Link
-// version: 20.09.14
+// version: 20.12.27
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -22,12 +22,55 @@ table AJCR = LGGTTT("AJCR")
 import Apollo_Panic
 
 
+// Placed outside the group to enforce it being a private!
+string LastPoint=""
+
 
 group JCR6
-	string State = ApolloState.Name
+	readonly string State = ApolloState.Name
 
-	table Entries(string resource="*MPACKAGE")
-		return { AJCR.ENTRIES(resource,State) }
+	//table Entries(string resource="*MPACKAGE")
+	//	return { AJCR.ENTRIES(resource,State) }
+	//end
+	
+	void Error(string msg)
+		Lua.Error("JCR6 ERROR: "..msg)
+	end
+	
+	table Entry
+	void PointEntries(string resource="*MPACKAGE")
+		LastPoint = resource
+		AJCR.STARTENTRIES(resource,State)
+	end
+	
+	table GetDir(string dir,string resource="*MPACKAGE")
+		//table ret
+		//dir = dir:upper().."/"
+		//for ent in each(Entries(resource))
+		//	if prefixed(ent:upper(),dir)
+		//		ret += ent
+		//	end
+		//end
+		string tPoint = LastPoint
+		if (resource!=LastPoint)
+			PointEntries(resource)
+		end
+		
+		table ret
+		// Although ipairs() should work, I prefer this method in case future versions of Lua may be less forgiving on that
+		int i = 1
+		dir = dir:upper().."/"
+		while Entry[i]
+			if prefixed(Entry[i]:upper(),dir)
+				ret += Entry[i]
+			end
+			i++
+		end
+		if (resource!=LastPoint)
+			PointEntries(LastPoint)
+		end
+		
+		return ret
 	end
 	
 	string LoadString(string entry,string resource="*MPACKAGE")
@@ -48,4 +91,20 @@ group JCR6
 		return AJCR.ENTRYEXISTS(resource,State,entry)
 	end
 	
+	string ExtractDir(string file)
+		return AJCR.EXTRACTDIR(file)
+	end
+	
+	
+	CONSTRUCTOR
+		void nindex()
+			error("JCR6.Entry is read-only")
+		end
+		var gindex(useless,int key)
+			// Type is var to make "nil" returns possible, which is essential for this to work!
+			return AJCR.GETENTRY(State,key)
+		end
+		Lua.setmetatable(Entry,{ ["__index"] = gindex, ["__newindex"] = nindex })
+		PointEntries()
+	end
 end

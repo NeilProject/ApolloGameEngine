@@ -1,7 +1,7 @@
 // Lic:
 // Source/API/JCR6.cpp
 // Apollo
-// version: 20.10.01
+// version: 20.12.27
 // Copyright (C) 2020 JCR6 access
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -58,7 +58,7 @@ namespace Tricky_Apollo {
 	}
 
 
-
+	/* Looking for trouble. In large complex project this will guarantee a crash
 	static int Apollo_JCR6_Entries(lua_State* L) {
 		JCRCheck()
 		int c = 0;
@@ -69,7 +69,10 @@ namespace Tricky_Apollo {
 		}		
 		return c;
 	}
+	*/
 
+
+	// Better now to use, but if specific searches are not too big, safe. Deprecated though!
 	static int Apollo_JCR6_SpecEntries(lua_State* L) {
 		JCRCheck();
 		string lookfor = Upper(luaL_checkstring(L, 3));
@@ -84,9 +87,26 @@ namespace Tricky_Apollo {
 		return c;
 	}
 
+	vector<string> SEntries;
+	static int Apollo_JCR6_StartEntries(lua_State* L) {
+		JCRCheck();
+		SEntries.clear();
+		for (auto& e : JD->Entries()) {
+			SEntries.push_back(e.second.Entry());
+		}
+		return 0;
+	}
+	static int Apollo_JCR_GetEntry(lua_State* L) {
+		auto State = luaL_checkstring(L, 1);
+		size_t idx = (size_t)luaL_checkinteger(L, 2); 
+		if (idx<1 || idx>SEntries.size()) return 0;
+		lua_pushstring(L, SEntries[idx - 1].c_str()); 
+		return 1;
+	}
 
 
-	static int Apollo_JCR6_DirExists(lua_State* L) {
+
+	static int Apollo_JCR6_DirExists(lua_State* L) { 
 		JCRCheck();
 		string LookFor = Upper(luaL_checkstring(L, 3));
 		for (auto& e : JD->Entries()) {
@@ -234,6 +254,23 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Apollo_SG_LString(lua_State* L) {
+		auto file = luaL_checkstring(L, 1);
+		if (SaveDir == "") SaveDir = Dirry("$Home$/ApolloGameData/" + Identify::ProjectData("ID") + "/SaveGame");
+		if (!FileExists(SaveDir+"/"+file)) return 0;
+		lua_pushstring(L, LoadString(SaveDir+"/"+file).c_str());
+		return 1; 
+	}
+
+	static int Apollo_SG_SString(lua_State* L) {
+		auto
+			file = luaL_checkstring(L, 1),
+			str = luaL_checkstring(L, 2);
+		if (SaveDir == "") SaveDir = Dirry("$Home$/ApolloGameData/" + Identify::ProjectData("ID") + "/SaveGame");
+		SaveString(SaveDir + "/" + file, str);
+		return 0;
+	}
+
 	static int Apollo_SG_Exists(lua_State* L) {
 		string f = luaL_checkstring(L, 1);
 		if (SaveDir == "") SaveDir = Dirry("$Home$/ApolloGameData/" + Identify::ProjectData("ID") + "/SaveGame");
@@ -265,16 +302,21 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+
+	static int Apollo_ExtractDir(lua_State* L) { lua_pushstring(L, ExtractDir(luaL_checkstring(L, 1)).c_str()); return 1; }
 	// Init
 
 	void ApolloAPIInit_JCR6() {
 		// JCR6 General
-		Apollo_State::RequireFunction("AJCR_Entries", Apollo_JCR6_Entries);
+		//Apollo_State::RequireFunction("AJCR_Entries", Apollo_JCR6_Entries);
 		Apollo_State::RequireFunction("AJCR_SpecEntries", Apollo_JCR6_SpecEntries);
 		Apollo_State::RequireFunction("AJCR_LoadString", Apollo_JCR6_LoadString);
 		Apollo_State::RequireFunction("AJCR_Size", Apollo_JCR6_Size);
 		Apollo_State::RequireFunction("AJCR_EntryExists", Apollo_JCR_EntryExists);
 		Apollo_State::RequireFunction("AJCR_DirExists", Apollo_JCR6_DirExists);
+		Apollo_State::RequireFunction("AJCR_StartEntries", Apollo_JCR6_StartEntries);
+		Apollo_State::RequireFunction("AJCR_GetEntry", Apollo_JCR_GetEntry);
+		Apollo_State::RequireFunction("AJCR_ExtractDir", Apollo_ExtractDir);
 		Apollo_State::RequireNeil("API/JCR6.neil");
 
 		// SaveGames
@@ -287,6 +329,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("ASGM_Load", Apollo_SG_Load);
 		Apollo_State::RequireFunction("ASGM_Exists", Apollo_SG_Exists);
 		Apollo_State::RequireFunction("ASGM_GetHeader", Apollo_SG_Head);
+		Apollo_State::RequireFunction("ASGM_SaveIndieString", Apollo_SG_SString);
+		Apollo_State::RequireFunction("ASGM_LoadIndieString", Apollo_SG_LString);
 		Apollo_State::RequireNeil("API/SaveGame.neil");
 	}
 }
