@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Core.Neil
 // Apollo Core API linkup
-// version: 20.09.19
+// version: 20.12.27
 // Copyright (C) 2020 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -80,6 +80,10 @@ Group State
 		if not Has(State)
 			Load(State,File)
 		end
+	end
+	
+	void LoadFlow(string FlState,string file)
+		Load("FLOW_"..FlState,file)
 	end
 	
 end
