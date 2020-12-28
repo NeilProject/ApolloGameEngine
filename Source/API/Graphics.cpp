@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.10.10
+// Version: 20.12.27
 // EndLic
 // We get into the deep of this later!
 
@@ -149,6 +149,19 @@ namespace Tricky_Apollo {
 		std::string Tag = luaL_checkstring(L, 2);
 		auto ret = LoadTex(Tag, File);
 		lua_pushstring(L, ret.c_str());
+		return 1;
+	}
+
+	static int AIMG_LoadNew(lua_State* L) {
+		auto
+			File = luaL_checkstring(L, 1),
+			Tag = luaL_checkstring(L, 2);
+		if (HasTex(Tag)) {
+			lua_pushstring(L, Tag);
+		} else {
+			auto ret = LoadTex(Tag, File);
+			lua_pushstring(L, ret.c_str());
+		}
 		return 1;
 	}
 
@@ -351,6 +364,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_ImgHeight", AIMG_ImgHeight);
 		Apollo_State::RequireFunction("AIMG_ImgWidth", AIMG_ImgWidth);
 		Apollo_State::RequireFunction("AIMG_TagExists", AIMG_TagExists);
+		Apollo_State::RequireFunction("AIMG_LoadNew", AIMG_LoadNew);
 		// Fonts
 		Apollo_State::RequireFunction("AFNT_LoadImageFont", AFNT_LoadImageFont);
 		Apollo_State::RequireFunction("AFNT_DrawText", AFNT_DrawText);
