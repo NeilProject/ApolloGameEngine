@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.10.06
+// Version: 20.12.27
 // EndLic
 
 
@@ -280,6 +280,9 @@ namespace Tricky_Apollo {
             Crash("There is no image tagged: " + Tag, State, Apollo_State::TraceBack(State));
         }
         return &Texture[Upper(Tag)];
+    }
+    bool HasTex(std::string Tag) {
+        return Texture.count(Upper(Tag));
     }
 
     int TexWidth(std::string Tag, std::string State, std::string Traceback) {
