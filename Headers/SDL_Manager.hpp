@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.10.01
+// Version: 20.12.27
 // EndLic
 
 
@@ -47,6 +47,7 @@ namespace Tricky_Apollo {
 
 	// Texture
 	TrickyUnits::TQSG_Image* GetTex(std::string Tag,std::string State="C++");
+	bool HasTex(std::string Tag);
 	void RemTex(std::string Tag);
 	std::string LoadTex(std::string Tag, std::string File);
 	std::string LoadAnimTex(std::string Tag, std::string File, int w, int h, int frames);
@@ -67,7 +68,7 @@ namespace Tricky_Apollo {
 
 	// Audio
 	std::string Apollo_SDL_LoadAudio(std::string Tag, std::string File, std::string State = "C++", std::string Traceback = "");
-	TQSA_Audio* Apollo_SDL_Audio(std::string Tag, std::string State = "C++");
+	TrickyUnits::TQSA_Audio* Apollo_SDL_Audio(std::string Tag, std::string State = "C++");
 	void Apollo_SDL_KillAudio(std::string Tag);
 	
 
