@@ -142,7 +142,7 @@
       <AdditionalDependencies>zlib.lib;Lua.lib;sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>powershell njcr script barf.lua</Command>
+      <Command>powershell jcr6 script barf.lua</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
