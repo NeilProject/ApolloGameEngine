@@ -156,6 +156,9 @@
     <ClCompile Include="..\JCR6\src\jcr6_zlib.cpp">
       <Filter>Source Files\JCR6</Filter>
     </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\TrickySTOI.cpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">

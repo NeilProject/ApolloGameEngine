@@ -1,7 +1,7 @@
 -- <License Block>
 -- ARF_src/API/RPGStat.lua
 -- RPG Stat Link up
--- version: 20.12.25
+-- version: 20.12.29
 -- Copyright (C) 2020 Jeroen P. Broks
 -- This software is provided 'as-is', without any express or implied
 -- warranty.  In no event will the authors be held liable for any damages
@@ -42,7 +42,7 @@ end]])()
 
 RPGChar = setmetatable({},{
 
-	__newindex = function() error("No new members may be assinged to RPGChar") end,
+	__newindex = function() error("No new members may be assinged to RPGChar; Use the RPGChar.Create() function stead") end,
 
 	__index = function(s,char)
 		if char:upper()=="CREATE" then return RPGCreate end

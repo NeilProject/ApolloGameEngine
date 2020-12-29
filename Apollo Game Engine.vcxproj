@@ -171,6 +171,7 @@
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\RPGSave.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\RPGStat.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\TrickySTOI.cpp" />
     <ClCompile Include="Source\API\Audio.cpp" />
     <ClCompile Include="Source\API\APIBank.cpp" />
     <ClCompile Include="Source\API\Events.cpp" />

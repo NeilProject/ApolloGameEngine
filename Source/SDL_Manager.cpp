@@ -69,7 +69,8 @@ namespace Tricky_Apollo {
 
 
     // static SDL_Texture* Tex_Death = NULL;
-    static std::map<std::string, TQSG_Image> Texture;
+    //static std::map<std::string, TQSG_Image> Texture;
+    static std::map<std::string, TQSG_AutoImage> Texture;
     static std::map<std::string, TQSA_Audio> Audio;
     static std::map<std::string, TQSG_ImageFont> Font;
 
@@ -97,8 +98,8 @@ namespace Tricky_Apollo {
 
     void RemTex(std::string Tag) {
         auto T = Upper(Tag);
-        //SDL_DestroyTexture(Texture[T]);
-        Texture[T].KillAll(); // Should happen automatically on erase, but it never hurts to make 100% sure!
+        //SDL_DestroyTexture(Texture[T]);        
+        Texture[T]->Img()->KillAll(); // Should happen automatically on erase, but it never hurts to make 100% sure! Now that I replaced this with a shared pointer it should even go fully automatic.
         Texture.erase(T);
         Apollo_SDL_Klets("Disposed " + T);
     }
@@ -108,21 +109,23 @@ namespace Tricky_Apollo {
         for (auto &TL : Texture) {
             Apollo_SDL_Klets(TL.first);
             //SDL_DestroyTexture(TL.second);
-            TL.second.KillAll();
+            TL.second->Img()->KillAll(); // Should be 100% automated now due to shared pointers. This is only a safety precaution.
         }
         Apollo_SDL_Klets("All removals done");
         Texture.clear();
     }
     
+    /* Shoud no longer be needed
     static void SetTex(std::string Tag, TQSG_Image &Tex) { //static void SetTex(std::string Tag, SDL_Texture* Tex) {
         auto T = Upper(Tag);
-        /* Texture manager should destroy the old automatically now!
+        //* Texture manager should destroy the old automatically now!
         if (Texture.count(T) == 1) {
             Apollo_SDL_Klets("Request to replace texture " + T + ", but I gotta dispose the old texture first!");
         }
-        */
+        // * /
         Texture[Upper(Tag)] = Tex;        
     }
+    */
 
 
 
@@ -139,12 +142,15 @@ namespace Tricky_Apollo {
             } while (Texture.count(T) > 0);
         }
         // SetTex(T, Tex_From_JCR(JCRPackage, File));
+        /*
         TQSG_Image LTex;
         if (prefixed(Tag,"**") && suffixed(Tag,"**"))
             LTex.Create(ARF, File);
         else
         LTex.Create(JCRPackage, File);
         SetTex(T, LTex);
+        */
+        Texture[T] = TQSG_LoadAutoImage(JCRPackage, File);
         return T;
     }
 
@@ -174,7 +180,7 @@ namespace Tricky_Apollo {
             return 0;
         }
         auto& Tex = Texture[T];
-        return Tex.Height();
+        return Tex->H();
     }
 
     void KillTex(std::string Tag) {
@@ -279,7 +285,9 @@ namespace Tricky_Apollo {
         if (!Texture.count(Upper(Tag))) {
             Crash("There is no image tagged: " + Tag, State, Apollo_State::TraceBack(State));
         }
-        return &Texture[Upper(Tag)];
+        //return &Texture[Upper(Tag)];
+        // Leftover from old times, but as it's too much work to get it all removed, I'll leave it this way for now. The API won't notice the difference anyway.
+        return Texture[Upper(Tag)]->Img();
     }
     bool HasTex(std::string Tag) {
         return Texture.count(Upper(Tag));
@@ -293,7 +301,7 @@ namespace Tricky_Apollo {
             return 0;
         }
         auto& Tex = Texture[T];
-        return Tex.Width();
+        return Tex->W();
     }
 
     void Apollo_SDL_Draw(std::string Tag, int x, int y, std::string State, std::string Traceback) {
@@ -304,7 +312,7 @@ namespace Tricky_Apollo {
             return;
         }
         auto& Tex = Texture[T];
-        Tex.Draw(x, y);
+        Tex->Draw(x, y);
     }
 
     void Apollo_SDL_Draw(std::string Tag, int x, int y, int f, std::string State, std::string Traceback) {
@@ -315,7 +323,7 @@ namespace Tricky_Apollo {
             return;
         }
         auto& Tex = Texture[T];
-        Tex.Draw(x, y,f);
+        Tex->Draw(x, y,f);
     }
 
     void Apollo_SDL_Tile(std::string Tag, int x, int y, int w, int h, std::string State, std::string Traceback) {
@@ -329,7 +337,7 @@ namespace Tricky_Apollo {
             return;
         }
         auto& Tex = Texture[T];
-        Tex.Tile(x, y, w, h, f);
+        Tex->Tile(x, y, w, h, f);
 
     }
 
@@ -344,7 +352,7 @@ namespace Tricky_Apollo {
             return;
         }
         auto& Tex = Texture[T];
-        Tex.StretchDraw(x, y, w, h, f);
+        Tex->Stretch(x, y, w, h, f);
     }
 
     void Apollo_SDL_Flip() {
