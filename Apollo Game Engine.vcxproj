@@ -166,6 +166,7 @@
     <ClCompile Include="..\TrickyUnits\Source\Dirry.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\JXSDA.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\MD5.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\Platform.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickStream.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />

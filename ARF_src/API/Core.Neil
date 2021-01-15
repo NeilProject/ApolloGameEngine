@@ -36,6 +36,7 @@ import HasState
 import PKGDir
 import PlanToKill
 import WaitMinTicks
+import MD5
 // import Platform
 
 Group Core

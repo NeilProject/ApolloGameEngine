@@ -28,6 +28,7 @@
 
 #include <QuickString.hpp>
 #include <Platform.hpp>
+#include <MD5.hpp>
 #include <TQSE.hpp>
 #include <TQSG.hpp>
 
@@ -285,6 +286,13 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int APICORE_MD5(lua_State* L) {
+		auto str = luaL_checkstring(L, 1);
+		auto hash = qc_md5(str);
+		lua_pushstring(L, hash.c_str());
+		return 1;
+	}
+
 
 
 	void InitCore() {
@@ -299,6 +307,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("LoadFlow", APICORE_LoadFlow);
 		Apollo_State::RequireFunction("KillFlow", APICORE_KillFlow);
 		Apollo_State::RequireFunction("GetFlow", APICORE_GetFlow);
+		Apollo_State::RequireFunction("MD5", APICORE_MD5);
 
 		Apollo_State::RequireFunction("CallState", APICORE_Call);
 		Apollo_State::RequireFunction("LoadState", APICORE_LoadState);
