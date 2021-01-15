@@ -159,6 +159,9 @@
     <ClCompile Include="..\TrickyUnits\Source\TrickySTOI.cpp">
       <Filter>Header Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\MD5.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
