@@ -53,19 +53,28 @@ namespace Tricky_Apollo {
 			ImmHalt(exitcode); return;
 		}
 		CrashedBefore = exitcode;
-		auto Tag = LoadTex("**DEATH**", "Pics/Death.png");
-		auto DW = TexWidth("**DEATH**");
-		auto DH = TexHeight("**DEATH**");
-		int SX, SY; TQSG_ScreenSize(&SX, &SY);
-		auto DX = 0, DY = 0;
+		//auto Tag = LoadTex("**DEATH**", "Pics/Death.png");
+		//auto DW = TexWidth("**DEATH**");
+		//auto DH = TexHeight("**DEATH**");
+		auto
+			Death = TQSG_LoadAutoImage(ARF, "Pics/Death.png");
+		int
+			DW = Death->W(),
+			DH = Death->H(),
+			SX, 
+			SY,
+			DX = 0, 
+			DY = 0;
+		TQSG_ScreenSize(&SX, &SY);
 		if (DH < SY) DY = SY - DH;
-		printf("DEAH %dx%d; Screen %dx%d; Coords(%d,%d)\n", DW, DH, SX, SY, DX, DY);
+		printf("DEATH %dx%d; Screen %dx%d; Coords(%d,%d)\n", DW, DH, SX, SY, DX, DY);
 		TQSG_ClsColor(0, 0, 100);		
 		do {
 			TQSE_Poll();
 			TQSG_Cls();
 			TQSG_Color(0, 0, 255);
-			Apollo_SDL_Draw("**DEATH**", 0, DY);
+			//Apollo_SDL_Draw("**DEATH**", 0, DY);
+			Death->Draw(DX, DY);
 			TQSG_Color(0, 255, 255);
 			Apollo_SysFont.Draw("Houston! We have a problem!", 5, 5);
 			TQSG_Color(255, 255, 0);
