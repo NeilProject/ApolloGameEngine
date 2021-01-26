@@ -17,6 +17,7 @@
 // misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 // End License Information
+
 Table AGGA = LGGTTT("AGGA")
 Table AIMG = LGGTTT("AIMG")
 Table AFNT = LGGTTT("AFNT")
@@ -145,6 +146,13 @@ Class Image
 	end
 	
 	Get Int Height
+		return AIMG.IMGHEIGHT(ApolloState.Name,Tag)
+	end
+	Get Int W
+		return AIMG.IMGWIDTH(ApolloState.Name,Tag)
+	end
+	
+	Get Int H
 		return AIMG.IMGHEIGHT(ApolloState.Name,Tag)
 	end
 		
