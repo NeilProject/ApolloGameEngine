@@ -57,6 +57,8 @@ namespace Tricky_Apollo {
 	int TexHeight(std::string Tag, std::string State = "C++", std::string Traceback = "");
 	void KillTex(std::string Tag); // RemTex requires a tag to exist, KillTex does not!
 	bool TagExists(std::string Tag);
+	void SetTex(std::string Tag, TQSG_AutoImage Img);
+	std::string MkTex(std::string Tag);
 
 	// Fonts
 	std::string LoadFont(std::string Tag, std::string File, std::string State = "C++");

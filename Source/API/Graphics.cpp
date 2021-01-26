@@ -330,6 +330,16 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AIMG_GrabScreen(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		auto I = TQSG_GrabScreen();
+		auto Ret{ MkTex(Tag) };
+		SetTex(Ret, I);
+		lua_pushstring(L, Ret.c_str());
+		return 1;
+	}
+
 
 	// ImageFont
 
@@ -365,6 +375,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_ImgWidth", AIMG_ImgWidth);
 		Apollo_State::RequireFunction("AIMG_TagExists", AIMG_TagExists);
 		Apollo_State::RequireFunction("AIMG_LoadNew", AIMG_LoadNew);
+		Apollo_State::RequireFunction("AIMG_GrabScreen", AIMG_GrabScreen);
 		// Fonts
 		Apollo_State::RequireFunction("AFNT_LoadImageFont", AFNT_LoadImageFont);
 		Apollo_State::RequireFunction("AFNT_DrawText", AFNT_DrawText);

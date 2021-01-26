@@ -127,20 +127,24 @@ namespace Tricky_Apollo {
     }
     */
 
-
-
-    string LoadTex(std::string Tag, std::string File) {
-        static unsigned int cnt=0;
+    std::string MkTex(std::string Tag) {
+        static unsigned int cnt = 0;
         string T = Upper(Tag);
         if (Tag == "") {
             char hx[10];
             do {
                 cnt++;
-                sprintf_s(hx, 10,"%6X", cnt);                
+                sprintf_s(hx, 10, "%6X", cnt);
                 T = hx;
                 T = "IMAGE::" + T;
             } while (Texture.count(T) > 0);
         }
+        return T;
+    }
+
+
+    string LoadTex(std::string Tag, std::string File) {
+        auto T = MkTex(Tag);
         // SetTex(T, Tex_From_JCR(JCRPackage, File));
         /*
         TQSG_Image LTex;
@@ -194,6 +198,10 @@ namespace Tricky_Apollo {
 
     bool TagExists(std::string Tag) {
         return Texture.count(Upper(Tag));
+    }
+
+    void SetTex(std::string Tag, TQSG_AutoImage Img) {
+        Texture[Upper(Tag)] = Img;
     }
 
     std::string LoadFont(std::string Tag, std::string File, std::string State) {
