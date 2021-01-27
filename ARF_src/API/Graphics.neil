@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Graphics.neil
 // Apollo - Graphics Linkup
-// version: 21.01.26
+// version: 21.01.28
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -156,6 +156,47 @@ Class Image
 		return AIMG.IMGHEIGHT(ApolloState.Name,Tag)
 	end
 		
+	static var GrabScreen(String Tag="")
+		AllowCImage = true
+		String NTag = AIMG.GRABSCREEN(ApolloState.Name,Tag)
+		var Ret = new Image(NTag)
+		AllowCImage = false
+		return ret
+	end
+	
+	static var Copy(Ori,string Tag="")
+		Switch Lua.type(Ori)
+			case "string"
+				OriTag = Ori
+			case "table"
+				OriTag = Ori.Tag
+				Lua.assert(Lua.type(OriTag)=="string","Invalid original for copy")
+			default
+				Lua.error("I cannot copy original "..tostring(Ori)
+		end
+		AllowCImage = true
+		String NTag = AIMG.COPY(ApolloState.Name,OriTag,Tag)
+		var Ret = new Image(NTag)
+		AllowCImage = false
+		return ret
+	end
+
+	static var Copy(Ori,string Tag="")
+		Switch Lua.type(Ori)
+			case "string"
+				OriTag = Ori
+			case "table"
+				OriTag = Ori.Tag
+				Lua.assert(Lua.type(OriTag)=="string","Invalid original for negative copy")
+			default
+				Lua.error("I cannot negative copy original "..tostring(Ori)
+		end
+		AllowCImage = true
+		String NTag = AIMG.NEGATIVE(ApolloState.Name,OriTag,Tag)
+		var Ret = new Image(NTag)
+		AllowCImage = false
+		return ret
+	end
 	
 end
 
@@ -173,6 +214,8 @@ group Screen
 	Get Int Height
 		return AGGA.SCREENH()
 	End
+	
+	readonly delegate Grab = Image.GrabScreen
 End
 
 

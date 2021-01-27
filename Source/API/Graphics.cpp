@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.01.26
+// Version: 21.01.28
 // EndLic
 // We get into the deep of this later!
 
@@ -340,6 +340,36 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AIMG_Copy(lua_State* L) {
+		auto
+			State = luaL_checkstring(L, 1),
+			Ori = luaL_checkstring(L, 2);
+		auto
+			Tar = MkTex(luaL_checkstring(L, 3));
+		auto
+			OriTex = GetTex(Ori, State);
+		auto
+			TarTex = TQSG_Copy(OriTex);
+		SetTex(Tar, TarTex);
+		lua_pushstring(L, Tar.c_str());
+		return 1;
+	}
+
+	static int AIMG_Negative(lua_State* L) {
+		auto
+			State = luaL_checkstring(L, 1),
+			Ori = luaL_checkstring(L, 2);
+		auto
+			Tar = MkTex(luaL_checkstring(L, 3));
+		auto
+			OriTex = GetTex(Ori, State);
+		auto
+			TarTex = TQSG_Negative(OriTex);
+		SetTex(Tar, TarTex);
+		lua_pushstring(L, Tar.c_str());
+		return 1;
+	}
+
 
 	// ImageFont
 
@@ -376,6 +406,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_TagExists", AIMG_TagExists);
 		Apollo_State::RequireFunction("AIMG_LoadNew", AIMG_LoadNew);
 		Apollo_State::RequireFunction("AIMG_GrabScreen", AIMG_GrabScreen);
+		Apollo_State::RequireFunction("AIMG_Copy", AIMG_Copy);
+		Apollo_State::RequireFunction("AIMG_Negative", AIMG_Negative);
 		// Fonts
 		Apollo_State::RequireFunction("AFNT_LoadImageFont", AFNT_LoadImageFont);
 		Apollo_State::RequireFunction("AFNT_DrawText", AFNT_DrawText);

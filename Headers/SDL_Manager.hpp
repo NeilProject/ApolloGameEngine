@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.01.26
+// Version: 21.01.28
 // EndLic
 
 
@@ -35,6 +35,7 @@
 #include <string>
 
 namespace Tricky_Apollo {
+	using namespace TrickyUnits;
 	/// <summary>
 	/// When set to true, all kind of debug crap will be shown on the console
 	/// </summary>
