@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Graphics.neil
 // Apollo - Graphics Linkup
-// version: 21.01.28
+// version: 21.01.29
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -165,6 +165,7 @@ Class Image
 	end
 	
 	static var Copy(Ori,string Tag="")
+		string OriTag
 		Switch Lua.type(Ori)
 			case "string"
 				OriTag = Ori
@@ -172,7 +173,7 @@ Class Image
 				OriTag = Ori.Tag
 				Lua.assert(Lua.type(OriTag)=="string","Invalid original for copy")
 			default
-				Lua.error("I cannot copy original "..tostring(Ori)
+				Lua.error("I cannot copy original "..tostring(Ori))
 		end
 		AllowCImage = true
 		String NTag = AIMG.COPY(ApolloState.Name,OriTag,Tag)
@@ -181,7 +182,8 @@ Class Image
 		return ret
 	end
 
-	static var Copy(Ori,string Tag="")
+	static var Negative(Ori,string Tag="")
+		string OriTag
 		Switch Lua.type(Ori)
 			case "string"
 				OriTag = Ori
@@ -189,7 +191,7 @@ Class Image
 				OriTag = Ori.Tag
 				Lua.assert(Lua.type(OriTag)=="string","Invalid original for negative copy")
 			default
-				Lua.error("I cannot negative copy original "..tostring(Ori)
+				Lua.error("I cannot negative copy original "..tostring(Ori))
 		end
 		AllowCImage = true
 		String NTag = AIMG.NEGATIVE(ApolloState.Name,OriTag,Tag)
