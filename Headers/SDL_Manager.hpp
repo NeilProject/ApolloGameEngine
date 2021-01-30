@@ -73,6 +73,7 @@ namespace Tricky_Apollo {
 	std::string Apollo_SDL_LoadAudio(std::string Tag, std::string File, std::string State = "C++", std::string Traceback = "");
 	TrickyUnits::TQSA_Audio* Apollo_SDL_Audio(std::string Tag, std::string State = "C++");
 	void Apollo_SDL_KillAudio(std::string Tag);
+	bool Apollo_SDL_HasAudioTag(std::string Tag);
 	
 
 	// Base features

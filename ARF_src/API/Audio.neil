@@ -96,6 +96,18 @@ Class Audio
 	
 	Static ReadOnly Delegate ChannelPlaying = AAUA.CHANNELPLAYING
 	
+	static Bool HasTag(string Tag)
+		return AAUA.HASTAG(Tag,ApolloState.Name)
+	end
+	
+	Static Var LoadNew(string File,String Tag)
+		if HasTag(Tag)
+			return Obtain(Tag)
+		else
+			return Load(File,Tag)
+		end
+	end
+	
 	Static Void Stop(channel)
 		AAUA.STOP(channel or -1);
 	End

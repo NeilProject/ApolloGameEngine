@@ -266,6 +266,11 @@ namespace Tricky_Apollo {
         return Tag;
     }
 
+    bool Apollo_SDL_HasAudioTag(string Tag) {
+        Tag = Upper(Tag);
+        return Audio.count(Tag);
+    }
+
 
     TQSA_Audio* Apollo_SDL_Audio(std::string Tag, std::string State) {
         Tag = Upper(Tag);

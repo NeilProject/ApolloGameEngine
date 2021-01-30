@@ -40,6 +40,14 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AAUA_HasTag(lua_State* L) {
+		auto
+			Tag = luaL_checkstring(L, 1),
+			State = luaL_checkstring(L, 2);
+		lua_pushboolean(L, Apollo_SDL_HasAudioTag(Tag));
+		return 1;
+	}
+
 	static int AAUA_Play(lua_State* L) {
 		auto Tag = luaL_checkstring(L, 1);
 		auto Channel = luaL_checkinteger(L, 2);
@@ -86,6 +94,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AAUA_Stop", AAUA_Stop);
 		Apollo_State::RequireFunction("AAUA_Kill", AAUA_Kill);
 		Apollo_State::RequireFunction("AAUA_ChannelPlaying", AAUA_ChannelPlaying);
+		Apollo_State::RequireFunction("AAUA_HasTag", AAUA_HasTag);
 		Apollo_State::RequireNeil("API/Audio.neil");
 
 	}
