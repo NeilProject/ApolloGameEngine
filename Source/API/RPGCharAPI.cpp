@@ -75,6 +75,14 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int RPGHasStat(lua_State* L) {
+		std::string ch = luaL_checkstring(L, 1);
+		std::string stat = luaL_checkstring(L, 2);
+		lua_pushboolean(L, Character::Map[ch].HasStat(stat));
+		return 1;
+	}
+
+
 	static int RPGSetStatValue(lua_State* L) {
 		std::string ch = luaL_checkstring(L, 1);
 		std::string stat = luaL_checkstring(L, 2);
@@ -222,6 +230,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("RPGCreate", RPGCreate);
 		Apollo_State::RequireFunction("RPGGetStatValue", RPGGetStatValue);
 		Apollo_State::RequireFunction("RPGSetStatValue", RPGSetStatValue);
+		Apollo_State::RequireFunction("RPGHasStat", RPGHasStat);
 		Apollo_State::RequireFunction("RPGSetPoints", RPGSetPoints);
 		Apollo_State::RequireFunction("RPGGetPoints", RPGGetPoints);
 		Apollo_State::RequireFunction("RPGGetData", RPGGetData);
