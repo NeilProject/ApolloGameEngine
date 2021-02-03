@@ -62,7 +62,7 @@ RPGChar = setmetatable({},{
 							__newindex = function(s,stat,value) RPGSetStatValue(char,stat,value) end
 						})
 						return PreciseWanted[sf("%s.STAT",char)] 
-					elseif what=="HASSTAT" then
+					elseif what=="HASSTAT" or what=="STATEXISTS" then
 						return function(stat)
 							RPGHasStat(char,stat)
 						end
