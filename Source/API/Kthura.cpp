@@ -4,7 +4,7 @@
 // 
 // 
 // 
-// (c) Jeroen P. Broks, 2020
+// (c) Jeroen P. Broks, 2020, 2021
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.12.27
+// Version: 21.02.14
 // EndLic
 // C++
 #include <iostream>
@@ -584,6 +584,7 @@ namespace Tricky_Apollo {
 	static int Kthura_GetData(lua_State* L) {
 		qObjVerify();
 		string DataTag = luaL_checkstring(L, 7);
+		// cout << "Getting data for field " << DataTag << " from object " << obj->Kind() << " tag: " << obj->Tag() << " => " << obj->MetaData(DataTag) << endl; // DEBUG! ONLY!
 		lua_pushstring(L, obj->MetaData(DataTag).c_str());
 		return 1;
 	}
