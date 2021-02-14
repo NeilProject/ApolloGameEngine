@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.01.28
+// Version: 21.02.14
 // EndLic
 // We get into the deep of this later!
 
@@ -29,6 +29,8 @@
 #include <TQSG.hpp>
 #include <SDL_Manager.hpp>
 #include <States.hpp>
+#include <string>
+using namespace std;
 
 namespace Tricky_Apollo {
 	using namespace TrickyUnits;
@@ -201,6 +203,17 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int AIMG_XDraw(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		int x = floor(luaL_checknumber(L, 3));
+		int y = floor(luaL_checknumber(L, 4));
+		int f = luaL_checknumber(L, 5);
+		//GetTex(Tag, State)->Draw(x, y, f);
+		Apollo_SDL_XDraw(Tag, x, y, f, State, Apollo_State::TraceBack(State));
+		return 0;
+	}
+
 	static int AIMG_Tile(lua_State* L) {
 		std::string State = luaL_checkstring(L, 1);
 		std::string Tag = luaL_checkstring(L, 2);
@@ -370,6 +383,49 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AIMG_SetRotation(lua_State*L){
+		auto
+			kind = luaL_checkinteger(L, 1);
+		auto
+			value = luaL_checknumber(L, 2);
+		switch (kind) {
+		case 0:
+			// degrees
+			TQSG_Rotate(value);
+			break;
+		case 1:
+			// Radians
+			TQSG_RotateRAD(luaL_checknumber(L, 2));
+			break;
+		case 2:
+			TQSG_RotateGRAD(luaL_checknumber(L, 3));
+			break;
+		default:
+			Crash("Unknown rotation kind (" + std::to_string(kind) + ")");
+			break;
+		}
+		return 0;
+	}
+
+	static int AIMG_GetRotation(lua_State* L) {
+		double value = 0;
+		auto kind{ luaL_checkinteger(L,1) };
+		switch (kind) {
+		case 0:
+			value = TQSG_Rotate(); break;
+		case 1:
+			value = TQSG_RotateRAD(); break;
+		case 2:
+			value = TQSG_RotateGRAD(); break;
+		default:
+			Crash("Unknown rotation kind (" + std::to_string(kind) + ")");
+			break;
+		}
+		lua_pushnumber(L, value);
+		return 1;
+	}
+
+	
 
 	// ImageFont
 
@@ -397,6 +453,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_Kill", AIMG_Kill);
 		Apollo_State::RequireFunction("AIMG_Stretch", AIMG_Stretch);
 		Apollo_State::RequireFunction("AIMG_Draw", AIMG_Draw);
+		Apollo_State::RequireFunction("AIMG_XDraw", AIMG_XDraw);
 		Apollo_State::RequireFunction("AIMG_Tile", AIMG_Tile);
 		Apollo_State::RequireFunction("AIMG_Hot", AIMG_Hot);
 		Apollo_State::RequireFunction("AIMG_HotCenter", AIMG_HotCenter);
@@ -408,6 +465,11 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_GrabScreen", AIMG_GrabScreen);
 		Apollo_State::RequireFunction("AIMG_Copy", AIMG_Copy);
 		Apollo_State::RequireFunction("AIMG_Negative", AIMG_Negative);
+		Apollo_State::RequireFunction("AIMG_GetRotation", AIMG_GetRotation);
+		Apollo_State::RequireFunction("AIMG_SetRotation", AIMG_SetRotation);
+		// Alias in General 
+		Apollo_State::RequireFunction("AGGA_GetRotation", AIMG_GetRotation);
+		Apollo_State::RequireFunction("AGGA_SetRotation", AIMG_SetRotation);
 		// Fonts
 		Apollo_State::RequireFunction("AFNT_LoadImageFont", AFNT_LoadImageFont);
 		Apollo_State::RequireFunction("AFNT_DrawText", AFNT_DrawText);

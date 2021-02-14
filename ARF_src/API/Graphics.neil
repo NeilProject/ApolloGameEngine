@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Graphics.neil
 // Apollo - Graphics Linkup
-// version: 21.01.29
+// version: 21.02.14
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -39,6 +39,34 @@ QuickMeta Graphics
 	
 End
 
+QuickMeta GFX_Rotation
+	index
+		switch key:upper()
+			case "DEG" "DEGREES"
+				return AIMG.GETROTATION(0)
+			case "RAD" "RADIANS"
+				return AIMG.GETROTATION(1)
+			case "GRA" "GRAD" "GRADIANS"
+				return AIMG.GETROTATION(2)
+			default
+				Lua.error("Unknown rotation kind: "..key)
+		end
+	end
+	
+	newindex
+		switch key:upper()
+			case "DEG" "DEGREES"
+				AIMG.SETROTATION(0,value)
+			case "RAD" "RADIANS"
+				AIMG.SETROTATION(1,value)
+			case "GRA" "GRAD" "GRADIANS"
+				AIMG.SETROTATION(2,value)
+			default
+				Lua.error("Unknown rotation kind: "..key)
+		end
+	end
+end
+
 //Init
 //	For k,v in SPAIRS(AGGA)
 //		print(type(v),k,"=",v)
@@ -52,6 +80,22 @@ Class Image
 	
 	ReadOnly String Tag
 	ReadOnly Bool AutoDestruct
+	static String RotateBy = "Degrees"
+	
+	static get number Rotate
+		return GFX_Rotation[RotateBy]
+	end
+	static Set number Rotate
+		GFX_Rotation[RotateBy] = value
+	end
+
+	static get number Rotation
+		return GFX_Rotation[RotateBy]
+	end
+	static Set number Rotation
+		GFX_Rotation[RotateBy] = value
+	end
+	
 	
 	Private Constructor(string ATag)
 		if !AllowCImage
@@ -118,6 +162,9 @@ Class Image
 	
 	Void Draw(int x, int y, int frame=0)
 		AIMG.DRAW(ApolloState.Name,Tag,x,y,frame)
+	End
+	Void XDraw(int x, int y, int frame=0)
+		AIMG.XDRAW(ApolloState.Name,Tag,x,y,frame)
 	End
 
 	Void Tile(int x, int y, int w, int h,int frame=0)
