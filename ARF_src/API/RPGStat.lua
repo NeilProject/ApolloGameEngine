@@ -1,8 +1,8 @@
 -- <License Block>
 -- ARF_src/API/RPGStat.lua
 -- RPG Stat Link up
--- version: 20.12.29
--- Copyright (C) 2020 Jeroen P. Broks
+-- version: 21.02.14
+-- Copyright (C) 2020, 2021 Jeroen P. Broks
 -- This software is provided 'as-is', without any express or implied
 -- warranty.  In no event will the authors be held liable for any damages
 -- arising from the use of this software.
@@ -21,6 +21,7 @@
 local CharsWantedBefore={} -- Saves time later!
 local PreciseWanted={}
 local RPGCreate = RPGCreate _G.RPGCreate=nil
+local RPGKillChar = RPGKillChar _G.RPGKillChar=nil
 local sf = string.format
 
 Neil.Load([[
@@ -46,6 +47,7 @@ RPGChar = setmetatable({},{
 
 	__index = function(s,char)
 		if char:upper()=="CREATE" then return RPGCreate end
+		if char:upper()=="KILL" then return RPGKillChar end
 		CharsWantedBefore[char] = CharsWantedBefore[char] or setmetatable({},{
 			__newindex = function(s,k,v) 
 				if k:upper()=="NAME" then RPGSetChName(char,v) end
@@ -53,7 +55,9 @@ RPGChar = setmetatable({},{
 			end,
 			__index = function(s,what)
 					what = what:upper()
-					if what=="STAT" then 
+					if what=="KILL" then
+						return function() RPGKillChar(char) end
+					elseif what=="STAT" then 
 						PreciseWanted[sf("%s.STAT",char)] = PreciseWanted[sf("%s.STAT",char)] or setmetatable({},{
 							__index = function(s,stat) 
 								-- Neil.Globals.cout("Asking for stat ",stat," of char ",char,"\n") -- debug
@@ -64,7 +68,7 @@ RPGChar = setmetatable({},{
 						return PreciseWanted[sf("%s.STAT",char)] 
 					elseif what=="HASSTAT" or what=="STATEXISTS" then
 						return function(stat)
-							RPGHasStat(char,stat)
+							return RPGHasStat(char,stat)
 						end
 					elseif what=="NAME" then
 						return RPGGetChName(char)

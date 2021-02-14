@@ -4,7 +4,7 @@
 // 
 // 
 // 
-// (c) Jeroen P. Broks, 2020
+// (c) Jeroen P. Broks, 2020, 2021
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.12.27
+// Version: 21.02.14
 // EndLic
 
 #undef blabbermouth
@@ -223,6 +223,19 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int RPGKillChar(lua_State* L) {
+		auto ch = luaL_checkstring(L, 1);
+		auto prefix = luaL_optinteger(L, 2, 0);
+		if (prefix) {
+			std::vector<string>Kill{};
+			for (auto& s : Character::Map) if (prefixed(s.first, ch)) Kill.push_back(s.first);
+			for (auto& s : Kill) Character::Map.erase(s);
+		} else {
+			if (Character::Map.count(ch)) Character::Map.erase(ch);
+		}
+		return 0;
+	}
+
 	void ApolloAPIInit_RPGCharAPI() {
 		Character::Panic = RPGError;
 		Apollo_State::RequireFunction("RPGGetParty", RPGGetParty);
@@ -246,6 +259,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("RPGGetAllStats", RPGGetAllStats);
 		Apollo_State::RequireFunction("RPGGetChName", RPGGetChName);
 		Apollo_State::RequireFunction("RPGSetChName", RPGSetChName);
+		Apollo_State::RequireFunction("RPGKillChar", RPGKillChar);
 		Apollo_State::RequireLua("API/RPGStat.lua");
 	}
 
