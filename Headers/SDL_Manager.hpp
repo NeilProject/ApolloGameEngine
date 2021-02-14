@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.01.28
+// Version: 21.02.14
 // EndLic
 
 
@@ -84,6 +84,7 @@ namespace Tricky_Apollo {
 
 	void Apollo_SDL_Draw(std::string Tag, int x, int y, std::string State = "C++", std::string Traceback = "No Traceback possible");
 	void Apollo_SDL_Draw(std::string Tag, int x, int y, int f, std::string State = "C++", std::string Traceback = "No Traceback possible");
+	void Apollo_SDL_XDraw(std::string tag, int x, int y, int f, std::string State = "C++", std::string Traceback = "No Traceback possible");
 	void Apollo_SDL_Tile(std::string Tag, int x, int y, int w, int h,std::string State = "C++", std::string Traceback = "No Traceback possible");
 	void Apollo_SDL_Tile(std::string Tag, int x, int y, int w, int h, int f, std::string State = "C++", std::string Traceback = "No Traceback possible");
 	void Apollo_SDL_Stretch(std::string Tag, int x, int y, int w, int h, std::string State = "C++", std::string Traceback = "No Traceback possible");

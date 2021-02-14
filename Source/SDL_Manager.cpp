@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.01.26
+// Version: 21.02.14
 // EndLic
 
 
@@ -134,7 +134,7 @@ namespace Tricky_Apollo {
             char hx[10];
             do {
                 cnt++;
-                sprintf_s(hx, 10, "%6X", cnt);
+                sprintf_s(hx, 10, "%06X", cnt);
                 T = hx;
                 T = "IMAGE::" + T;
             } while (Texture.count(T) > 0);
@@ -337,6 +337,17 @@ namespace Tricky_Apollo {
         }
         auto& Tex = Texture[T];
         Tex->Draw(x, y,f);
+    }
+
+    void Apollo_SDL_XDraw(std::string Tag, int x, int y, int f, std::string State, std::string Traceback) {
+        auto T = Upper(Tag);
+        if (Texture.count(T) != 1) {
+            if (T == "**DEATH**") return; // Otherwise we get a cyclic function call, recursing stuff forever until the stack blows up!
+            Crash("There is no image loaded named " + T, State, Traceback, AE_NoTextureOnTag);
+            return;
+        }
+        auto& Tex = Texture[T];
+        Tex->XDraw(x, y, f);
     }
 
     void Apollo_SDL_Tile(std::string Tag, int x, int y, int w, int h, std::string State, std::string Traceback) {
