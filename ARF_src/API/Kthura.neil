@@ -1,8 +1,8 @@
 // License Information:
 // ARF_src/API/Kthura.neil
 // Apollo - Kthura Linker
-// version: 20.12.25
-// Copyright (C) 2020 Jeroen P. Broks
+// version: 21.02.14
+// Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
 // arising from the use of this software.
@@ -56,7 +56,7 @@ class KTHURA_Object
 			AKTH.SETDATA(aMapTag,ApolloState.Name,aID,LayerTag,"number",aObjID,key,value)
 		end
 		
-		lua.setmetatable(Data,{["__index"]=DataIndex,["__newindex"]=DataNewIndex})
+		Data = lua.setmetatable({},{["__index"]=DataIndex,["__newindex"]=DataNewIndex})
 		
 	end
 	
