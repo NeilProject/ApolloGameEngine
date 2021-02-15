@@ -293,6 +293,13 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int APICORE_Sleep(lua_State* L) {
+		auto
+			tijd = luaL_checkinteger(L, 1);
+		SDL_Delay(tijd);
+		return 0;
+	}
+
 
 
 	void InitCore() {
@@ -316,6 +323,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("HasState", APICORE_HasState);
 		Apollo_State::RequireFunction("PKGDir", APICORE_PKGDir);
 		Apollo_State::RequireFunction("Ticks", APICORE_Ticks);
+		Apollo_State::RequireFunction("Sleep", APICORE_Sleep);
 		Apollo_State::RequireFunction("Shell", APICORE_Shell);
 		Apollo_State::RequireFunction("Platform", APICORE_Platform);
 		Apollo_State::RequireFunction("WaitMinTicks", APICORE_WaitMinTicks);

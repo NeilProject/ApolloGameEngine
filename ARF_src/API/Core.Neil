@@ -37,6 +37,7 @@ import PKGDir
 import PlanToKill
 import WaitMinTicks
 import MD5
+//import Sleep
 // import Platform
 
 Group Core
@@ -118,6 +119,8 @@ Group FPS
 	
 	readonly Delegate WaitMinTicks = Lua.WaitMinTicks
 	
+	ReadOnly Delegate Sleep = Lua.Sleep
+	
 End
 
 
@@ -148,6 +151,7 @@ end
 
 
 global delegate Shell = Lua.Shell
+global delegate Sleep = Lua.Sleep
 
 //Init
 //	Print("DEBUG! Salut monde!") // Test output!
