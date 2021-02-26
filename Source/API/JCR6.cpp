@@ -173,6 +173,12 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int Apollo_SG_HasData(lua_State* L) {
+		auto Key = Upper(luaL_checkstring(L, 1));
+		lua_pushboolean(L, SaveGameData.count(Key));
+		return 1;
+	}
+
 	static int Apollo_SG_DataFields(lua_State* L) {
 		string ret{ "" };
 		for (auto it : SaveGameData) {
@@ -324,6 +330,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("ASGM_Clear", Apollo_SG_Clear);
 		Apollo_State::RequireFunction("ASGM_SetData", Apollo_SG_SetData);
 		Apollo_State::RequireFunction("ASGM_GetData", Apollo_SG_GetData);
+		Apollo_State::RequireFunction("ASGM_HasData", Apollo_SG_HasData);
 		Apollo_State::RequireFunction("ASGM_DataFields", Apollo_SG_DataFields);
 		Apollo_State::RequireFunction("ASGM_Save", Apollo_SG_Save);
 		Apollo_State::RequireFunction("ASGM_Load", Apollo_SG_Load);
