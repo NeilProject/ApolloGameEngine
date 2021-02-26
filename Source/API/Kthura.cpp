@@ -226,7 +226,7 @@ namespace Tricky_Apollo {
 		auto x = luaL_checkinteger(L, 7);
 		auto y = luaL_checkinteger(L, 8);
 		auto real = luaL_optinteger(L, 9, 1);
-		cout << "Actor " << obj->Tag() << " is walking to (" << x << "," << y << ")   (real:" << real << ")  Layer:" << obj->GetParent()->GetCreationName() << "\n";
+		//std::cout << "Actor " << obj->Tag() << " is walking to (" << x << "," << y << ")   (real:" << real << ")  Layer:" << obj->GetParent()->GetCreationName() << "\n";
 		obj->WalkTo(x, y,real);
 		return 0;
 	}
@@ -425,6 +425,7 @@ namespace Tricky_Apollo {
 	static int Kthura_RemapAllLayers(lua_State* L) {
 		qVerify();
 		Maps[Tag].Remap();
+		return 0;
 	}
 
 	static int Kthura_MapMetaFields(lua_State* L) {
@@ -510,6 +511,7 @@ namespace Tricky_Apollo {
 		string Layer = luaL_checkstring(L, 4);
 		string Label = luaL_checkstring(L, 5);
 		Maps[Tag].Layer(Layer)->ShowByLabel(Label);
+		return 0;
 	}
 
 	static int Kthura_HideByLabel(lua_State* L) {
@@ -517,6 +519,7 @@ namespace Tricky_Apollo {
 		string Layer = luaL_checkstring(L, 4);
 		string Label = luaL_checkstring(L, 5);		
 		Maps[Tag].Layer(Layer)->HideByLabel(Label);
+		return 0;
 	}
 
 
@@ -526,6 +529,7 @@ namespace Tricky_Apollo {
 		string Label = luaL_checkstring(L, 5);
 		//cout << "Hiding everything except label \"" << Label << "\" on Layer: " << Layer << "\n";
 		Maps[Tag].Layer(Layer)->ShowButLabel(Label);
+		return 0;
 	}
 
 	static int Kthura_HideButLabel(lua_State* L) {
@@ -533,6 +537,7 @@ namespace Tricky_Apollo {
 		string Layer = luaL_checkstring(L, 4);
 		string Label = luaL_checkstring(L, 5);
 		Maps[Tag].Layer(Layer)->HideButLabel(Label);
+		return 0;
 	}
 
 	static int Kthura_LabelMapDump(lua_State* L) {
@@ -614,6 +619,15 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Kthura_RemapDominance(lua_State* L) {
+		qVerify();
+		auto M = &Maps[Tag];
+		auto Lay = Upper(luaL_checkstring(L, 4));
+		qAssert(M->Layers.count(Lay), "RemapDominance: There is no layer named: " + Lay);
+		M->Layer(Lay)->RemapDominance();
+		return 0;
+	}
+
 
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
@@ -664,6 +678,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_DumpObjectData", Kthura_DumpObjectData);
 		Apollo_State::RequireFunction("AKTHURA_AutoReMap", Kthura_AutoRemap);
 		Apollo_State::RequireFunction("AKTHURA_Blocked", Kthura_Blocked);
+		Apollo_State::RequireFunction("AKTHURA_RemapDominance", Kthura_RemapDominance);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }
