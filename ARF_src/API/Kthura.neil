@@ -386,6 +386,10 @@ class KTHURA_Layer
 		LayerTag=aLayer
 	End
 	
+	void RemapDominance()
+		AKTH.REMAPDOMINANCE(MapTag,ApolloState.Name,MapID,LayerTag)
+	end
+	
 	Get Int ObjCount
 		return AKTH.COUNTOBJECTS(MapTag,ApolloState.Name,MapID,LayerTag)
 	End
