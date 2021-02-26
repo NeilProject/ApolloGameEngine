@@ -39,6 +39,10 @@ namespace Tricky_Apollo {
 		Crash(emessage);
 	}
 
+	static void CheckChar(std::string ch) {
+		if (!Character::Map.count(ch)) Crash("Character " + ch + " is non-existent");
+	}
+
 	static int RPGGetParty(lua_State* L) {
 		lua_pushstring(L,Party::Member(luaL_checkinteger(L, 1)).c_str());
 		return 1;
@@ -115,6 +119,7 @@ namespace Tricky_Apollo {
 		std::string stat = luaL_checkstring(L, 2);
 		std::string field = Upper(luaL_checkstring(L, 3));
 		int value{ 0 }; if (Upper(field) != "MAXCOPY") value = luaL_checkinteger(L, 4);
+		CheckChar(ch);
 		auto pnt = Character::Map[ch].GetPoints(stat);
 		if (field == "HAVE")
 			pnt->Have(value);
@@ -131,6 +136,7 @@ namespace Tricky_Apollo {
 		std::string ch = luaL_checkstring(L, 1);
 		std::string stat = luaL_checkstring(L, 2);
 		std::string field = Upper(luaL_checkstring(L, 3));
+		CheckChar(ch);
 		auto pnt = Character::Map[ch].GetPoints(stat);
 		if (field == "HAVE")
 			lua_pushinteger(L,pnt->Have());
@@ -146,6 +152,7 @@ namespace Tricky_Apollo {
 	static int RPGKillList(lua_State* L) {
 		std::string ch = luaL_checkstring(L, 1);
 		std::string list = luaL_checkstring(L, 2);
+		CheckChar(ch);
 		Character::Map[ch].NULLList(list);
 		return 0;
 	}
@@ -153,6 +160,7 @@ namespace Tricky_Apollo {
 	static int RPGListCount(lua_State* L) {
 		std::string ch = luaL_checkstring(L, 1);
 		std::string list = luaL_checkstring(L, 2);
+		CheckChar(ch);
 		lua_pushinteger(L,Character::Map[ch].GetList(list)->List.size());
 		return 1;
 	}
@@ -163,6 +171,7 @@ namespace Tricky_Apollo {
 		std::string needle = luaL_checkstring(L, 3);
 		bool ignorecase = luaL_optinteger(L, 4, 0);
 		bool ret = false;
+		CheckChar(ch);
 		for(auto &D : Character::Map[ch].GetList(list)->List){
 			ret = ret || D == needle;
 			if (ignorecase) ret = ret || Upper(D) == Upper(needle);
@@ -175,6 +184,7 @@ namespace Tricky_Apollo {
 		std::string ch = luaL_checkstring(L, 1);
 		std::string list = luaL_checkstring(L, 2);
 		int index = luaL_checkinteger(L, 3);
+		CheckChar(ch);
 		if (index < 0 || index >= Character::Map[ch].GetList(list)->List.size()) { Crash("RPG list index out of bounds!"); }
 		lua_pushstring(L, Character::Map[ch].GetList(list)->List[index].c_str());
 		return 1;
@@ -185,13 +195,14 @@ namespace Tricky_Apollo {
 		std::string list = luaL_checkstring(L, 2);
 		int index = luaL_checkinteger(L, 3);
 		std::string value = luaL_checkstring(L, 4);
+		CheckChar(ch);
 		if (index < 0 || index >= Character::Map[ch].GetList(list)->List.size()) { Crash("RPG list index out of bounds!"); }
 		Character::Map[ch].GetList(list)->List[index] = value;
 		return 0;
 	}
 
 	static int RPGListAdd(lua_State* L) {
-		std::string ch = luaL_checkstring(L, 1);
+		std::string ch = luaL_checkstring(L, 1); CheckChar(ch);
 		std::string list = luaL_checkstring(L, 2);		
 		std::string value = luaL_checkstring(L, 3);		
 		Character::Map[ch].GetList(list)->List.push_back(value);
@@ -199,32 +210,32 @@ namespace Tricky_Apollo {
 	}	
 
 	static int RPGSetStatScript(lua_State* L) {
-		std::string ch = luaL_checkstring(L, 1);
+		std::string ch = luaL_checkstring(L, 1); CheckChar(ch);
 		std::string stat = luaL_checkstring(L, 2);
 		std::string value = luaL_checkstring(L, 3);
 		Character::Map[ch].GetStat(stat)->Script(value);
 	}
 
 	static int RPGGetAllStats(lua_State* L) {
-		std::string ch = luaL_checkstring(L, 1);
+		std::string ch = luaL_checkstring(L, 1); CheckChar(ch);
 		lua_pushstring(L, Character::Map[ch].StatList().c_str());
 		return 1;
 	}
 
 	static int RPGGetChName(lua_State* L) {
-		std::string ch = luaL_checkstring(L, 1);
+		std::string ch = luaL_checkstring(L, 1); CheckChar(ch);
 		lua_pushstring(L, Character::Map[ch].Name.c_str());
 		return 1;
 	}
 
 	static int RPGSetChName(lua_State* L) {
-		std::string ch = luaL_checkstring(L, 1);
+		std::string ch = luaL_checkstring(L, 1); CheckChar(ch);
 		Character::Map[ch].Name = luaL_checkstring(L, 2);
 		return 0;
 	}
 
 	static int RPGKillChar(lua_State* L) {
-		auto ch = luaL_checkstring(L, 1);
+		auto ch = luaL_checkstring(L, 1); //CheckChar(ch);
 		auto prefix = luaL_optinteger(L, 2, 0);
 		if (prefix) {
 			std::vector<string>Kill{};
@@ -234,6 +245,26 @@ namespace Tricky_Apollo {
 			if (Character::Map.count(ch)) Character::Map.erase(ch);
 		}
 		return 0;
+	}
+
+#define Lnk(func,kind,lnk)  \
+	static int func(lua_State* L) {	\
+			auto src = luaL_checkstring(L, 1); \
+			auto tgt = luaL_checkstring(L, 2); \
+			auto dat = luaL_checkstring(L, 3); \
+			if (!Character::Map.count(src)) Crash("Character Link "+string(kind)+" Error: Source " + string(src) + " non existent!"); \
+			if (!Character::Map.count(tgt)) Crash("Character Link "+string(kind)+" Error: Target " + string(tgt) + " non existent!"); \
+			Character::Map[tgt].lnk(dat, src); \
+			return 0; \
+	}
+	Lnk(RPGLinkStat, "Stat", LinkStat);
+	Lnk(RPGLinkData, "Data", LinkData);
+	Lnk(RPGLinkList, "List", LinkList);
+	Lnk(RPGLinkPoints, "Points", LinkPoints);
+
+	static int RPGHasChar(lua_State* L) {
+		lua_pushboolean(L, Character::Map.count(luaL_checkstring(L, 1)));
+		return 1;
 	}
 
 	void ApolloAPIInit_RPGCharAPI() {
@@ -260,6 +291,11 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("RPGGetChName", RPGGetChName);
 		Apollo_State::RequireFunction("RPGSetChName", RPGSetChName);
 		Apollo_State::RequireFunction("RPGKillChar", RPGKillChar);
+		Apollo_State::RequireFunction("RPGLinkStat", RPGLinkStat);
+		Apollo_State::RequireFunction("RPGLinkData", RPGLinkData);
+		Apollo_State::RequireFunction("RPGLinkList", RPGLinkList);
+		Apollo_State::RequireFunction("RPGLinkPoints", RPGLinkPoints);
+		Apollo_State::RequireFunction("RPGHasChar", RPGHasChar);
 		Apollo_State::RequireLua("API/RPGStat.lua");
 	}
 
