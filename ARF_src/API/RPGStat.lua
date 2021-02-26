@@ -24,6 +24,9 @@ local RPGCreate = RPGCreate _G.RPGCreate=nil
 local RPGKillChar = RPGKillChar _G.RPGKillChar=nil
 local sf = string.format
 
+local RPGLink = {}
+for _,k in ipairs {"Stat","List","Data","Points"} do RPGLink[k:upper()]=_G["RPGLink"..k] end 
+
 Neil.Load([[
 QuickMeta RPGParty
 
@@ -48,6 +51,7 @@ RPGChar = setmetatable({},{
 	__index = function(s,char)
 		if char:upper()=="CREATE" then return RPGCreate end
 		if char:upper()=="KILL" then return RPGKillChar end
+		if char:upper()=="HAS" or char:upper()=="EXISTS" then return RPGHasChar end
 		CharsWantedBefore[char] = CharsWantedBefore[char] or setmetatable({},{
 			__newindex = function(s,k,v) 
 				if k:upper()=="NAME" then RPGSetChName(char,v) end
@@ -57,7 +61,13 @@ RPGChar = setmetatable({},{
 					what = what:upper()
 					if what=="KILL" then
 						return function() RPGKillChar(char) end
-					elseif what=="STAT" then 
+					elseif Neil.Globals.Prefixed(what,"LINK_") then
+						local kind = Neil.Globals.Right(what,#what-5) 
+						return function(src,dat)
+							assert(RPGLink[kind],"What the fuck am I supposed to a link? A "..kind.."?")
+							RPGLink[kind](src,char,dat)
+						end
+					elseif what=="STAT" or what=="STATS" then 
 						PreciseWanted[sf("%s.STAT",char)] = PreciseWanted[sf("%s.STAT",char)] or setmetatable({},{
 							__index = function(s,stat) 
 								-- Neil.Globals.cout("Asking for stat ",stat," of char ",char,"\n") -- debug
