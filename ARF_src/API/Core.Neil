@@ -40,6 +40,8 @@ import MD5
 //import Sleep
 // import Platform
 
+global const delegate OpenURL = Lua.OpenURL
+
 Group Core
 	Get String PKGDir 
 		Return Lua.PKGDir()

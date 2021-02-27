@@ -31,6 +31,7 @@
 #include <MD5.hpp>
 #include <TQSE.hpp>
 #include <TQSG.hpp>
+#include <OpenURL.hpp>
 
 #include <Globals.hpp>
 #include <core.hpp>
@@ -300,6 +301,12 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int APICORE_OpenURL(lua_State* L) {
+		auto url{ luaL_checkstring(L,1) };
+		TrickyUnits::OpenURL(url);
+		return 0;
+	}
+
 
 
 	void InitCore() {
@@ -315,6 +322,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("KillFlow", APICORE_KillFlow);
 		Apollo_State::RequireFunction("GetFlow", APICORE_GetFlow);
 		Apollo_State::RequireFunction("MD5", APICORE_MD5);
+		Apollo_State::RequireFunction("OpenURL", APICORE_OpenURL);
 
 		Apollo_State::RequireFunction("CallState", APICORE_Call);
 		Apollo_State::RequireFunction("LoadState", APICORE_LoadState);
