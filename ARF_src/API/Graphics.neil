@@ -27,6 +27,9 @@ QuickMeta Graphics
 
 	index
 		key = key:upper()
+		if Key=="SETSCALE"
+			key="SCALE"
+		end
 		If Not AGGA[key]
 			Apollo_Panic("Module Graphics does not have an element named: "..key)
 		End
