@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.02.27
+// Version: 21.02.28
 // EndLic
 // C++
 #include <iostream>
@@ -359,6 +359,7 @@ namespace Tricky_Apollo {
 		qStCs("G") obj->G ( value);
 		qStCs("B") obj->B ( value);
 		qStCs("ALPHA") obj->Alpha255(value);
+		qStCs("ALPHA255") obj->Alpha255(value);
 		qStCs("SCALEX") obj->ScaleX ( value);
 		qStCs("SCALEY") obj->ScaleY ( value);
 		qStCs("DOMINANCE") obj->Dominance(value);

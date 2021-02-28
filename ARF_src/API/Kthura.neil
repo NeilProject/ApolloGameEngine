@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Kthura.neil
 // Apollo - Kthura Linker
-// version: 21.02.27
+// version: 21.02.28
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -233,7 +233,11 @@ class KTHURA_Object
 	Set Int Alpha
 		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ALPHA", Value)
 	End
-	
+
+	Set Int Alpha255
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ALPHA", Value)
+	End
+
 	Set Int ScaleX
 		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"SCALEX", Value)
 	End
@@ -257,6 +261,10 @@ class KTHURA_Object
 	Set Int AnimFrame
 		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ANIMFRAME", Value)
 	End
+	
+	Set Int Frame
+		self.AnimFrame=value
+	end
 	
 	Set String Kind
 		AKTH.SETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"KIND", Value)
