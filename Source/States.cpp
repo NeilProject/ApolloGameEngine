@@ -39,7 +39,7 @@
 #include <QuickStream.hpp>
 #include <Globals.hpp>
 
-#define Apollo_State_Debug
+#undef Apollo_State_Debug
 
 namespace Tricky_Apollo {
 	using namespace TrickyUnits;
@@ -126,7 +126,9 @@ namespace Tricky_Apollo {
 			if (scr.isModule) {
 				Crash("No support for Module for core Neil (yet)");
 			} else {
+#ifdef Apollo_State_Debug
 				std::cout << "Executing core Neil Script: " << scr.Script << "\n";
+#endif
 				auto script = ARF.String(scr.Script);
 				auto safe = bsdec(script);
 				auto workout = "--[[CORECALL: "+scr.Script+"]]\nlocal success,lfunc,err = xpcall(Neil.Load,Apollo_Panic,\"" + safe + "\",\"ARF:"+scr.Script+"\")\n";
