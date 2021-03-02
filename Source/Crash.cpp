@@ -68,7 +68,8 @@ namespace Tricky_Apollo {
 		TQSG_ScreenSize(&SX, &SY);
 		if (DH < SY) DY = SY - DH;
 		printf("DEATH %dx%d; Screen %dx%d; Coords(%d,%d)\n", DW, DH, SX, SY, DX, DY);
-		TQSG_ClsColor(0, 0, 100);		
+		TQSG_ClsColor(0, 0, 100);	
+		SetScale(1, 1);
 		do {
 			TQSE_Poll();
 			TQSG_Cls();
