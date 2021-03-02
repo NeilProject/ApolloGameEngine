@@ -80,7 +80,7 @@ namespace Tricky_Apollo {
 		for (auto& e : JD->Entries()) {
 			if (prefixed(e.first, lookfor)) {
 				c++;
-				cout << c << ":" << e.second.Entry() << "\n";
+				//cout << c << ":" << e.second.Entry() << "\n";
 				lua_pushstring(L, e.second.Entry().c_str());
 			}
 		}
