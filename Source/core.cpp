@@ -156,6 +156,7 @@ namespace Tricky_Apollo {
 		string Script = luaL_checkstring(L, 2);
 		ToFlow = Upper(ToFlow);
 		if (!prefixed(ToFlow, "FLOW_")) ToFlow = "FLOW_" + ToFlow;
+		if (ExtractExt(Script)=="") Script+=".neil";
 		Apollo_State::Load(ToFlow, JCRPackage, Script);
 		return 0;
 	}
