@@ -176,6 +176,7 @@
     <ClCompile Include="..\TrickyUnits\Source\TrickySTOI.cpp" />
     <ClCompile Include="Source\API\Audio.cpp" />
     <ClCompile Include="Source\API\APIBank.cpp" />
+    <ClCompile Include="Source\API\Dialog.cpp" />
     <ClCompile Include="Source\API\Events.cpp" />
     <ClCompile Include="Source\API\Graphics.cpp" />
     <ClCompile Include="Source\API\JCR6.cpp" />

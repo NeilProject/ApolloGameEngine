@@ -14,6 +14,7 @@ namespace Tricky_Apollo {
 	void ApolloAPIInit_JCR6();
 	void ApolloAPIInit_Kthura();
 	void ApolloAPIInit_RPGCharAPI();
+	void ApolloAPIInit_Dialog();
 	 
 
 
@@ -27,6 +28,7 @@ namespace Tricky_Apollo {
 		ApolloAPIInit_JCR6();
 		ApolloAPIInit_Kthura();
 		ApolloAPIInit_RPGCharAPI();
+		ApolloAPIInit_Dialog();
 	}
 
 }

@@ -165,6 +165,9 @@
     <ClCompile Include="..\TrickyUnits\Source\OpenURL.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="Source\API\Dialog.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">

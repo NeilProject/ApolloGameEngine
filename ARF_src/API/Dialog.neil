@@ -1,0 +1,14 @@
+Table ADIA = LGGTTT("DIALOG")
+
+group Dialog
+
+	readonly delegate Yes = ADIA.YES
+	readonly delegate Annoy = ADIA.ANNOY
+	readonly delegate Notify = ADIA.ANNOY
+	
+end
+
+
+//init
+//	print("DIALOG API LOADED!")
+//end
