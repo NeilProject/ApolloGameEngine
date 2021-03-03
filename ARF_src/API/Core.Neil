@@ -36,11 +36,12 @@ import HasState
 import PKGDir
 import PlanToKill
 import WaitMinTicks
-import MD5
+//import MD5
 //import Sleep
 // import Platform
 
 global const delegate OpenURL = Lua.OpenURL
+global const delegate MD5 = Lua.MD5
 
 Group Core
 	Get String PKGDir 
