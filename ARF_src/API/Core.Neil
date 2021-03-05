@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Core.Neil
 // Apollo Core API linkup
-// version: 21.02.27
+// version: 21.03.05
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -80,6 +80,7 @@ Group State
 	ReadOnly Delegate Call = CallState
 	ReadOnly Delegate Has  =  HasState
 	ReadOnly Delegate PlanToKill = Lua.PlanToKill
+	ReadOnly Delegate GoToFlow = Lua.GoToFlow
 	
 	static void LoadNew(string State,string File)
 		if not Has(State)
