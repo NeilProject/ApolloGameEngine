@@ -35,9 +35,11 @@
 // Myself
 #include <States.hpp>
 
+
 // Apollo
 #include <QuickStream.hpp>
 #include <Globals.hpp>
+#include <Crash.hpp>
 
 #undef Apollo_State_Debug
 
@@ -335,6 +337,10 @@ namespace Tricky_Apollo {
 	void Apollo_State::RawCall(std::string function, std::string parameters,int retvalues) {
 	std:string work = "--[[RawCall]]\nif type(" + function + ")~='function' then\n\tApollo_Crash(\"Callback error:\\n" + function + " is not a function but a \"..type(" + function + "),  Neil.Globals.ApolloState.Name, Neil.Globals.ApolloState.TraceBack)\nelse\n\tlocal s,e=xpcall(" + function + ",Apollo_Panic," + parameters + ")\nreturn s\nend";
 		//cout << "<RAWCALL>\n" << work << "\n</RAWCALL>\n";
+		if (!MyState) {			
+			Crash("RawCall to NULL state", "RawCall","RawCall(\""+function+"\",\""+parameters+"\","+std::to_string(retvalues)+"):\n\n<Work>\n"+work+"</work>");
+			return;
+		}
 		luaL_loadstring(MyState, work.c_str());
 		lua_call(MyState,0, 0,retvalues);
 	}
