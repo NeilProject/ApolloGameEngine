@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.02.28
+// Version: 21.03.18
 // EndLic
 // C++
 #include <iostream>
@@ -38,6 +38,7 @@
 
 // Tricky's Units
 #include <QuickString.hpp>
+#include <TQSG.hpp>
 
 // Apollo
 #include <globals.hpp>
@@ -58,9 +59,10 @@
 	string Layer = Upper(luaL_checkstring(L, 4)); \
 	qAssert(Maps[Tag].Layers.count(Layer), "No layer named \"" + Tag + "\ while searching for object"); \
 	string gType = luaL_checkstring(L, 5); \
+    string objTag {""};\
 	KthuraObject* obj = NULL; \
 	if (gType == "string") { \
-		string objTag = luaL_checkstring(L, 6); \
+		objTag = luaL_checkstring(L, 6); \
 		qAssert(Maps[Tag].Layers[Layer].HasTag(objTag), "No object tagged \"" + objTag + "\" in layer " + Layer + " in map " + Tag); \
 		obj = Maps[Tag].Layers[Layer].TagMap(objTag); \
 	} else if (gType == "number") { \
@@ -74,7 +76,7 @@
 
 #define qObjActor() \
 		qObjVerify(); \
-		qAssert((obj->Kind() == "Actor"), "Object \"" + Tag + "\" is not an actor!"); \
+		qAssert((obj->Kind() == "Actor"), "Object \"" + objTag + "\" is not an actor!"); \
 		KthuraActor* actor = (KthuraActor*)obj;
 
 #define qCase(wannahave,value) } else if (ObjKey==wannahave) { ret=value
@@ -248,9 +250,10 @@ namespace Tricky_Apollo {
 		string Layer = Upper(luaL_checkstring(L, 4));
 		qAssert(Maps[Tag].Layers.count(Layer), "No layer named \"" + Tag + "\ while searching for object");
 		string gType = luaL_checkstring(L, 5);
+		string objTag{ "" };
 		KthuraObject* obj = NULL;
 		if (gType == "string") {
-			string objTag = luaL_checkstring(L, 6);
+			objTag = luaL_checkstring(L, 6);
 			qAssert(Maps[Tag].Layers[Layer].HasTag(objTag), "No object tagged \"" + objTag + "\" in layer " + Layer + " in map " + Tag);
 			obj = Maps[Tag].Layers[Layer].TagMap(objTag);
 		} else if (gType == "number") {
@@ -261,7 +264,7 @@ namespace Tricky_Apollo {
 			Crash("Invalid Object Verification Requiest!", State, Apollo_State::TraceBack(State));
 			return 0;
 		}
-		qAssert((obj->Kind() == "Actor"), "Object \"" + Tag + "\" is not an actor!"); 
+		qAssert((obj->Kind() == "Actor"), "Object \"" + to_string(obj->ID())+"::"+obj->Tag() + "\" is not an actor!"); 
 		//auto actor = obj;
 		auto x = luaL_checkinteger(L, 7);
 		auto y = luaL_checkinteger(L, 8);
@@ -334,6 +337,7 @@ namespace Tricky_Apollo {
 			ret = obj->Impassible();
 			qCase("FORCEPASSIBLE", obj->ForcePassible());
 			qCase("VISIBLE", obj->Visible());
+			qCase("XVISIBLE", obj->XVisible(luaL_optinteger(L,8,0),luaL_optinteger(L,9,0)));
 			qCase("NOTINMOTIONTHEN0", obj->NotInMotionThen0());
 			qCase("NOTMOVINGTHEN0", obj->NotInMotionThen0());
 			qCase("WALKING", obj->Walking());
@@ -421,6 +425,20 @@ namespace Tricky_Apollo {
 		}
 		lua_pushstring(L, Maps[Tag].Layer(Layer)->TagList().c_str());
 		return 1;		
+	}
+
+	static int Kthura_CreateObj(lua_State* L) {
+		qVerify();
+		string Layer = Upper(luaL_checkstring(L, 4));
+		if (!Maps[Tag].Layers.count(Layer)) {
+			Crash("Cannot create objects onto a non-existent layer: " + Layer, State, Apollo_State::TraceBack(State));
+			return 0;
+		}
+		auto Kind{ luaL_checkstring(L,5) };
+		auto OTag{ luaL_checkstring(L,6) };
+		auto O = Maps[Tag].Layer(Layer)->RNewObject(Kind);
+		O->Tag(OTag);
+		return 0;
 	}
 
 	static int Kthura_RemapAllLayers(lua_State* L) {
@@ -629,11 +647,26 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Kthura_SetAutoVisible(lua_State* L) {
+		Kthura::AutoVisible = {
+			(int)luaL_optinteger(L,1,0),
+			(int)luaL_optinteger(L,2,0),
+			(int)luaL_optinteger(L,3,TQSG_ScreenWidth()),
+			(int)luaL_optinteger(L,4,TQSG_ScreenHeight()),
+			true
+		};
+		printf("Kthura Autovisible %d,%d => %d, %d \n", Kthura::AutoVisible.bx, Kthura::AutoVisible.by, Kthura::AutoVisible.ex, Kthura::AutoVisible.ex);
+		return 0;
+	}
+	static int Kthura_KillAutoVisible(lua_State* L) { Kthura::AutoVisible.active = false; return 0; }
+
 
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
 		Kthura::PathFinder = new Kthura_Dijkstra();
 		Kthura_Draw_SDL_Driver::Init();
+		Apollo_State::RequireFunction("AKTHURA_SetAutoVisible", Kthura_SetAutoVisible);
+		Apollo_State::RequireFunction("AKTHURA_KillAutoVisible", Kthura_KillAutoVisible);
 		Apollo_State::RequireFunction("AKTHURA_Load", Kthura_Load);
 		Apollo_State::RequireFunction("AKTHURA_Check", Kthura_Check);
 		Apollo_State::RequireFunction("AKTHURA_Verify", Kthura_Verify);
@@ -680,6 +713,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_AutoReMap", Kthura_AutoRemap);
 		Apollo_State::RequireFunction("AKTHURA_Blocked", Kthura_Blocked);
 		Apollo_State::RequireFunction("AKTHURA_RemapDominance", Kthura_RemapDominance);
+		Apollo_State::RequireFunction("AKTHURA_CreateObj", Kthura_CreateObj);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }

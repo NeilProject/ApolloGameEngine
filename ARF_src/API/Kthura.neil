@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Kthura.neil
 // Apollo - Kthura Linker
-// version: 21.02.28
+// version: 21.03.18
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -173,6 +173,11 @@ class KTHURA_Object
 	Get Bool Visible
 		return AKTH.GETOBJBOOL(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"VISIBLE")
 	end
+	
+	bool XVisible(int camx,int camy)
+		return AKTH.GETOBJBOOL(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"XVISIBLE",camx,camy)
+	end
+
 
 
 	get bool NotMovingThen0
@@ -322,6 +327,8 @@ class KTHURA_Object
 		End
 		
 	end
+	
+	
 
 	set bool NotMovingThen0
 		if Value
@@ -436,7 +443,7 @@ class KTHURA_Layer
 	
 	get string TagList
 		string ret = AKTH.GETTAGS(MapTag,ApolloState.Name,MapID,LayerTag)
-		print("Taglist: ",ret)
+		// print("Taglist: ",ret)
 		return ret
 	end
 	
@@ -514,6 +521,10 @@ class KTHURA_Layer
 		ntag = ntag or ""
 		int i = AKTH.NEWOBJ(MapTag,ApolloState.Name,MapID,LayerTag,nkind,ntag)
 		return obj(ntag)
+	end
+	
+	get delegate NewObj
+		return NewObject
 	end
 	
 	bool Blocked(int X, int Y, a)
@@ -601,6 +612,9 @@ group Kthura
 			AKTH.AUTOREMAP(0)
 		end
 	end
+	
+	readonly delegate SetAutoVisible=AKTH.SETAUTOVISIBLE
+	readonly delegate KillAutoVisible=AKTH.KILLAUTOVISIBLE
 	
 end
 
