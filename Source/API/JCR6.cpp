@@ -1,7 +1,7 @@
 // Lic:
 // Source/API/JCR6.cpp
 // Apollo
-// version: 21.03.05
+// version: 21.03.18
 // Copyright (C) 2020, 2021 JCR6 access
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -312,6 +312,31 @@ namespace Tricky_Apollo {
 	static int Apollo_ExtractDir(lua_State* L) { lua_pushstring(L, ExtractDir(luaL_checkstring(L, 1)).c_str()); return 1; }
 	// Init
 
+	static int Apollo_SG_Mutilate(lua_State* L) {
+		if (SaveGameFile == "") Crash("Trying to load a savegame file without a name");
+		if (SaveDir == "") SaveDir = Dirry("$Home$/ApolloGameData/" + Identify::ProjectData("ID") + "/SaveGame");
+		string ff = SaveDir + "/" + SaveGameFile;
+		cout << "MUTILATING SAVEGAME: " << ff << endl;
+		int size = FileSize(ff);
+		std::ofstream out(ff);
+		for (int i = 0; i < size; i++) {
+			out << (char)(i % 127);
+		}
+		out.close();
+		// I chose this rather than just deleting, as experiences of the past taught me that Windows in particular is a bit buggy when it comes to deleting files when it has to.
+		// Linux and Mac were more accurate on this. It's for a reason why the quit-save feature in TFTREVAMPED and Star Story were not supported in Windows but they were on Mac.
+		SaveGameFile = ""; // File is mutilated so why bother with it.
+	}
+	
+	static int Apollo_SG_Recognized(lua_State* L) {
+		auto f{ luaL_checkstring(L,1) };
+		if (SaveDir == "") SaveDir = Dirry("$Home$/ApolloGameData/" + Identify::ProjectData("ID") + "/SaveGame");
+		auto rec{ Recognize(SaveDir + "/" + f) };
+		lua_pushboolean(L, Upper(rec) != "NONE" && rec !="");
+		return 1;
+	}
+	
+
 	void ApolloAPIInit_JCR6() {
 		// JCR6 General
 		//Apollo_State::RequireFunction("AJCR_Entries", Apollo_JCR6_Entries);
@@ -334,7 +359,9 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("ASGM_DataFields", Apollo_SG_DataFields);
 		Apollo_State::RequireFunction("ASGM_Save", Apollo_SG_Save);
 		Apollo_State::RequireFunction("ASGM_Load", Apollo_SG_Load);
+		Apollo_State::RequireFunction("ASGM_Mutilate", Apollo_SG_Mutilate);
 		Apollo_State::RequireFunction("ASGM_Exists", Apollo_SG_Exists);
+		Apollo_State::RequireFunction("ASGM_Recognized", Apollo_SG_Recognized);
 		Apollo_State::RequireFunction("ASGM_GetHeader", Apollo_SG_Head);
 		Apollo_State::RequireFunction("ASGM_SaveIndieString", Apollo_SG_SString);
 		Apollo_State::RequireFunction("ASGM_LoadIndieString", Apollo_SG_LString);
