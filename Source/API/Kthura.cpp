@@ -57,7 +57,7 @@
 #define qObjVerify() \
 	qVerify(); \
 	string Layer = Upper(luaL_checkstring(L, 4)); \
-	qAssert(Maps[Tag].Layers.count(Layer), "No layer named \"" + Tag + "\ while searching for object"); \
+	qAssert(Maps[Tag].Layers.count(Layer), "No layer named \"" + Layer + "\"  while searching for object"); \
 	string gType = luaL_checkstring(L, 5); \
     string objTag {""};\
 	KthuraObject* obj = NULL; \
