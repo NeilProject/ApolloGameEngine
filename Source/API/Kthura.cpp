@@ -63,12 +63,12 @@
 	KthuraObject* obj = NULL; \
 	if (gType == "string") { \
 		objTag = luaL_checkstring(L, 6); \
-		qAssert(Maps[Tag].Layers[Layer].HasTag(objTag), "No object tagged \"" + objTag + "\" in layer " + Layer + " in map " + Tag); \
-		obj = Maps[Tag].Layers[Layer].TagMap(objTag); \
+		qAssert(Maps[Tag].Layers[Layer]->HasTag(objTag), "No object tagged \"" + objTag + "\" in layer " + Layer + " in map " + Tag); \
+		obj = Maps[Tag].Layers[Layer]->TagMap(objTag); \
 	} else if (gType == "number") { \
 		int objID = luaL_checkinteger(L, 6); \
-		qAssert(Maps[Tag].Layers[Layer].GetIDMap().count(objID), "No object with ID  " + to_string(objID) + " in layer " + Layer + " in map " + Tag); \
-		obj = Maps[Tag].Layers[Layer].GetIDMap()[objID]; \
+		qAssert(Maps[Tag].Layers[Layer]->GetIDMap().count(objID), "No object with ID  " + to_string(objID) + " in layer " + Layer + " in map " + Tag); \
+		obj = Maps[Tag].Layers[Layer]->GetIDMap()[objID]; \
 	} else { \
 		Crash("Invalid Object Verification Requiest!",State,Apollo_State::TraceBack(State)); \
 		return 0;\
@@ -149,7 +149,7 @@ namespace Tricky_Apollo {
 		qVerify();
 		string Layer = Upper(luaL_checkstring(L, 4));
 		if (!Maps[Tag].Layers.count(Layer)) Crash("Map " + Tag + " does not have a layer named \"" + Layer + "\"", State, Apollo_State::TraceBack(State));
-		lua_pushinteger(L, Maps[Tag].Layers[Layer].Objects.size());
+		lua_pushinteger(L, Maps[Tag].Layers[Layer]->Objects.size());
 		return 1;
 	}
 
@@ -157,10 +157,10 @@ namespace Tricky_Apollo {
 		qVerify();
 		string Layer = Upper(luaL_checkstring(L, 4));
 		if (!Maps[Tag].Layers.count(Layer)) { Crash("Map " + Tag + " does not have a layer named \"" + Layer + "\"", State, Apollo_State::TraceBack(State)); return 0; }
-		for (auto& obj : Maps[Tag].Layers[Layer].Objects) {
-			lua_pushinteger(L,obj.ID());
+		for (auto& obj : Maps[Tag].Layers[Layer]->Objects) {
+			lua_pushinteger(L,obj->ID());
 		}
-		return Maps[Tag].Layers[Layer].Objects.size();
+		return Maps[Tag].Layers[Layer]->Objects.size();
 	}
 
 	static int Kthura_MapHasLayer(lua_State* L) {
@@ -254,12 +254,12 @@ namespace Tricky_Apollo {
 		KthuraObject* obj = NULL;
 		if (gType == "string") {
 			objTag = luaL_checkstring(L, 6);
-			qAssert(Maps[Tag].Layers[Layer].HasTag(objTag), "No object tagged \"" + objTag + "\" in layer " + Layer + " in map " + Tag);
-			obj = Maps[Tag].Layers[Layer].TagMap(objTag);
+			qAssert(Maps[Tag].Layers[Layer]->HasTag(objTag), "No object tagged \"" + objTag + "\" in layer " + Layer + " in map " + Tag);
+			obj = Maps[Tag].Layers[Layer]->TagMap(objTag);
 		} else if (gType == "number") {
 			int objID = luaL_checkinteger(L, 6);
-			qAssert(Maps[Tag].Layers[Layer].GetIDMap().count(objID), "No object with ID  " + to_string(objID) + " in layer " + Layer + " in map " + Tag);
-			obj = Maps[Tag].Layers[Layer].GetIDMap()[objID];
+			qAssert(Maps[Tag].Layers[Layer]->GetIDMap().count(objID), "No object with ID  " + to_string(objID) + " in layer " + Layer + " in map " + Tag);
+			obj = Maps[Tag].Layers[Layer]->GetIDMap()[objID];
 		} else {
 			Crash("Invalid Object Verification Requiest!", State, Apollo_State::TraceBack(State));
 			return 0;
@@ -412,7 +412,7 @@ namespace Tricky_Apollo {
 			Crash("Cannot draw non-existent layer: " + Layer, State, Apollo_State::TraceBack(State));
 			return 0;
 		}
-		KthuraDraw::DrawMap(Maps[Tag].Layers[Layer], scx, scy, inx, iny);
+		KthuraDraw::DrawMap(Maps[Tag].Layers[Layer].get(), scx, scy, inx, iny);
 		return 0;
 	}
 
@@ -495,7 +495,7 @@ namespace Tricky_Apollo {
 		auto Lay = Maps[Tag].Layer(Layer);
 		bool ret{ false };
 		for (auto o : Lay->Objects) {
-			if (o.EKind() == KthuraKind::Actor) ret = ret || o.Moving();
+			if (o->EKind() == KthuraKind::Actor) ret = ret || o->Moving();
 		}
 		lua_pushboolean(L, ret);
 		return 1;
