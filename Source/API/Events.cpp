@@ -65,6 +65,13 @@ namespace Tricky_Apollo {
 		lua_pushinteger(L, TQSE_MouseY());
 		return 1;
 	}
+	
+	static int AEA_GetChar(lua_State* L) {
+		lua_pushinteger(L, TQSE_GetChar());
+		return 1;
+	}
+
+	static int AEA_Flush(lua_State* L) { TQSE_Flush(); return 0; }
 
 	static int AEA_HideMouse(lua_State* L) { HideMouse(); return 0; }
 	static int AEA_ShowMouse(lua_State* L) { ShowMouse(); return 0; }
@@ -85,6 +92,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AEA_KeyDown", AEA_KeyDown);
 		Apollo_State::RequireFunction("AEA_KeyHit", AEA_KeyHit);		
 		Apollo_State::RequireFunction("AEA_KeyByName", AEA_KeyByName);
+		Apollo_State::RequireFunction("AEA_GetChar", AEA_GetChar);
 		Apollo_State::RequireFunction("AEA_Terminate", AEA_Terminate);
 		Apollo_State::RequireFunction("AEA_MouseX", AEA_MouseX);
 		Apollo_State::RequireFunction("AEA_MouseY", AEA_MouseY);
@@ -97,6 +105,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AEA_MouseDownRight", AEA_MouseDownRight);
 		Apollo_State::RequireFunction("AEA_MouseHitRight", AEA_MouseHitRight);
 		Apollo_State::RequireFunction("AEA_KeyName", AEA_KeyName);
+		Apollo_State::RequireFunction("AEA_Flush", AEA_Flush);
 		Apollo_State::RequireNeil("API/Events.neil");
 	}
 }
