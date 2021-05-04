@@ -64,6 +64,11 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int RPGGetPartyMax(lua_State* L) {
+		lua_pushinteger(L, Party::Max());
+		return 1;
+	}
+
 	static int RPGCreate(lua_State* L) {
 		std::string ch = luaL_checkstring(L, 1);
 		if (Character::Map.count(ch)) Character::Map.erase(ch);
@@ -287,6 +292,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("RPGListSet", RPGListSet);
 		Apollo_State::RequireFunction("RPGSetStatScript", RPGSetStatScript);
 		Apollo_State::RequireFunction("RPGSetPartyMax", RPGSetPartyMax);
+		Apollo_State::RequireFunction("RPGGetPartyMax", RPGGetPartyMax);
 		Apollo_State::RequireFunction("RPGGetAllStats", RPGGetAllStats);
 		Apollo_State::RequireFunction("RPGGetChName", RPGGetChName);
 		Apollo_State::RequireFunction("RPGSetChName", RPGSetChName);
