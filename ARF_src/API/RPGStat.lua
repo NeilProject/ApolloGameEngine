@@ -31,6 +31,9 @@ Neil.Load([[
 QuickMeta RPGParty
 
 	index
+		if type(key)=="string" and key:upper()=="MAX"
+			return Lua.RPGGetPartyMax()
+		end
 		return Lua.RPGGetParty(key)
 	end
 	
