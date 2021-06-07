@@ -425,6 +425,14 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AGGA_Plot(lua_State* L) {
+		auto
+			x{ luaL_checkinteger(L,1) },
+			y{ luaL_checkinteger(L,2) };
+		TQSG_Plot(x, y);
+		return 0;
+	}
+
 	
 
 	// ImageFont
@@ -447,6 +455,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGGA_Scale", AGGA_Scale);
 		Apollo_State::RequireFunction("AGGA_SetAlpha", AGGA_SetAlpha);
 		Apollo_State::RequireFunction("AGGA_GetAlpha", AGGA_GetAlpha);
+		Apollo_State::RequireFunction("AGGA_Plot", AGGA_Plot);
 		// Images
 		Apollo_State::RequireFunction("AIMG_Load", AIMG_Load);
 		Apollo_State::RequireFunction("AIMG_LoadAnim", AIMG_LoadAnim);
