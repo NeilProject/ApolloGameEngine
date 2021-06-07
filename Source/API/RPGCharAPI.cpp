@@ -272,6 +272,17 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int RPGAllChars(lua_State* L) {
+		// Will list all characters in RAM, regardess if they are in the party or not.
+		std::string ret{ "" };
+		for (auto& i : Character::Map) {
+			if (ret.size()) ret += ";";
+			ret += i.first;
+		}
+		lua_pushstring(L, ret.c_str());
+		return 1;
+	}
+
 	void ApolloAPIInit_RPGCharAPI() {
 		Character::Panic = RPGError;
 		Apollo_State::RequireFunction("RPGGetParty", RPGGetParty);
@@ -302,6 +313,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("RPGLinkList", RPGLinkList);
 		Apollo_State::RequireFunction("RPGLinkPoints", RPGLinkPoints);
 		Apollo_State::RequireFunction("RPGHasChar", RPGHasChar);
+		Apollo_State::RequireFunction("RPGAllChars", RPGAllChars);
 		Apollo_State::RequireLua("API/RPGStat.lua");
 	}
 
