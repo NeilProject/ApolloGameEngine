@@ -341,6 +341,7 @@ namespace Tricky_Apollo {
 			qCase("NOTINMOTIONTHEN0", obj->NotInMotionThen0());
 			qCase("NOTMOVINGTHEN0", obj->NotInMotionThen0());
 			qCase("WALKING", obj->Walking());
+			qCase("MOVING", obj->Moving());
 		} else {
 			Crash("Unknown Object Boolean field: " + ObjKey, State, Apollo_State::TraceBack(State));
 		}
@@ -379,6 +380,7 @@ namespace Tricky_Apollo {
 		qStCs("NOTINMOTIONTHEN0") obj->NotInMotionThen0(value != 0);
 		qStCs("NOTMOVINGTHEN0") obj->NotInMotionThen0(value != 0);
 		qStCs("WALKING") { if (value != 0) Crash(".WALKING can only be set to false!"); obj->Walking(0); }
+		qStCs("MOVING") { if (value != 0) Crash(".MOVING can only be set to false!"); obj->Moving(0); }
 		else {
 			Crash("Could not write to Object Integer/Boolean field: " + ObjKey, State, Apollo_State::TraceBack(State));
 		}
