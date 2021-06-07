@@ -22,6 +22,7 @@ local CharsWantedBefore={} -- Saves time later!
 local PreciseWanted={}
 local RPGCreate = RPGCreate _G.RPGCreate=nil
 local RPGKillChar = RPGKillChar _G.RPGKillChar=nil
+local RPGAllChars = RPGAllChars _G.RPGAllChars=nil
 local sf = string.format
 
 local RPGLink = {}
@@ -52,13 +53,17 @@ RPGChar = setmetatable({},{
 	__newindex = function() error("No new members may be assinged to RPGChar; Use the RPGChar.Create() function stead") end,
 
 	__index = function(s,char)
+		if char:upper()=="ALL" then return Neil.Globals.Split(RPGAllChars(),";") end
 		if char:upper()=="CREATE" then return RPGCreate end
 		if char:upper()=="KILL" then return RPGKillChar end
 		if char:upper()=="HAS" or char:upper()=="EXISTS" then return RPGHasChar end
 		CharsWantedBefore[char] = CharsWantedBefore[char] or setmetatable({},{
 			__newindex = function(s,k,v) 
-				if k:upper()=="NAME" then RPGSetChName(char,v) end
-				error("No new data may be appointed to characters in this manner") 
+				if k:upper()=="NAME" then 
+					RPGSetChName(char,v) 
+				else
+					error("No new data may be appointed to characters in this manner")
+				end
 			end,
 			__index = function(s,what)
 					what = what:upper()
@@ -76,7 +81,7 @@ RPGChar = setmetatable({},{
 								-- Neil.Globals.cout("Asking for stat ",stat," of char ",char,"\n") -- debug
 								return RPGGetStatValue(char,stat) 
 							end,
-							__newindex = function(s,stat,value) RPGSetStatValue(char,stat,value) end
+							__newindex = function(s,stat,value) RPGSetStatValue(char,stat,math.floor(value)) end
 						})
 						return PreciseWanted[sf("%s.STAT",char)] 
 					elseif what=="HASSTAT" or what=="STATEXISTS" then
