@@ -17,6 +17,7 @@
 // misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 // End License Information
+
 Table AKTH = LGGTTT("AKTHURA")
 import Apollo_Panic
 
@@ -344,6 +345,7 @@ class KTHURA_Object
 	
 	void StopWalking()
 		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"WALKING", 0)
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"MOVING", 0)
 	end
 	
 	void WalkTo(a,b,c)
