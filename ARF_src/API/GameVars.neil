@@ -1,0 +1,102 @@
+// License Information:
+// ARF_src/API/GameVars.neil
+// Apollo Game Engine - Game Vars - Glue
+// version: 21.07.07
+// Copyright (C) 2021 Jeroen P. Broks
+// This software is provided 'as-is', without any express or implied
+// warranty.  In no event will the authors be held liable for any damages
+// arising from the use of this software.
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it
+// freely, subject to the following restrictions:
+// 1. The origin of this software must not be misrepresented; you must not
+// claim that you wrote the original software. If you use this software
+// in a product, an acknowledgment in the product documentation would be
+// appreciated but is not required.
+// 2. Altered source versions must be plainly marked as such, and must not be
+// misrepresented as being the original software.
+// 3. This notice may not be removed or altered from any source distribution.
+// End License Information
+Global Const Table GameVars = LGGTTT("AGVR")
+
+//Const Table Types = { ["BOOL"]=1, ["GBOOL"]=1, ["VBOOL"]=1, ["INT"]=2, ["GINT"]=2, ["VINT"]=2, ["STRING"]=3, ["GSTRING"]=3, ["VSTRING"]=3 }
+
+QuickMeta GV__Bool
+	Index
+		return GameVars.RECEIVE(ApolloState.Name,"_GV_",1,key)
+	End
+	NewIndex
+		If value
+			GameVars.DEFINE(ApolloState.Name,"_GV_",1,key,1)
+		Else
+			GameVars.DEFINE(ApolloState.Name,"_GV_",1,key,0)
+		End
+	End
+End
+
+
+QuickMeta GV__Int
+	Index
+		return GameVars.RECEIVE(ApolloState.Name,"_GV_",2,key)
+	End
+	NewIndex
+		GameVars.DEFINE(ApolloState.Name,"_GV_",2,key,value)
+	End
+End
+
+
+QuickMeta GV__String
+	Index
+		return GameVars.RECEIVE(ApolloState.Name,"_GV_",3,key)
+	End
+	NewIndex
+		GameVars.DEFINE(ApolloState.Name,"_GV_",3,key,value)
+	End
+End
+
+Const Table Types
+Init
+	Types.BOOL    = GV__Bool
+	Types.GBOOL   = GV__Bool
+	Types.VBOOL   = GV__Bool
+	Types.INT     = GV__Int
+	Types.GINT    = GV__Int
+	Types.VINT    = GV__Int
+	Types.STRING  = GV__String
+	Types.GSTRING = GV__String
+	Types.VSTRING = GV__String
+	Types.STR     = GV__String
+	Types.GSTR    = GV__String
+	Types.VSTR    = GV__String
+End
+
+	
+QuickMeta GV
+	Index
+		key = key:upper()
+		Switch(Key)
+			Case "CLEAR"
+				Void C()
+					GameVars.CLEAR(ApolloState.Name,"_GV_")
+				End
+				Return C
+			case "ENROLL" "SERIALIZE" "TONEIL"				
+				Return GameVars.ENROLL(ApolloState.Name,"_GV_","gv")
+			case "DUMPSTR" "DUMPSTRING"
+				return GameVars.SHOW(ApolloState.Name,"_GV_","gv")
+			case "DUMPTABLE"
+				return Split(GameVars.SHOW(ApolloState.Name,"_GV_"),"\n")
+			Default
+				Lua.assert(Types[key],"I do not know type: "..key)				
+				Return Types[key];
+		End
+	End
+End
+
+QuickMeta Done
+	Index
+		plua ret = gv.gbool[key]
+		gv.gbool[key] = true
+		return ret
+	End
+End

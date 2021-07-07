@@ -15,6 +15,7 @@ namespace Tricky_Apollo {
 	void ApolloAPIInit_Kthura();
 	void ApolloAPIInit_RPGCharAPI();
 	void ApolloAPIInit_Dialog();
+	void ApolloAPIInit_InitGameVars();
 	 
 
 
@@ -29,6 +30,7 @@ namespace Tricky_Apollo {
 		ApolloAPIInit_Kthura();
 		ApolloAPIInit_RPGCharAPI();
 		ApolloAPIInit_Dialog();
+		ApolloAPIInit_InitGameVars();
 	}
 
 }
