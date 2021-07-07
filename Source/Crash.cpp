@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.03.05
+// Version: 21.07.07
 // EndLic
 
 
@@ -104,6 +104,7 @@ namespace Tricky_Apollo {
 		if (NSKthura::Kthura::PathFinder) delete NSKthura::Kthura::PathFinder;
 		Apollo_State::KillAll();
 		Apollo_SDL_End();
+		jcr6::JT_Dir::FlushBlock();
 		exit(exitcode);
 	}
 
