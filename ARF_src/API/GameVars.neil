@@ -70,7 +70,10 @@ Init
 	Types.VSTR    = GV__String
 End
 
-	
+String gvSub(string l)
+	return GameVars.SUB(ApolloState.Name,"_GV_",l)
+End
+
 QuickMeta GV
 	Index
 		key = key:upper()
@@ -80,12 +83,14 @@ QuickMeta GV
 					GameVars.CLEAR(ApolloState.Name,"_GV_")
 				End
 				Return C
-			case "ENROLL" "SERIALIZE" "TONEIL"				
+			Case "ENROLL" "SERIALIZE" "TONEIL"				
 				Return GameVars.ENROLL(ApolloState.Name,"_GV_","gv")
-			case "DUMPSTR" "DUMPSTRING"
-				return GameVars.SHOW(ApolloState.Name,"_GV_","gv")
+			Case "DUMPSTR" "DUMPSTRING"
+				Return GameVars.SHOW(ApolloState.Name,"_GV_","gv")
 			case "DUMPTABLE"
-				return Split(GameVars.SHOW(ApolloState.Name,"_GV_"),"\n")
+				Return Split(GameVars.SHOW(ApolloState.Name,"_GV_"),"\n")
+			Case "SUB"
+				return gvSub
 			Default
 				Lua.assert(Types[key],"I do not know type: "..key)				
 				Return Types[key];

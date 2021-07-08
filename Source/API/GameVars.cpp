@@ -150,6 +150,17 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AGV_Sub(lua_State* L) {
+		static string tf[2] { "false","true" };
+		auto state{ luaL_checkstring(L,1) };
+		auto bundle{ luaL_checkstring(L,2) };
+		string ret{ luaL_checkstring(L,3) };
+		for (auto fe : bgv[bundle].gBool) ret = TReplace(ret, string("&" + fe.first), tf[fe.second]);
+		for (auto fe : bgv[bundle].gInt) ret = TReplace(ret, string("%" + fe.first), to_string(fe.second));
+		for (auto fe : bgv[bundle].gString) ret = TReplace(ret, string("$" + fe.first), fe.second);
+		lua_pushstring(L, ret.c_str());
+		return 1;
+	}
 	
 
 	void ApolloAPIInit_InitGameVars() {
@@ -159,6 +170,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGVR_ClearAll", AGV_ClearAll);
 		Apollo_State::RequireFunction("AGVR_Enroll", AGV_Enroll);
 		Apollo_State::RequireFunction("AGVR_Show", AGV_Show);
+		Apollo_State::RequireFunction("AGVR_Sub", AGV_Sub);
 		Apollo_State::RequireNeil("API/GameVars.neil");
 	}
 
