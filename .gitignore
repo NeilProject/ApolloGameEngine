@@ -14,3 +14,4 @@ itchlab.ps1
 # This file would only spook things up in repositories, especially when you are a read-only
 # user in this repository.
 Headers/builddate.hpp
+ARF_src/ID/Build
