@@ -120,12 +120,15 @@ namespace Tricky_Apollo {
 
 
 	static int RPGSetPoints(lua_State* L) {
+		static bool Chat = false;
 		std::string ch = luaL_checkstring(L, 1);
 		std::string stat = luaL_checkstring(L, 2);
 		std::string field = Upper(luaL_checkstring(L, 3));
 		int value{ 0 }; if (Upper(field) != "MAXCOPY") value = luaL_checkinteger(L, 4);
 		CheckChar(ch);
 		auto pnt = Character::Map[ch].GetPoints(stat);
+		if (Chat)
+			cout << "POINTS CHANGE> " << ch << "." << stat << "." << field << " => " << value << endl;
 		if (field == "HAVE")
 			pnt->Have(value);
 		else if (field == "MAXIMUM" || field == "MAXI" || field == "MAX")
@@ -134,6 +137,8 @@ namespace Tricky_Apollo {
 			pnt->Mini(value);
 		else if (field == "MAXCOPY")
 			pnt->MaxCopy(luaL_checkstring(L, 4));
+		else if (field == "CHAT")
+			Chat = value > 0;
 		return 0;
 	}
 
