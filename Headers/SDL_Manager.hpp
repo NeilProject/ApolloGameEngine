@@ -87,6 +87,7 @@ namespace Tricky_Apollo {
 	void Apollo_SDL_XDraw(std::string tag, int x, int y, int f, std::string State = "C++", std::string Traceback = "No Traceback possible");
 	void Apollo_SDL_Tile(std::string Tag, int x, int y, int w, int h,std::string State = "C++", std::string Traceback = "No Traceback possible");
 	void Apollo_SDL_Tile(std::string Tag, int x, int y, int w, int h, int f, std::string State = "C++", std::string Traceback = "No Traceback possible");
+	void Apollo_SDL_Tile(std::string Tag, int x, int y, int w, int h, int ix, int iy, int f, std::string State, std::string Traceback="No Traceback possible");
 	void Apollo_SDL_Stretch(std::string Tag, int x, int y, int w, int h, std::string State = "C++", std::string Traceback = "No Traceback possible");
 	void Apollo_SDL_Stretch(std::string Tag, int x, int y, int w, int h, int f, std::string State = "C++", std::string Traceback = "No Traceback possible");
 	//void Apollo_SDL_ClsColor(int r, int g, int b);

@@ -42,19 +42,19 @@ namespace Tricky_Apollo {
 	}
 
 	static int AGGA_ClsColor(lua_State* L) {
-		int r = 0, g = 0, b = 0;
-		r = luaL_checkinteger(L, 1);
-		g = luaL_checkinteger(L, 2);
-		b = luaL_checkinteger(L, 3);
+		int
+			r = luaL_checkinteger(L, 1),
+			g = luaL_checkinteger(L, 2),
+			b = luaL_checkinteger(L, 3);
 		TQSG_ClsColor(r % 256, g % 256, b % 256);
 		return 0;
 	}
 
 	static int AGGA_Color(lua_State* L) {
-		int r = 0, g = 0, b = 0;
-		r = luaL_checkinteger(L, 1);
-		g = luaL_checkinteger(L, 2);
-		b = luaL_checkinteger(L, 3);
+		int
+			r = luaL_checkinteger(L, 1),
+			g = luaL_checkinteger(L, 2),
+			b = luaL_checkinteger(L, 3);
 		TQSG_Color(r % 256, g % 256, b % 256);
 		return 0;
 	}
@@ -71,7 +71,10 @@ namespace Tricky_Apollo {
 	}
 
 	static int AGGA_GetColor(lua_State* L) {
-		Uint8 r = 0, g = 0, b = 0;
+		Uint8 
+			r = 0, 
+			g = 0, 
+			b = 0;
 		TQSG_GetColor(&r, &g, &b);
 		lua_Integer rr = r, rg = g, rb = b;
 		lua_pushinteger(L,rr);
@@ -225,6 +228,23 @@ namespace Tricky_Apollo {
 		//GetTex(Tag, State)->Draw(x, y, f);
 		// std::cout << "Tile(" << x << "," << y << "," << w << "," << h << "," << f << ");\n";
 		Apollo_SDL_Tile(Tag, x, y, w, h, f, State, Apollo_State::TraceBack(State));
+		if (TQSG_GetError() != "") Crash(TQSG_GetError(), State, Apollo_State::TraceBack(State));
+		return 0;
+	}
+
+	static int AIMG_XTile(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		int x = floor(luaL_checknumber(L, 3));
+		int y = floor(luaL_checknumber(L, 4));
+		int w = floor(luaL_checknumber(L, 5));
+		int h = floor(luaL_checknumber(L, 6));
+		int ix = floor(luaL_checknumber(L, 7));
+		int iy = floor(luaL_checknumber(L, 8));
+		int f = luaL_checknumber(L, 9);
+		//GetTex(Tag, State)->Draw(x, y, f);
+		// std::cout << "Tile(" << x << "," << y << "," << w << "," << h << "," << f << ");\n";
+		Apollo_SDL_Tile(Tag, x, y, w, h, ix, iy, f, State, Apollo_State::TraceBack(State));
 		if (TQSG_GetError() != "") Crash(TQSG_GetError(), State, Apollo_State::TraceBack(State));
 		return 0;
 	}
@@ -453,6 +473,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGGA_Color", AGGA_Color);
 		Apollo_State::RequireFunction("AGGA_GetColor", AGGA_GetColor);
 		Apollo_State::RequireFunction("AGGA_Scale", AGGA_Scale);
+		Apollo_State::RequireFunction("AGGA_SetScale", AGGA_Scale);
 		Apollo_State::RequireFunction("AGGA_SetAlpha", AGGA_SetAlpha);
 		Apollo_State::RequireFunction("AGGA_GetAlpha", AGGA_GetAlpha);
 		Apollo_State::RequireFunction("AGGA_Plot", AGGA_Plot);
@@ -464,6 +485,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_Draw", AIMG_Draw);
 		Apollo_State::RequireFunction("AIMG_XDraw", AIMG_XDraw);
 		Apollo_State::RequireFunction("AIMG_Tile", AIMG_Tile);
+		Apollo_State::RequireFunction("AIMG_XTile", AIMG_XTile);
 		Apollo_State::RequireFunction("AIMG_Hot", AIMG_Hot);
 		Apollo_State::RequireFunction("AIMG_HotCenter", AIMG_HotCenter);
 		Apollo_State::RequireFunction("AIMG_HotBottomCenter", AIMG_HotBottomCenter);
