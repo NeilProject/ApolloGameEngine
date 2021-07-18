@@ -173,6 +173,10 @@ Class Image
 	Void Tile(int x, int y, int w, int h,int frame=0)
 		AIMG.TILE(ApolloState.Name,Tag,x,y,w,h,frame)
 	End
+	
+	Void XTile(int x, int y, int w, int h, int ix, int iy,int frame=0)
+		AIMG.XTILE(ApolloState.Name,Tag,x,y,w,h,ix,iy,frame)
+	End
 
 	Void Stretch(int x, int y, int w, int h,int frame=0)
 		AIMG.STRETCH(ApolloState.Name,Tag,x,y,w,h,frame)
