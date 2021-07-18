@@ -58,6 +58,9 @@
 // Init
 #include "API/ApolloAPIs.hpp"
 
+// Build
+#include "../Headers/builddate.hpp"
+
 using namespace TrickyUnits;
 using namespace jcr6;
 
@@ -82,7 +85,8 @@ namespace Tricky_Apollo {
 			cout << "ERROR! " << ARFile << " does not appear to be set up for the Apollo Game Engine!\n";
 			exit(AE_ARF_Invalid);
 		}
-		cout << "Validated: " << ARFile << "\n\n";
+		cout << "Validated ARF:  " << ARFile << "\n";
+		cout << "ARF build date: " << ARF.String("ID/Build")<<"\n\n";
 	}
 
 	void ApolloConfigFile() {
@@ -179,7 +183,7 @@ namespace Tricky_Apollo {
 using namespace Tricky_Apollo;
 
 int main(int n, char* args[]) {
-	printf("Apollo Game Engine\nWritten by Jeroen P. Broks\nBuild date: %s\n(c) Jeroen P. Broks\nReleased under the terms of the GPL3\n\n",__DATE__);
+	printf("Apollo Game Engine\nWritten by Jeroen P. Broks\nBuild date: %s\n(c) Jeroen P. Broks\nReleased under the terms of the GPL3\n\n",Appollo_BuildDate);
 	//TQSE_Init();  TQSE_ShowKeyNames(); return 0; // debug	
 	ApolloConfigFile();
 	CLI_Args(n, args);
