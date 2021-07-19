@@ -4,7 +4,7 @@
 // 
 // 
 // 
-// (c) Jeroen P. Broks, 2020
+// (c) Jeroen P. Broks, 2020, 2021
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.27
+// Version: 21.07.19
 // EndLic
 #include <QuickString.hpp>
 #include <Crash.hpp>
@@ -54,6 +54,10 @@ namespace Tricky_Apollo {
 
 	std::string Identify::ProjectData(std::string Key) {
 		return ConfigData.Value("Project",Key);
+	}
+
+	bool Identify::WindowsConsole() {
+		return ConfigData.Value("OS.WINDOWS", "CONSOLE") != "FALSE";
 	}
 
 	bool Identify::FullScreen() { return Upper(ConfigData.Value("Window", "FullScreen")) == "YES"; }

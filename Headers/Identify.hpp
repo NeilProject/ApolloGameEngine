@@ -4,7 +4,7 @@
 // 
 // 
 // 
-// (c) Jeroen P. Broks, 2020
+// (c) Jeroen P. Broks, 2020, 2021
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.27
+// Version: 21.07.19
 // EndLic
 // Tricky's Units
 #ifndef APOLLO_INCLUDED_ID
@@ -46,6 +46,7 @@ namespace Tricky_Apollo {
 		static std::string EngineData(std::string key);
 		static std::string WindowTitle();
 		static std::string ProjectData(std::string Key);
+		static bool WindowsConsole();
 		static bool FullScreen();		
 		static int WinHeight();
 		static int WinWidth();

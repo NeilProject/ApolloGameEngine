@@ -21,8 +21,14 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.07.18
+// Version: 21.07.19
 // EndLic
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#define USING_WINDOWS
+#include <Windows.h>
+#endif
+
 
 // Internal
 #include <iostream>
@@ -163,6 +169,13 @@ namespace Tricky_Apollo {
 		else
 			cout << Identify::WinWidth() << "x" << Identify::WinHeight();
 		cout << "\n";
+#ifdef USING_WINDOWS
+		if (!Identify::WindowsConsole()) {
+			cout << "Free Apollo from the console\n";
+			FreeConsole();
+		} else { cout << "Apollo set set to keep up the console\n"; }
+#endif
+
 	}
 
 	void LookUpMainScript() {
