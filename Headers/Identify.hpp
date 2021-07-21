@@ -47,10 +47,13 @@ namespace Tricky_Apollo {
 		static std::string WindowTitle();
 		static std::string ProjectData(std::string Key);
 		static bool WindowsConsole();
-		static bool FullScreen();		
+		static bool FullScreen();
 		static int WinHeight();
 		static int WinWidth();
 		static FlowType GetFlowType();
+		static bool KthuraUseAS();
+		static unsigned int KthuraASW();
+		static unsigned int KthuraASH();
 	};
 
 }

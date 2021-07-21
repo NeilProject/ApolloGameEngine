@@ -156,9 +156,6 @@
     <ClCompile Include="..\JCR6\src\jcr6_zlib.cpp">
       <Filter>Source Files\JCR6</Filter>
     </ClCompile>
-    <ClCompile Include="..\TrickyUnits\Source\TrickySTOI.cpp">
-      <Filter>Header Files\Tricky%27s Units</Filter>
-    </ClCompile>
     <ClCompile Include="..\TrickyUnits\Source\MD5.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
@@ -170,6 +167,12 @@
     </ClCompile>
     <ClCompile Include="Source\API\GameVars.cpp">
       <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Kthura\src\Kthura_TQSG_SA_Driver.cpp">
+      <Filter>Source Files\Kthura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\TrickySTOI.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Kthura\src\Kthura_TQSG_SA_Driver.hpp">
+      <Filter>Header Files\Kthura</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

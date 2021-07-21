@@ -35,6 +35,8 @@ using namespace std;
 namespace Tricky_Apollo {
 	using namespace TrickyUnits;
 
+
+
 	// Apollo General Graphics API
 	static int AGGA_Cls(lua_State* L) {
 		TQSG_Cls();
@@ -457,6 +459,24 @@ namespace Tricky_Apollo {
 
 	// ImageFont
 
+#pragma region AltScreen
+	static string ChosenAltScreenTag = "";
+	static TQSG_ASScreen ChosenAltScreen = nullptr;
+
+	static int AGAS_Create(lua_State* L) {
+		int
+			w{ (int)luaL_checkinteger(L,1) },
+			h{ (int)luaL_checkinteger(L,2) };
+		auto
+			t{ luaL_checkstring(L,3) };
+		if (t == "") { Crash("No AS Tag! Cannot Create"); return 0; }
+		if (t[0] == '$') { Crash("Invalid AS Tag: " + string(t)); return 0; }
+		CreateAS(w, h, t);
+		return 0;
+	}
+#pragma endregion
+
+
 
 	// Init
 	void ApolloAPIInit_Graphics() {
@@ -509,6 +529,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AFNT_GFix", AFNT_GFix);
 		Apollo_State::RequireFunction("AFNT_TxtW", AFNT_TxtW);
 		Apollo_State::RequireFunction("AFNT_TxtH", AFNT_TxtH);
+		// Alternate Screen
+		Apollo_State::RequireFunction("AGAS_Create", AGAS_Create);
 		// Link Script
 		Apollo_State::RequireNeil("API/Graphics.neil");
 		// Image Font

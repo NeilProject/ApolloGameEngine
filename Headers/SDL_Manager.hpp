@@ -44,6 +44,10 @@ namespace Tricky_Apollo {
 	extern bool NeverFullScreen;
 	
 	
+	// AS
+	void CreateAS(unsigned int w, unsigned int h, std::string Tag);
+	bool HasAS(std::string Tag);
+	TQSG_ASScreen GetAS(std::string Tag);
 	
 
 	// Texture

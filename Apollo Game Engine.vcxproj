@@ -158,6 +158,7 @@ powershell updatebuilddata
     <ClCompile Include="..\Kthura\src\Kthura_Dijkstra.cpp" />
     <ClCompile Include="..\Kthura\src\Kthura_Draw.cpp" />
     <ClCompile Include="..\Kthura\src\Kthura_SDL_Driver.cpp" />
+    <ClCompile Include="..\Kthura\src\Kthura_TQSG_SA_Driver.cpp" />
     <ClCompile Include="..\TQSG\TQSA.cpp" />
     <ClCompile Include="..\TQSG\TQSE.cpp" />
     <ClCompile Include="..\TQSG\TQSG.cpp" />
@@ -201,6 +202,7 @@ powershell updatebuilddata
     <ClInclude Include="..\Kthura\src\Kthura_Dijkstra.hpp" />
     <ClInclude Include="..\Kthura\src\Kthura_Draw.hpp" />
     <ClInclude Include="..\Kthura\src\Kthura_SDL_Driver.hpp" />
+    <ClInclude Include="..\Kthura\src\Kthura_TQSG_SA_Driver.hpp" />
     <ClInclude Include="..\TQSG\TQSE.hpp" />
     <ClInclude Include="..\TQSG\TQSG.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\Bank.hpp" />

@@ -73,6 +73,8 @@ namespace Tricky_Apollo {
     static std::map<std::string, TQSG_AutoImage> Texture;
     static std::map<std::string, TQSA_Audio> Audio;
     static std::map<std::string, TQSG_ImageFont> Font;
+    static std::map<std::string, TQSG_ASScreen> AltScreens;
+
 
     static void Apollo_SDL_Klets(std::string Gezwets) {
         if (Apollo_SDL_Loudmouth)
@@ -292,6 +294,21 @@ namespace Tricky_Apollo {
             Slachtoffer.second.Kill();
         }
         Audio.clear();
+    }
+
+    void CreateAS( unsigned int w, unsigned int h, std::string Tag) {
+        AltScreens[Upper(Tag)] = TQSG_CreateAS(w, h);
+    }
+
+    bool HasAS(std::string Tag) {
+        return AltScreens.count(Upper(Tag));
+    }
+
+    TQSG_ASScreen GetAS(std::string Tag) {
+        Tag = Upper(Tag);
+        if( AltScreens.count(Tag))
+            return AltScreens[Tag];
+        return nullptr;
     }
 
     TQSG_Image* GetTex(std::string Tag, std::string State) {

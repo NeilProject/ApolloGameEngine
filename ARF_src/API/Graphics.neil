@@ -21,6 +21,7 @@
 Table AGGA = LGGTTT("AGGA")
 Table AIMG = LGGTTT("AIMG")
 Table AFNT = LGGTTT("AFNT")
+Table AGAS = LGGTTT("AGAS")
 import Apollo_Panic
 
 QuickMeta Graphics
@@ -272,6 +273,10 @@ group Screen
 	End
 	
 	readonly delegate Grab = Image.GrabScreen
+	
+	Void CreateAlt(int x, int y, string Tag)
+		AGAS.CREATE(x,y,Tag)
+	End
 End
 
 

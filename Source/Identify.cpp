@@ -24,6 +24,7 @@
 // Version: 21.07.19
 // EndLic
 #include <QuickString.hpp>
+#include <TrickySTOI.hpp>
 #include <Crash.hpp>
 #include "..\Headers\Identify.hpp"
 
@@ -84,6 +85,18 @@ namespace Tricky_Apollo {
 			return FullCallback;
 		Crash("Unknown flow type: " + ConfigData.Value("Flow", "Type"), "Your project file", "Check ID/Identify.ini", AE_UnknownFlowType);
 		return UnknownFlow; // I must return something! Even though it doesn't matter anymore!
+	}
+
+	unsigned int Identify::KthuraASW() {
+		return ToUInt(ConfigData.Value("Kthura","ASW"));
+	}
+
+	unsigned int Identify::KthuraASH() {
+		return ToUInt(ConfigData.Value("Kthura", "ASH"));
+	}
+
+	bool Identify::KthuraUseAS() {
+		return ConfigData.Value("Kthura", "UseAS") == "YES";
 	}
 
 

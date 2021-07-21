@@ -34,6 +34,7 @@
 // Kthura
 #include <Kthura.hpp>
 #include <Kthura_SDL_Driver.hpp>
+#include <Kthura_TQSG_SA_Driver.hpp>
 #include <Kthura_Dijkstra.hpp>
 
 // Tricky's Units
@@ -43,6 +44,7 @@
 // Apollo
 #include <globals.hpp>
 #include <States.hpp>
+#include <Identify.hpp>
 
 #define qAssert(condition,err) if (!condition) Crash(err,State,Apollo_State::TraceBack(State))
 
@@ -666,7 +668,10 @@ namespace Tricky_Apollo {
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
 		Kthura::PathFinder = new Kthura_Dijkstra();
-		Kthura_Draw_SDL_Driver::Init();
+		if (Identify::KthuraUseAS())
+			Kthura_Draw_TQSG_SA_Driver::Init(Identify::KthuraASW(), Identify::KthuraASH());
+		else
+			Kthura_Draw_SDL_Driver::Init();
 		Apollo_State::RequireFunction("AKTHURA_SetAutoVisible", Kthura_SetAutoVisible);
 		Apollo_State::RequireFunction("AKTHURA_KillAutoVisible", Kthura_KillAutoVisible);
 		Apollo_State::RequireFunction("AKTHURA_Load", Kthura_Load);
