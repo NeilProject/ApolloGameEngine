@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.07.19
+// Version: 21.07.26
 // EndLic
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -163,6 +163,7 @@ namespace Tricky_Apollo {
 		cout << "Title:     " << Identify::MetaData("Title") << "\n";
 		cout << "Author:    " << Identify::MetaData("Author") << "\n";
 		cout << "Copyright: " << Identify::MetaData("Copyright") << "\n\n";
+		if (CLI_Config.bool_flags["v"]) exit(0);
 		cout << "Starting up window entitled \"" << Identify::WindowTitle() << "\"; ";
 		if (Identify::FullScreen())
 			cout << "Full Screen";
