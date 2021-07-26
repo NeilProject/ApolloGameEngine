@@ -1,7 +1,7 @@
 // Lic:
 // Source/API/JCR6.cpp
 // Apollo
-// version: 21.03.18
+// version: 21.07.26
 // Copyright (C) 2020, 2021 JCR6 access
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -193,15 +193,18 @@ namespace Tricky_Apollo {
 		cout << "Savegame write request received\n";
 		if (SaveGameFile == "") Crash("Trying to save a savegame file without a name");
 		if (SaveDir == "") SaveDir = Dirry("$Home$/ApolloGameData/"+Identify::ProjectData("ID")+"/SaveGame");
+		auto secu = false;
+		/*
 		string cmd{ "OpenURL MD \""+SaveDir+"\"" };
 		cout << "chkexe: " << cmd << endl;
 		cout << "Directory check: " << SaveDir << endl;
 		auto exc = system(cmd.c_str());
-		auto secu = false;
 		if (exc) {
 			lua_pushstring(L, std::string("Checking/Creating Savegame dir " + SaveDir + " failed! (" + to_string(exc) + ")").c_str()); // A more elegant solution may come later!
 			return 1;
 		}
+		//*/
+		MakeDir(SaveDir);
 		cout << "Saving: " << SaveDir << "/" << SaveGameFile << endl;
 		jcr6::JT_Create JCR(SaveDir + "/"+ SaveGameFile);
 		for (auto& it : SaveGameData) {
@@ -211,7 +214,7 @@ namespace Tricky_Apollo {
 				JCR.AddString("HEAD/PARTY", "Present");
 			}else if(it.first=="*SECU") {
 				secu = Upper(it.second) == "YES";
-			} else if (prefixed(it.first,"*")){
+			} else if (prefixed(it.first,"*")) {
 				Crash("Invalid save game request!", "C++:SAVEGAME", it.first);
 			} else {
 				cout << "= Adding data entry: " << it.first << endl;
