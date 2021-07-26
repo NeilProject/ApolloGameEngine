@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.07.19
+// Version: 21.07.26
 // EndLic
 // Tricky's Units
 #ifndef APOLLO_INCLUDED_ID
