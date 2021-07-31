@@ -177,6 +177,7 @@ powershell updatebuilddata
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\RPGSave.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\RPGStat.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\TrickyMath.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\TrickySTOI.cpp" />
     <ClCompile Include="Source\API\Audio.cpp" />
     <ClCompile Include="Source\API\APIBank.cpp" />
@@ -211,6 +212,7 @@ powershell updatebuilddata
     <ClInclude Include="..\TrickyUnits\Headers\QuickString.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\RPGSave.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\RPGStat.hpp" />
+    <ClInclude Include="..\TrickyUnits\Headers\TrickyMath.hpp" />
     <ClInclude Include="Headers\AP_Lua_CPP.hpp" />
     <ClInclude Include="Headers\Core.hpp" />
     <ClInclude Include="Headers\Crash.hpp" />

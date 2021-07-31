@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.07.26
+// Version: 21.07.31
 // EndLic
 // C++
 #include <iostream>
@@ -40,6 +40,7 @@
 // Tricky's Units
 #include <QuickString.hpp>
 #include <TQSG.hpp>
+#include <TQSE.hpp>
 
 // Apollo
 #include <globals.hpp>
@@ -61,7 +62,7 @@
 	string Layer = Upper(luaL_checkstring(L, 4)); \
 	qAssert(Maps[Tag].Layers.count(Layer), "No layer named \"" + Layer + "\"  while searching for object"); \
 	string gType = luaL_checkstring(L, 5); \
-    string objTag {""};\
+	string objTag {""};\
 	KthuraObject* obj = NULL; \
 	if (gType == "string") { \
 		objTag = luaL_checkstring(L, 6); \
@@ -664,6 +665,35 @@ namespace Tricky_Apollo {
 	}
 	static int Kthura_KillAutoVisible(lua_State* L) { Kthura::AutoVisible.active = false; return 0; }
 
+	static int Kthura_KthuraScreensize(lua_State* L) {
+		if (Kthura_Draw_TQSG_SA_Driver::Used()) {
+			lua_pushinteger(L, Kthura_Draw_TQSG_SA_Driver::Width());
+			lua_pushinteger(L, Kthura_Draw_TQSG_SA_Driver::Height());
+		} else {
+			lua_pushinteger(L, TQSG_ScreenWidth());
+			lua_pushinteger(L, TQSG_ScreenHeight());
+		}
+		return 2;
+	}
+
+	static int Kthura_MX(lua_State* L) {
+		if (Kthura_Draw_TQSG_SA_Driver::Used()) {
+			lua_pushinteger(L, floor(Kthura_Draw_TQSG_SA_Driver::Width()*((double)TQSE_MouseX()/TQSG_ScreenWidth())));
+		} else {
+			lua_pushinteger(L, TQSE_MouseX());
+		}
+		return 1;
+	}
+
+	static int Kthura_MY(lua_State* L) {
+		if (Kthura_Draw_TQSG_SA_Driver::Used()) {
+			lua_pushinteger(L, floor(Kthura_Draw_TQSG_SA_Driver::Height() * ((double)TQSE_MouseY() / TQSG_ScreenHeight())));
+		} else {
+			lua_pushinteger(L, TQSE_MouseY());
+		}
+		return 1;
+	}
+
 
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
@@ -721,6 +751,9 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_Blocked", Kthura_Blocked);
 		Apollo_State::RequireFunction("AKTHURA_RemapDominance", Kthura_RemapDominance);
 		Apollo_State::RequireFunction("AKTHURA_CreateObj", Kthura_CreateObj);
+		Apollo_State::RequireFunction("AKTHURA_ScreenSize", Kthura_KthuraScreensize);
+		Apollo_State::RequireFunction("AKTHURA_MX", Kthura_MX);
+		Apollo_State::RequireFunction("AKTHURA_MY", Kthura_MY);
 		Apollo_State::RequireNeil("API/Kthura.neil");
 	}
 }

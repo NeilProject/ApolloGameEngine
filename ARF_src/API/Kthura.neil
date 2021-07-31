@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Kthura.neil
 // Apollo - Kthura Linker
-// version: 21.07.07
+// version: 21.07.31
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -618,6 +618,32 @@ group Kthura
 	readonly delegate SetAutoVisible=AKTH.SETAUTOVISIBLE
 	readonly delegate KillAutoVisible=AKTH.KILLAUTOVISIBLE
 	
+	Static Var ScreenSize()
+		Return AKTH.SCREENSIZE()
+	END
+	
+	Static Get Int Width
+		int x
+		int y
+		x,y = ScreenSize()
+		return x
+	End
+
+	Static Get Int Height
+		int x
+		int y
+		x,y = ScreenSize()
+		return y
+	End
+	
+	Static Get Int MX
+		Return AKTH.MX()
+	End
+	
+	Static Get Int MY
+		Return AKTH.MY()
+	End
+
 end
 
 // Everything Ok?
