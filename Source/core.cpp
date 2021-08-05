@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.03.05
+// Version: 21.08.05
 // EndLic
 
 #include <iostream>
@@ -308,6 +308,14 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int APICORE_aTan2(lua_State* L) {
+		auto
+			x{ luaL_checknumber(L,1) },
+			y{ luaL_checknumber(L,2) };
+		lua_pushnumber(L, atan2(x, y));
+		return 1;
+	}
+
 
 
 	void InitCore() {
@@ -324,6 +332,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("GetFlow", APICORE_GetFlow);
 		Apollo_State::RequireFunction("MD5", APICORE_MD5);
 		Apollo_State::RequireFunction("OpenURL", APICORE_OpenURL);
+		Apollo_State::RequireFunction("aTan2", APICORE_aTan2);
 
 		Apollo_State::RequireFunction("CallState", APICORE_Call);
 		Apollo_State::RequireFunction("LoadState", APICORE_LoadState);

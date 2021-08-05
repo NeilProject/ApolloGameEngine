@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Core.Neil
 // Apollo Core API linkup
-// version: 21.03.05
+// version: 21.08.05
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -42,6 +42,7 @@ import WaitMinTicks
 
 global const delegate OpenURL = Lua.OpenURL
 global const delegate MD5 = Lua.MD5
+global const delegate aTan2 = Lua.aTan2
 
 Group Core
 	Get String PKGDir 
