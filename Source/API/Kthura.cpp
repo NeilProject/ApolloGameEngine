@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.07.31
+// Version: 21.08.05
 // EndLic
 // C++
 #include <iostream>
@@ -73,7 +73,7 @@
 		qAssert(Maps[Tag].Layers[Layer]->GetIDMap().count(objID), "No object with ID  " + to_string(objID) + " in layer " + Layer + " in map " + Tag); \
 		obj = Maps[Tag].Layers[Layer]->GetIDMap()[objID]; \
 	} else { \
-		Crash("Invalid Object Verification Requiest!",State,Apollo_State::TraceBack(State)); \
+		Crash("Invalid Object Verification Request! ("+gType+")",State,Apollo_State::TraceBack(State)); \
 		return 0;\
 	}
 
@@ -164,6 +164,18 @@ namespace Tricky_Apollo {
 			lua_pushinteger(L,obj->ID());
 		}
 		return Maps[Tag].Layers[Layer]->Objects.size();
+	}
+
+	static int Kthura_AltEnumObjects(lua_State* L) {
+		qVerify();
+		string Layer{ Upper(luaL_checkstring(L, 4)) };
+		string Result{ "" };
+		for (auto& obj : Maps[Tag].Layers[Layer]->Objects) {
+			if (Result.size()) Result += ";";
+			Result += to_string(obj->ID());
+		}
+		lua_pushstring(L, Result.c_str());
+		return 1;
 	}
 
 	static int Kthura_MapHasLayer(lua_State* L) {
@@ -717,6 +729,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_SetObjStr", Kthura_SetObjStr);
 		Apollo_State::RequireFunction("AKTHURA_GetObjBool", Kthura_GetObjBool);
 		Apollo_State::RequireFunction("AKTHURA_EnumObjects", Kthura_EnumObjects);		
+		Apollo_State::RequireFunction("AKTHURA_AltEnumObjects", Kthura_AltEnumObjects);
 		Apollo_State::RequireFunction("AKTHURA_Draw", Kthura_Draw);
 		Apollo_State::RequireFunction("AKTHURA_GetTags", Kthura_GetTags); 
 		Apollo_State::RequireFunction("AKTHURA_RemapAllLayers", Kthura_RemapAllLayers);

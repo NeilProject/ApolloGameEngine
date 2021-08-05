@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Kthura.neil
 // Apollo - Kthura Linker
-// version: 21.07.31
+// version: 21.08.05
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -422,7 +422,8 @@ class KTHURA_Layer
 	Get Table ObjEnum
 		//print("ObjEnum")
 		//print(Serialize("Invisible Kthura Module",AKTH))
-		return { AKTH.ENUMOBJECTS(MapTag,ApolloState.Name,MapID,LayerTag) }
+		//return { AKTH.ENUMOBJECTS(MapTag,ApolloState.Name,MapID,LayerTag) }
+		Return Split(AKTH.ALTENUMOBJECTS(MapTag,ApolloState.Name,MapID,LayerTag),";")
 	End
 	
 	Get Delegate EachObject
@@ -434,7 +435,10 @@ class KTHURA_Layer
 			if i>#OE
 				return null
 			end
-			return Obj(OE[i])
+			//Print("DEBUG EACHOBJECT: ",i,#OE,OE[i])
+			Plua R = Obj(Lua.tonumber(OE[i]))
+			//Print("DEBUG ECACHOBJECT: Returning: ",R)
+			Return R
 		end
 		return Ret
 	end
