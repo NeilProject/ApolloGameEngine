@@ -30,6 +30,9 @@ Class Audio
 	ReadOnly String Tag
 	ReadOnly Bool AutoDestruct
 	Static Bool Chat=false
+	Static Get Int MaxVolume
+		Return AAUA.MAXVOLUME()
+	End
 	
 	Constructor(string T, Bool AD)
 		if !AllowCAudio
@@ -112,5 +115,9 @@ Class Audio
 		AAUA.STOP(channel or -1);
 	End
 	
+	Static Void Volume(int channel, int vol,pure)
+		Static Table bp = {[true]=1, [false]=0}
+		AAUA.VOLUME(channel,vol,bp[pure==true])
+	End
 	
 End

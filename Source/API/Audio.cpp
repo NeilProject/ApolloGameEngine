@@ -85,6 +85,25 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AAUA_Volume(lua_State* L) {
+		auto ch{ luaL_checkinteger(L,1) };
+		auto value{ luaL_checkinteger(L,2) };
+		auto p100{ luaL_checkinteger(L,3) };
+		switch (p100) {
+		case 1:
+			Apollo_SDL_AudioVolume100(ch,value);
+			break;
+		default:
+			Apollo_SDL_AudioVolume(ch, value);
+		}
+		return 0;
+	}
+
+	static int AAUA_MaxVolume(lua_State* L) {
+		lua_pushinteger(L, MIX_MAX_VOLUME);
+		return 1;
+	}
+
 
 
 	void ApolloAPIInit_Audio() {
@@ -95,6 +114,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AAUA_Kill", AAUA_Kill);
 		Apollo_State::RequireFunction("AAUA_ChannelPlaying", AAUA_ChannelPlaying);
 		Apollo_State::RequireFunction("AAUA_HasTag", AAUA_HasTag);
+		Apollo_State::RequireFunction("AAUA_MaxVolume", AAUA_MaxVolume);
+		Apollo_State::RequireFunction("AAUA_Volume", AAUA_Volume);
 		Apollo_State::RequireNeil("API/Audio.neil");
 
 	}

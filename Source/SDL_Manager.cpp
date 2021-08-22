@@ -273,6 +273,16 @@ namespace Tricky_Apollo {
         return Audio.count(Tag);
     }
 
+    void Apollo_SDL_AudioVolume100(int Channel, int value,string State) {
+        double breuk{ (double) MIX_MAX_VOLUME/100 };
+        int newvalue = floor(value * breuk);
+        Apollo_SDL_AudioVolume(Channel, value,State);
+    }
+
+    void Apollo_SDL_AudioVolume(int channel, int value,string State) {        
+        Mix_Volume(channel, value);
+    }
+
 
     TQSA_Audio* Apollo_SDL_Audio(std::string Tag, std::string State) {
         Tag = Upper(Tag);
