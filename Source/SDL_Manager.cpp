@@ -324,10 +324,20 @@ namespace Tricky_Apollo {
     TQSG_Image* GetTex(std::string Tag, std::string State) {
         if (!Texture.count(Upper(Tag))) {
             Crash("There is no image tagged: " + Tag, State, Apollo_State::TraceBack(State));
+            return nullptr;
         }
         //return &Texture[Upper(Tag)];
         // Leftover from old times, but as it's too much work to get it all removed, I'll leave it this way for now. The API won't notice the difference anyway.
         return Texture[Upper(Tag)]->Img();
+    }
+    TrickyUnits::TQSG_AutoImage GetATex(std::string Tag, std::string State) {
+        if (!Texture.count(Upper(Tag))) {
+            Crash("There is no image tagged: " + Tag, State, Apollo_State::TraceBack(State));
+            return nullptr;
+        }
+        //return &Texture[Upper(Tag)];
+        // Leftover from old times, but as it's too much work to get it all removed, I'll leave it this way for now. The API won't notice the difference anyway.
+        return Texture[Upper(Tag)];
     }
     bool HasTex(std::string Tag) {
         return Texture.count(Upper(Tag));
@@ -483,4 +493,26 @@ namespace Tricky_Apollo {
         TQSG_Close();
         printf("SDL Terminated");
     }
+
+
+#pragma region Alternate Screen
+    map<string, TQSG_ASScreen> ASRegister;
+    void Apollo_AS_Create(string Tag, unsigned int w, unsigned int h) {
+        Tag = Upper(Tag);
+        ASRegister[Tag] = TQSG_CreateAS(w, h);
+    }
+
+    TQSG_ASScreen Apollo_AS_Get(std::string Tag) {
+        Tag = Upper(Tag);
+        if (!ASRegister.count(Tag)) {
+            Crash("There is no Alternate Screen tagged " + Tag);
+            return nullptr;
+        }
+        return ASRegister[Tag];
+    }
+    bool Apollo_AS_Has(std::string Tag) {
+        return ASRegister.count(Tag);
+    }
+#pragma endregion
+
 }

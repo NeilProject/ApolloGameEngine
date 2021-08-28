@@ -25,8 +25,9 @@
 // EndLic
 
 
-#ifndef INCLUDED_APOLLO_SDL_START_AND_FINISH
-#define INCLUDED_APOLLO_SDL_START_AND_FINISH
+//#ifndef INCLUDED_APOLLO_SDL_START_AND_FINISH
+//#define INCLUDED_APOLLO_SDL_START_AND_FINISH
+#pragma once
 
 
 #include <SDL.h>
@@ -52,6 +53,7 @@ namespace Tricky_Apollo {
 
 	// Texture
 	TrickyUnits::TQSG_Image* GetTex(std::string Tag,std::string State="C++");
+	TrickyUnits::TQSG_AutoImage GetATex(std::string Tag, std::string State = "C++");
 	bool HasTex(std::string Tag);
 	void RemTex(std::string Tag);
 	std::string LoadTex(std::string Tag, std::string File);
@@ -99,5 +101,12 @@ namespace Tricky_Apollo {
 	//void Apollo_SDL_ClsColor(int r, int g, int b);
 	//void Apollo_SDL_Cls();
 
+
+#pragma region Header Alternate Screen System
+	void Apollo_AS_Create(std::string Tag, unsigned int w, unsigned int h);
+	TQSG_ASScreen Apollo_AS_Get(std::string Tag);
+	bool Apollo_AS_Has(std::string Tag);
+#pragma endregion
+
 }
-#endif
+//#endif

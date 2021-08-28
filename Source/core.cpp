@@ -255,6 +255,40 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int INTERSTATE_SetString(lua_State* L) {
+		string cState = luaL_checkstring(L, 1);
+		string fState = luaL_checkstring(L, 2);
+		string fVar = luaL_checkstring(L, 3);
+		auto fVal = luaL_checkstring(L, 4);
+		Apollo_State::Get(fState, cState)->DefString(fVar, fVal);
+	}
+
+	static int INTERSTATE_SetInt(lua_State* L) {
+		string cState = luaL_checkstring(L, 1);
+		string fState = luaL_checkstring(L, 2);
+		string fVar = luaL_checkstring(L, 3);
+		auto fVal = luaL_checkinteger(L, 4);
+		Apollo_State::Get(fState, cState)->DefInt(fVar, fVal);
+	}
+
+	static int INTERSTATE_SetNumber(lua_State* L) {
+		string cState = luaL_checkstring(L, 1);
+		string fState = luaL_checkstring(L, 2);
+		string fVar = luaL_checkstring(L, 3);
+		auto fVal = luaL_checknumber(L, 4);
+		Apollo_State::Get(fState, cState)->DefNumber(fVar, fVal);
+	}
+
+	static int INTERSTATE_SetBool(lua_State* L) {
+		string cState = luaL_checkstring(L, 1);
+		string fState = luaL_checkstring(L, 2);
+		string fVar = luaL_checkstring(L, 3);
+		auto fVal = luaL_checkstring(L, 4);
+		Apollo_State::Get(fState, cState)->DefBool(fVar, fVal);
+	}
+
+
+
 	static int APICORE_Ticks(lua_State* L) {
 		lua_pushinteger(L,(int)SDL_GetTicks());
 		return 1;
@@ -348,6 +382,11 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("INTERSTATE_GetInteger", INTERSTATE_GetInteger);
 		Apollo_State::RequireFunction("INTERSTATE_GetString", INTERSTATE_GetString);
 		Apollo_State::RequireFunction("INTERSTATE_GetBool", INTERSTATE_GetBool);
+		Apollo_State::RequireFunction("INTERSTATE_SetInteger", INTERSTATE_SetInt);
+		Apollo_State::RequireFunction("INTERSTATE_SetNumber", INTERSTATE_SetNumber);
+		Apollo_State::RequireFunction("INTERSTATE_SetString", INTERSTATE_SetString);
+		Apollo_State::RequireFunction("INTERSTATE_SetBool", INTERSTATE_SetBool);
+
 		Apollo_State::RequireNeil("API/Core.Neil");
 	}
 

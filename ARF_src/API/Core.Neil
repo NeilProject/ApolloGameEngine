@@ -93,6 +93,10 @@ Group State
 		Load("FLOW_"..FlState,file)
 	end
 	
+	Bool HasFlow(String Flw)
+		Return Has("FLOW_"..Flw)
+	End
+	
 end
 
 Group FPS
@@ -153,6 +157,23 @@ QuickMeta ISGET
 		Lua.Apollo_Panic("ISGET is read-only!")
 	end
 end
+
+global void ISSET(string key,string State,string varname, value)
+	string mkey
+	switch key:upper()
+		case "INT" "INTEGER"
+			mkey = "Integer"
+		case "STRING" "STR"
+			mkey = "String"
+		case "BOOL" "BOOLEAN"
+			mkey = "Bool"
+			value = tostring(value)
+		default
+			Lua.Apollo_Panic("Unknown ISSET type: "..key)
+	end
+	//Print("INTERSTATE_Set"..mkey,Lua["INTERSTATE_Set"..mkey]," >> ",ApolloState.name,state,varname,value)
+	Lua["INTERSTATE_Set"..mkey](ApolloState.name,state,varname,value)
+End
 
 
 global delegate Shell = Lua.Shell

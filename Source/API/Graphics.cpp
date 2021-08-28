@@ -469,10 +469,44 @@ namespace Tricky_Apollo {
 			h{ (int)luaL_checkinteger(L,2) };
 		auto
 			t{ luaL_checkstring(L,3) };
-		if (t == "") { Crash("No AS Tag! Cannot Create"); return 0; }
+		if (strcmp(t, "")==0) { Crash("No AS Tag! Cannot Create"); return 0; }
 		if (t[0] == '$') { Crash("Invalid AS Tag: " + string(t)); return 0; }
 		CreateAS(w, h, t);
 		return 0;
+	}
+
+	static int AGAS_Recalc(lua_State* L) {
+		auto
+			x{ (int)luaL_checkinteger(L,1) },
+			y{ (int)luaL_checkinteger(L,2) };
+		auto
+			t{ luaL_checkstring(L,3) },
+			s{ luaL_checkstring(L,4) };
+		if (!HasAS(t)) Crash(string("There is no AS tagged \"") + t + "\"!", s);
+		auto a{ GetAS(t) };
+		lua_pushinteger(L, a->RCX(x));
+		lua_pushinteger(L, a->RCY(y));
+		return 2;
+	}
+
+	static int AGAS_Draw(lua_State* L) {
+		auto
+			x{ (int)luaL_checkinteger(L,1) },
+			y{ (int)luaL_checkinteger(L,2) },
+			f{ (int)luaL_checkinteger(L,3) };
+		auto
+			p{ luaL_checkstring(L,4) }, // image
+			t{ luaL_checkstring(L,5) }, // as tag
+			s{ luaL_checkstring(L,6) }; // state
+		if (!HasAS(t)) Crash(string("There is no AS tagged \"") + t + "\"!", s);
+		if (!HasTex(p)) Crash(string("No image tagged \"") + p + "\"!", s);
+		GetAS(t)->Draw(GetATex(p), x, y, f);
+		return 0;
+	}
+
+	static int AGAS_Has(lua_State* L) {
+		lua_pushboolean(L, HasAS(luaL_checkstring(L, 1)));
+		return 1;
 	}
 #pragma endregion
 
@@ -521,6 +555,7 @@ namespace Tricky_Apollo {
 		// Alias in General 
 		Apollo_State::RequireFunction("AGGA_GetRotation", AIMG_GetRotation);
 		Apollo_State::RequireFunction("AGGA_SetRotation", AIMG_SetRotation);
+		
 		// Fonts
 		Apollo_State::RequireFunction("AFNT_LoadImageFont", AFNT_LoadImageFont);
 		Apollo_State::RequireFunction("AFNT_DrawText", AFNT_DrawText);
@@ -531,6 +566,9 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AFNT_TxtH", AFNT_TxtH);
 		// Alternate Screen
 		Apollo_State::RequireFunction("AGAS_Create", AGAS_Create);
+		Apollo_State::RequireFunction("AGAS_Recalc", AGAS_Recalc);
+		Apollo_State::RequireFunction("AGAS_Draw", AGAS_Draw);
+		Apollo_State::RequireFunction("AGAS_Has", AGAS_Has);
 		// Link Script
 		Apollo_State::RequireNeil("API/Graphics.neil");
 		// Image Font

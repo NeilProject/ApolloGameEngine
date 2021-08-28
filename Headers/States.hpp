@@ -115,6 +115,12 @@ namespace Tricky_Apollo {
 		double FetchNumber(std::string call, bool stauto = true);
 		bool FetchBoolean(std::string call, bool stauto = true);
 
+		void DefString(std::string call, std::string value, bool stauto = true);
+		void DefInt(std::string call, int value, bool stauto = true);
+		void DefNumber(std::string call, double value, bool stauto=true);
+		void DefBool(std::string call, bool value, bool stauto = true);
+		void DefBool(std::string call, std::string value, bool stauto = true);
+
 
 		~Apollo_State();
 	};

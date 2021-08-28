@@ -23,6 +23,10 @@
 // 
 // Version: 21.03.09
 // EndLic
+
+// Interstate define debug
+#define Interstate_define_debug
+
 // C++
 #include <iostream>
 
@@ -444,7 +448,7 @@ namespace Tricky_Apollo {
 	*/
 
 #define Fetch() \
-	std:string work;\
+	std::string work;\
 	if (stauto && StateType == "Neil")\
 		work = "return Neil.Globals." + call;\
 	else\
@@ -452,6 +456,19 @@ namespace Tricky_Apollo {
 	luaL_loadstring(MyState, work.c_str());\
 	lua_call(MyState, 0, 1, retvalues);
 
+
+#define ISDefine(value)\
+	std::string work{"--[[ISDefine]]\n"};\
+	if (stauto && StateType == "Neil")\
+		work += "Neil.Globals." + call;\
+	else\
+		work += call;\
+	work += " = " + value;\
+	luaL_loadstring(MyState, work.c_str());\
+	lua_call(MyState, 0, 1, retvalues);
+	//std::cout << "\n\n<Interstate_define_debug>\n"<<work<<"\n</Interstate_define_debug>\n\n";\
+
+	
 	std::string Apollo_State::FetchString(std::string call, bool stauto) {
 		Fetch();
 		return lua_tostring(MyState, -1);
@@ -471,6 +488,18 @@ namespace Tricky_Apollo {
 		Fetch();
 		return lua_toboolean(MyState, -1);
 	}
+
+	void Apollo_State::DefString(std::string call, std::string value, bool stauto) { ISDefine(string("\"") + value + "\""); }
+	void Apollo_State::DefInt(std::string call, int value, bool stauto) { ISDefine(to_string(value)); }
+	void Apollo_State::DefNumber(std::string call, double value, bool stauto) { ISDefine(to_string(value)); }
+
+	void Apollo_State::DefBool(std::string call, bool value, bool stauto) {
+		string v;
+		if (value) v = "true"; else v = "false";
+		ISDefine(v);
+	}
+
+	void Apollo_State::DefBool(std::string call, std::string value, bool stauto) { DefBool(call, Upper(value) == "TRUE", stauto); }
 
 	Apollo_State::~Apollo_State() {
 		std::cout << "Destroying state " << StateName << " -> " << MyState << "\n";

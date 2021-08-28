@@ -255,6 +255,9 @@ Class Image
 		return ret
 	end
 	
+	Void ASDraw(string ATag,int X,int Y,int frame=0)
+		AGAS.DRAW(x,y,frame,ATag,ApolloState.Name)
+	End
 end
 
 group Screen
@@ -277,6 +280,20 @@ group Screen
 	Void CreateAlt(int x, int y, string Tag)
 		AGAS.CREATE(x,y,Tag)
 	End
+	
+	
+	Var AltCoords(string Tag,int x, int y)
+		return AGAS.RECALC(x,y,Tag,ApolloState.Name)
+	End
+	
+	ReadOnly Delegate HasAlt = AGAS.HASALT
+	
+	Void NewAlt(int x, int y, string Tag)
+		if !HasAlt(Tag)
+			CreateAlt(x,y,Tag)
+		End
+	End
+
 End
 
 
@@ -352,5 +369,6 @@ Class ImageFont
 		Graphics.Color(r,g,b)
 		Text(Txt,x,y,ah,av,autonext)
 	end
+		
 
 end
