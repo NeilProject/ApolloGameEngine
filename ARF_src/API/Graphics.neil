@@ -258,7 +258,12 @@ Class Image
 	Void ASDraw(string ATag,int X,int Y,int frame=0)
 		AGAS.DRAW(x,y,frame,ATag,ApolloState.Name)
 	End
-end
+	
+	Void AltDraw(string ATag,int X,int Y,int frame=0)
+		AGAS.DRAW(x,y,frame,ATag,ApolloState.Name)
+	End
+
+End
 
 group Screen
 	Get Int Width
@@ -286,7 +291,7 @@ group Screen
 		return AGAS.RECALC(x,y,Tag,ApolloState.Name)
 	End
 	
-	ReadOnly Delegate HasAlt = AGAS.HASALT
+	ReadOnly Delegate HasAlt = AGAS.HAS
 	
 	Void NewAlt(int x, int y, string Tag)
 		if !HasAlt(Tag)
