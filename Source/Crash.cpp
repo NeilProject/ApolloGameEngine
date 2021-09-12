@@ -65,6 +65,7 @@ namespace Tricky_Apollo {
 			SY,
 			DX = 0, 
 			DY = 0;
+		TQSG_SetAlpha(255);
 		TQSG_ScreenSize(&SX, &SY);
 		if (DH < SY) DY = SY - DH;
 		printf("DEATH %dx%d; Screen %dx%d; Coords(%d,%d)\n", DW, DH, SX, SY, DX, DY);

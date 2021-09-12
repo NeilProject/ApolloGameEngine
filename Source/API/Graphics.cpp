@@ -508,6 +508,50 @@ namespace Tricky_Apollo {
 		lua_pushboolean(L, HasAS(luaL_checkstring(L, 1)));
 		return 1;
 	}
+
+	static int AGAS_Scale(lua_State* L) {
+		auto
+			w{ (double)luaL_checknumber(L,1) },
+			h{ (double)luaL_checknumber(L,2) };
+		auto
+			t{ luaL_checkstring(L,3) }, // as tag
+			s{ luaL_checkstring(L,4) }; // state
+		if (!HasAS(t)) Crash(string("There is no AS tagged \"") + t + "\"!", s);
+		GetAS(t)->Scale(w, h);
+		return 0;
+	}
+
+	// Debug
+	static int AGAS_GetAutoScale(lua_State* L) {
+		double w, h;
+		auto
+			t{ luaL_checkstring(L,1) }, // as tag
+			s{ luaL_checkstring(L,2) }; // state
+		if (!HasAS(t)) Crash(string("There is no AS tagged \"") + t + "\"!", s);
+		GetAS(t)->GetAutoScale(&w, &h);
+		lua_pushnumber(L, w);
+		lua_pushnumber(L, h);
+		return 2;		
+	}
+	
+	static int AGAS_CoordRecalc(lua_State* L) {
+		auto
+			t{ luaL_checkstring(L,1) }, // as tag
+			s{ luaL_checkstring(L,2) }; // state
+		auto
+			x{ luaL_checkinteger(L,3) },
+			y{ luaL_checkinteger(L,4) },
+			w{ luaL_checkinteger(L,5) },
+			h{ luaL_checkinteger(L,6) };
+		if (!HasAS(t)) Crash(string("There is no AS tagged \"") + t + "\"!", s);
+		auto
+			AS{ GetAS(t) };
+		lua_pushinteger(L, AS->RCX(x));
+		lua_pushinteger(L, AS->RCX(y));
+		lua_pushinteger(L, AS->RCX(w));
+		lua_pushinteger(L, AS->RCX(h));
+		return 4;
+	}
 #pragma endregion
 
 
@@ -569,6 +613,9 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGAS_Recalc", AGAS_Recalc);
 		Apollo_State::RequireFunction("AGAS_Draw", AGAS_Draw);
 		Apollo_State::RequireFunction("AGAS_Has", AGAS_Has);
+		Apollo_State::RequireFunction("AGAS_Scale", AGAS_Scale);
+		Apollo_State::RequireFunction("AGAS_GetAutoScale", AGAS_GetAutoScale);
+		Apollo_State::RequireFunction("AGAS_CoordRecalc", AGAS_CoordRecalc);
 		// Link Script
 		Apollo_State::RequireNeil("API/Graphics.neil");
 		// Image Font

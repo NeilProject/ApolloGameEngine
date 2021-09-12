@@ -256,13 +256,18 @@ Class Image
 	end
 	
 	Void ASDraw(string ATag,int X,int Y,int frame=0)
-		AGAS.DRAW(x,y,frame,ATag,ApolloState.Name)
+		AGAS.DRAW(x,y,frame,Tag,ATag,ApolloState.Name)
 	End
 	
 	Void AltDraw(string ATag,int X,int Y,int frame=0)
-		AGAS.DRAW(x,y,frame,ATag,ApolloState.Name)
+		AGAS.DRAW(x,y,frame,Tag,ATag,ApolloState.Name)
+	End
+	
+	Static Void AltScale(String ATag, number W, number h)
+		AGAS.SCALE(W,H,ATag,ApolloState.Name)
 	End
 
+	
 End
 
 group Screen
@@ -289,6 +294,14 @@ group Screen
 	
 	Var AltCoords(string Tag,int x, int y)
 		return AGAS.RECALC(x,y,Tag,ApolloState.Name)
+	End
+	
+	Var AltRectData(string Tag,int x,int y, int w, int h)
+		return AGAS.COORDRECALC(Tag,ApolloState.Name,x,y,w,h)
+	End
+	
+	Var AltAutoScale(String Tag)
+		return AGAS.GETAUTOSCALE(Tag,ApolloState.Name)
 	End
 	
 	ReadOnly Delegate HasAlt = AGAS.HAS
