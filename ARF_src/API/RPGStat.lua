@@ -1,7 +1,7 @@
 -- <License Block>
 -- ARF_src/API/RPGStat.lua
 -- RPG Stat Link up
--- version: 21.07.07
+-- version: 21.09.19
 -- Copyright (C) 2020, 2021 Jeroen P. Broks
 -- This software is provided 'as-is', without any express or implied
 -- warranty.  In no event will the authors be held liable for any damages
@@ -79,6 +79,18 @@ RPGChar = setmetatable({},{
 						PreciseWanted[sf("%s.STAT",char)] = PreciseWanted[sf("%s.STAT",char)] or setmetatable({},{
 							__index = function(s,stat) 
 								-- Neil.Globals.cout("Asking for stat ",stat," of char ",char,"\n") -- debug
+								return RPGGetStatValue(char,stat) 
+							end,
+							__newindex = function(s,stat,value) RPGSetStatValue(char,stat,math.floor(value)) end
+						})
+						return PreciseWanted[sf("%s.STAT",char)] 
+					elseif what=="SAFESTAT" then
+							PreciseWanted[sf("%s.STAT",char)] = PreciseWanted[sf("%s.STAT",char)] or setmetatable({},{
+							__index = function(s,stat) 
+								-- Neil.Globals.cout("Asking for stat ",stat," of char ",char,"\n") -- debug
+								if not s.HasStat[stat] then
+									return 0
+								end
 								return RPGGetStatValue(char,stat) 
 							end,
 							__newindex = function(s,stat,value) RPGSetStatValue(char,stat,math.floor(value)) end
