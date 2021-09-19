@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.07.26
+// Version: 21.09.19
 // EndLic
 // We get into the deep of this later!
 
@@ -547,11 +547,11 @@ namespace Tricky_Apollo {
 		auto
 			AS{ GetAS(t) };
 		lua_pushinteger(L, AS->RCX(x));
-		lua_pushinteger(L, AS->RCX(y));
-		lua_pushinteger(L, AS->RCX(w));
-		lua_pushinteger(L, AS->RCX(h));
+		lua_pushinteger(L, AS->RCY(y));
+		lua_pushinteger(L, AS->RCW(w));
+		lua_pushinteger(L, AS->RCH(h));
 		return 4;
-	}
+	} 
 #pragma endregion
 
 
