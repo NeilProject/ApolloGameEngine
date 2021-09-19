@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.03.09
+// Version: 21.09.19
 // EndLic
 
 // Interstate define debug
@@ -347,6 +347,7 @@ namespace Tricky_Apollo {
 		}
 		luaL_loadstring(MyState, work.c_str());
 		lua_call(MyState,0, 0,retvalues);
+		//lua_pop(MyState, 1); // Does this fix the mysterious stack overflows??
 	}
 
 	void Apollo_State::RawCall(std::string state, std::string function, std::string parameters,int retvalues) {
@@ -471,22 +472,36 @@ namespace Tricky_Apollo {
 	
 	std::string Apollo_State::FetchString(std::string call, bool stauto) {
 		Fetch();
-		return lua_tostring(MyState, -1);
+		//return lua_tostring(MyState, -1);
+		auto r{ string(lua_tostring(MyState, -1)) };
+		lua_pop(MyState, 1);
+		return r;
+
 	}
 
 	int Apollo_State::FetchInt(std::string call, bool stauto) {
 		Fetch();
-		return lua_tointeger(MyState, -1);
+		//return lua_tointeger(MyState, -1);
+		auto r{ lua_tointeger(MyState, -1) };
+		lua_pop(MyState, 1);
+		return r;
+
 	}
 
 	double Apollo_State::FetchNumber(string call, bool stauto) {
 		Fetch();
-		return (double)lua_tonumber(MyState, -1);
+		//return (double)lua_tonumber(MyState, -1);
+		auto r{ (double)lua_tonumber(MyState, -1) };
+		lua_pop(MyState, 1);
+		return r;
 	}
 
 	bool Apollo_State::FetchBoolean(std::string call, bool stauto) {
 		Fetch();
-		return lua_toboolean(MyState, -1);
+		//return lua_toboolean(MyState, -1);
+		bool r{ (bool)lua_toboolean(MyState, -1) };
+		lua_pop(MyState, 1);
+		return r;
 	}
 
 	void Apollo_State::DefString(std::string call, std::string value, bool stauto) { ISDefine(string("\"") + value + "\""); }
