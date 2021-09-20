@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.09.19
+// Version: 21.09.20
 // EndLic
 
 #include <iostream>
@@ -350,6 +350,11 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int INTERSTATE_CheckStack(lua_State* L) {
+		lua_pushstring(L, Apollo_State::StackDumpAll().c_str());
+		return 1;
+	}
+
 
 
 	void InitCore() {
@@ -386,6 +391,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("INTERSTATE_SetNumber", INTERSTATE_SetNumber);
 		Apollo_State::RequireFunction("INTERSTATE_SetString", INTERSTATE_SetString);
 		Apollo_State::RequireFunction("INTERSTATE_SetBool", INTERSTATE_SetBool);
+		Apollo_State::RequireFunction("INTERSTATE_CheckStack", INTERSTATE_CheckStack);
 
 		Apollo_State::RequireNeil("API/Core.Neil");
 	}

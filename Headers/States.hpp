@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.09.19
+// Version: 21.09.20
 // EndLic
 #pragma once
 
@@ -54,6 +54,9 @@ namespace Tricky_Apollo {
 		/// </summary>
 		void Init();
 		static void Init(std::string state);
+
+		std::string StackDump();
+		static std::string StackDumpAll();
 
 		void LoadString(std::string script, bool merge = false);
 		static void LoadString(std::string state, std::string script, bool merge = false);

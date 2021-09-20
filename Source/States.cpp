@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.09.19
+// Version: 21.09.20
 // EndLic
 
 // Interstate define debug
@@ -49,6 +49,48 @@
 
 namespace Tricky_Apollo {
 	using namespace TrickyUnits;
+	using namespace std;
+	
+	static string stackDump(lua_State* L) {
+		string ret{ "" };
+		int i;
+		int top = lua_gettop(L);
+		for (i = 1; i <= top; i++) {  /* repeat for each level */
+			int t = lua_type(L, i);
+			char a[15];
+			sprintf_s(a, "%09d> ", i);
+			ret += a;
+			switch (t) {
+
+			case LUA_TSTRING:  /* strings */
+				//printf("`%s'", lua_tostring(L, i));
+				ret += "\"" + string(lua_tostring(L, 1)) + "\"";
+				break;
+
+			case LUA_TBOOLEAN:  /* booleans */
+				//printf(lua_toboolean(L, i) ? "true" : "false");
+				ret += lua_toboolean(L, i) ? "true" : "false";
+				break;
+
+			case LUA_TNUMBER:  /* numbers */
+				//printf("%g", lua_tonumber(L, i));
+				ret += to_string(lua_tonumber(L, i));
+				break;
+
+			default:  /* other values */
+				//printf("%s", lua_typename(L, t));
+				ret += lua_typename(L, t);
+				break;
+
+			}
+			//printf("  ");  /* put a separator */
+			ret += "\n";
+		}
+		//printf("\n");  /* end the listing */
+		return ret;
+	}
+
+	
 
 	static std::map<std::string, Apollo_State> StateMap;
 
@@ -205,6 +247,19 @@ namespace Tricky_Apollo {
 		std::cout << "Creating new state: " << State << "\n";
 		StateMap[UState].StateName = State;
 		StateMap[UState].Init();
+	}
+
+	std::string Apollo_State::StackDump() {
+		return string("Stack Dump: ") + StateName + "\n" + stackDump(MyState);
+	}
+
+	std::string Apollo_State::StackDumpAll() {
+		string ret{ "" };
+		for (auto it : StateMap) {
+			if (ret.size()) ret += "\n";
+			ret += it.second.StackDump();
+		}
+		return ret;
 	}
 
 	void Apollo_State::LoadString(std::string source, bool merge) {
@@ -469,7 +524,6 @@ namespace Tricky_Apollo {
 	lua_call(MyState, 0, 1, retvalues);
 	//std::cout << "\n\n<Interstate_define_debug>\n"<<work<<"\n</Interstate_define_debug>\n\n";\
 
-	
 	std::string Apollo_State::FetchString(std::string call, bool stauto) {
 		Fetch();
 		//return lua_tostring(MyState, -1);
@@ -478,6 +532,7 @@ namespace Tricky_Apollo {
 		return r;
 
 	}
+
 
 	int Apollo_State::FetchInt(std::string call, bool stauto) {
 		Fetch();
