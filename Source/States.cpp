@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.09.20
+// Version: 21.10.20
 // EndLic
 
 // Interstate define debug
@@ -79,7 +79,7 @@ namespace Tricky_Apollo {
 
 			default:  /* other values */
 				//printf("%s", lua_typename(L, t));
-				ret += lua_typename(L, t);
+				ret += "<" + string(lua_typename(L, t)) + ">";
 				break;
 
 			}
