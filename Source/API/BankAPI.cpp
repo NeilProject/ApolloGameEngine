@@ -1,10 +1,10 @@
 // Lic:
-// Apollo
+// Apollo Game Engine
 // Bank
 // 
 // 
 // 
-// (c) Jeroen P. Broks, 2020
+// (c) Jeroen P. Broks, 2021
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 20.09.27
+// Version: 21.10.20
 // EndLic
 
 // C++
@@ -209,7 +209,7 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
-	void ApolloAPIInit_Bank() {
+	void ApolloAPIInit_APIBank() {
 		Apollo_State::RequireFunction("ABNK_Create", Apollo_BankCreate);
 		Apollo_State::RequireFunction("ABNK_Kill", Apollo_BankKill);
 		Apollo_State::RequireFunction("ABNK_PokeByte", Apollo_BankPokeByte);
