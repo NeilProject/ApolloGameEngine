@@ -120,9 +120,6 @@
     <ClCompile Include="Source\API\JCR6.cpp">
       <Filter>Source Files\Apollo\API</Filter>
     </ClCompile>
-    <ClCompile Include="Source\API\APIBank.cpp">
-      <Filter>Source Files\Apollo\API</Filter>
-    </ClCompile>
     <ClCompile Include="..\TrickyUnits\Source\Dirry.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
@@ -175,6 +172,15 @@
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
     <ClCompile Include="..\TrickyUnits\Source\TrickyMath.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\API\BankAPI.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\API\DateTime.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\TrickyTime.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
   </ItemGroup>

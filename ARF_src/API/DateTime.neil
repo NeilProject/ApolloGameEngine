@@ -1,0 +1,143 @@
+// License Information:
+// ARF_src/API/DateTime.neil
+// Date Time Glue Script
+// version: 21.10.20
+// Copyright (C) 2021 Jeroen P. Broks
+// This software is provided 'as-is', without any express or implied
+// warranty.  In no event will the authors be held liable for any damages
+// arising from the use of this software.
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it
+// freely, subject to the following restrictions:
+// 1. The origin of this software must not be misrepresented; you must not
+// claim that you wrote the original software. If you use this software
+// in a product, an acknowledgment in the product documentation would be
+// appreciated but is not required.
+// 2. Altered source versions must be plainly marked as such, and must not be
+// misrepresented as being the original software.
+// 3. This notice may not be removed or altered from any source distribution.
+// End License Information
+Table ATIM = LGGTTT("ATIM")
+
+
+// Apollo Date-Time
+Group ADT
+	
+	Get Int Day
+		plua d
+		plua m
+		plua y
+		d,m,y = ATIM.DATE()
+		return d
+	End
+	
+	Get Int Month
+		plua d
+		plua m
+		plua y
+		d,m,y = ATIM.DATE()
+		return m
+	end
+	
+	Get Int Year
+		plua d
+		plua m
+		plua y
+		d,m,y = ATIM.DATE()
+		return y
+	end
+	
+	Get Int WeekDayNum
+		return ATIM.WEEKDAY()
+	End
+	
+	Get String WeekDay
+		switch WeekDayNum
+			case 0
+				return "Sunday"
+			case 1
+				return "Monday"
+			case 2
+				return "Tuesday"
+			case 3
+				return "Wednesday"
+			case 4
+				return "Thursday"
+			case 5
+				return "Friday"
+			case 6
+				return "Saturday"
+			default
+				lua.error("Unknown weekday: "..WeekDay)
+		end
+	End
+	
+	Get String DagVanDeWeek
+		switch WeekDayNum
+			case 0
+				return "Zondag"
+			case 1
+				return "Maandag"
+			case 2
+				return "Dinsdag"
+			case 3
+				return "Woensdag"
+			case 4
+				return "Donderdag"
+			case 5
+				return "Vrijdag"
+			case 6
+				return "Zaterdag"
+			default
+				lua.error("Unknown weekday: "..WeekDay)
+		end
+	End
+	
+	Get Int Hour
+		plua h
+		plua m
+		plua s
+		h,m,s = ATIM.TIME()
+		return h
+	End
+	Get Int Minute
+		plua h
+		plua m
+		plua s
+		h,m,s = ATIM.TIME()
+		return m
+	End
+	Get int Second
+		plua h
+		plua m
+		plua s
+		h,m,s = ATIM.TIME()
+		return s
+	End
+
+	Get String Time
+		plua h
+		plua m
+		plua s
+		h,m,s = ATIM.TIME()
+		return sPrintF("%02d:%02d:%02d",h,m,s)
+	End
+
+	Get String Time12
+		plua h
+		plua m
+		plua s
+		plua p = "am"
+		h,m,s = ATIM.TIME()
+		If h>=12
+			p = "pm"
+		End	
+		h = h % 12
+		if h==0
+			h=12
+		end
+		return sPrintF("%2d:%02d:%02d%s",h,m,s,p)
+	End
+
+
+End
