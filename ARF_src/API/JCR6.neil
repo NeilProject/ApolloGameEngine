@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/JCR6.neil
 // Apollo - JCR6 - Link
-// version: 21.03.05
+// version: 21.10.20
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -95,6 +95,8 @@ group JCR6
 		return AJCR.ENTRYEXISTS(resource,State,entry)
 	end
 	
+	ReadOnly Delegate HasEntry
+	
 	string ExtractDir(string file)
 		return AJCR.EXTRACTDIR(file)
 	end
@@ -110,5 +112,6 @@ group JCR6
 		end
 		Lua.setmetatable(Entry,{ ["__index"] = gindex, ["__newindex"] = nindex })
 		PointEntries()
+		HasEntry = EntryExists
 	end
 end
