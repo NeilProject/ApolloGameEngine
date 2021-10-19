@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Core.Neil
 // Apollo Core API linkup
-// version: 21.09.20
+// version: 21.10.20
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -57,7 +57,21 @@ Group Core
 	get string FullPlatform
 		return Lua.Platform(0)
 	end
+	
+	Get String WinTitle
+		Return Lua.WinTitle
+	End
 end
+
+Group Sys
+	ReadOnly Delegate Yes = Lua.Yes
+	ReadOnly Delegate Annoy = Lua.Annoy
+	ReadOnly Delegate Notify = Lua.Annoy
+	Get String WinTitle
+		Return Lua.WinTitle
+	End
+End
+	
 
 Group Flow
 	ReadOnly Delegate GoToFlow = Lua.GoToFlow

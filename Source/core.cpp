@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.09.20
+// Version: 21.10.20
 // EndLic
 
 #include <iostream>
@@ -355,6 +355,26 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int APICORE_Yes(lua_State* L) {
+		auto question{ luaL_checkstring(L, 1) };
+		lua_pushboolean(L, TQSE_Yes(question));
+		return 1;
+	}
+
+	static int APICORE_Annoy(lua_State* L) {
+		auto message{ luaL_checkstring(L, 1) };
+		auto caption{ luaL_optstring(L,2,Identify::WindowTitle().c_str()) };
+		auto pushed{ TQSE_AppTitle };
+		TQSE_AppTitle = caption;
+		TQSE_Notify(message);
+		TQSE_AppTitle = pushed;
+		return 0;		
+	}
+
+	static int APICORE_WinTitle(lua_State* L) {
+		lua_pushstring(L, Identify::WindowTitle().c_str());
+		return 1;
+	}
 
 
 	void InitCore() {
@@ -372,6 +392,9 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("MD5", APICORE_MD5);
 		Apollo_State::RequireFunction("OpenURL", APICORE_OpenURL);
 		Apollo_State::RequireFunction("aTan2", APICORE_aTan2);
+		Apollo_State::RequireFunction("Yes", APICORE_Yes);
+		Apollo_State::RequireFunction("Annoy", APICORE_Annoy);
+		Apollo_State::RequireFunction("WinTitle", APICORE_WinTitle);
 
 		Apollo_State::RequireFunction("CallState", APICORE_Call);
 		Apollo_State::RequireFunction("LoadState", APICORE_LoadState);
