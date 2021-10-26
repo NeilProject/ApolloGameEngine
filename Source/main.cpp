@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.07.26
+// Version: 21.10.26
 // EndLic
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -41,6 +41,7 @@
 #include <QuickString.hpp>
 #include <Dirry.hpp>
 #include <TQSE.hpp>
+
 
 // Lua
 
