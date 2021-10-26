@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.07.18
+// Version: 21.10.26
 // EndLic
 
 #undef blabbermouth
@@ -133,12 +133,14 @@ namespace Tricky_Apollo {
 			pnt->Have(value);
 		else if (field == "MAXIMUM" || field == "MAXI" || field == "MAX")
 			pnt->Maxi(value);
-		else if (field == "MINUMUM" || field == "MINI" || field == "MIN")
+		else if (field == "MINIMUM" || field == "MINI" || field == "MIN")
 			pnt->Mini(value);
 		else if (field == "MAXCOPY")
 			pnt->MaxCopy(luaL_checkstring(L, 4));
 		else if (field == "CHAT")
 			Chat = value > 0;
+		else
+			Crash("Unknown field: " + field + " for points " + stat + " (" + ch + ") (set)");
 		return 0;
 	}
 
@@ -149,13 +151,15 @@ namespace Tricky_Apollo {
 		CheckChar(ch);
 		auto pnt = Character::Map[ch].GetPoints(stat);
 		if (field == "HAVE")
-			lua_pushinteger(L,pnt->Have());
+			lua_pushinteger(L, pnt->Have());
 		else if (field == "MAXIMUM" || field == "MAXI" || field == "MAX")
-			lua_pushinteger(L,pnt->Maxi());
-		else if (field == "MINUMUM" || field == "MINI" || field == "MIN")
-			lua_pushinteger(L,pnt->Mini());
+			lua_pushinteger(L, pnt->Maxi());
+		else if (field == "MINIMUM" || field == "MINI" || field == "MIN")
+			lua_pushinteger(L, pnt->Mini());
 		else if (field == "MAXCOPY")
-			lua_pushstring(L,pnt->MaxCopy().c_str());
+			lua_pushstring(L, pnt->MaxCopy().c_str());
+		else
+			Crash("Unknown field: " + field + " for points " + stat + " (" + ch + ") (get)");
 		return 1;
 	}
 
