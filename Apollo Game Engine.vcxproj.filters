@@ -183,6 +183,15 @@
     <ClCompile Include="..\TrickyUnits\Source\TrickyTime.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="..\TQSG\TQSG_BlopPlasma.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\API\BlopPlasma.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\TRandom.cpp">
+      <Filter>Source Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
@@ -261,6 +270,12 @@
       <Filter>Header Files\Kthura</Filter>
     </ClInclude>
     <ClInclude Include="..\TrickyUnits\Headers\TrickyMath.hpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TQSG\TQSG_BlopPlasma.hpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TQSG\TQSG_BlopPlasmaBlop.hpp">
       <Filter>Header Files\Tricky%27s Units</Filter>
     </ClInclude>
   </ItemGroup>
