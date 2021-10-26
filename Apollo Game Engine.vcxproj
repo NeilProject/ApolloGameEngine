@@ -162,6 +162,7 @@ powershell updatebuilddata
     <ClCompile Include="..\TQSG\TQSA.cpp" />
     <ClCompile Include="..\TQSG\TQSE.cpp" />
     <ClCompile Include="..\TQSG\TQSG.cpp" />
+    <ClCompile Include="..\TQSG\TQSG_BlopPlasma.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\ArgParse.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\Bank.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\CheckEndian.cpp" />
@@ -177,11 +178,13 @@ powershell updatebuilddata
     <ClCompile Include="..\TrickyUnits\Source\QuickString.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\RPGSave.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\RPGStat.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\TRandom.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\TrickyMath.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\TrickySTOI.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\TrickyTime.cpp" />
     <ClCompile Include="Source\API\Audio.cpp" />
     <ClCompile Include="Source\API\BankAPI.cpp" />
+    <ClCompile Include="Source\API\BlopPlasma.cpp" />
     <ClCompile Include="Source\API\DateTime.cpp" />
     <ClCompile Include="Source\API\Dialog.cpp" />
     <ClCompile Include="Source\API\Events.cpp" />
@@ -208,6 +211,8 @@ powershell updatebuilddata
     <ClInclude Include="..\Kthura\src\Kthura_TQSG_SA_Driver.hpp" />
     <ClInclude Include="..\TQSG\TQSE.hpp" />
     <ClInclude Include="..\TQSG\TQSG.hpp" />
+    <ClInclude Include="..\TQSG\TQSG_BlopPlasma.hpp" />
+    <ClInclude Include="..\TQSG\TQSG_BlopPlasmaBlop.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\Bank.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\dim2.hpp" />
     <ClInclude Include="..\TrickyUnits\Headers\Dirry.hpp" />
