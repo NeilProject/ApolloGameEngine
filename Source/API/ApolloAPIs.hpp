@@ -17,6 +17,7 @@ namespace Tricky_Apollo {
 	void ApolloAPIInit_Dialog();
 	void ApolloAPIInit_InitGameVars();
 	void ApolloAPIInit_InitTime();
+	void ApolloAPIInit_Blop();
 	 
 
 
@@ -33,6 +34,7 @@ namespace Tricky_Apollo {
 		ApolloAPIInit_Dialog();
 		ApolloAPIInit_InitGameVars();
 		ApolloAPIInit_InitTime();
+		ApolloAPIInit_Blop();
 	}
 
 }
