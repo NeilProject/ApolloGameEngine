@@ -83,7 +83,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\packages\zlib-msvc14-x64.1.2.11.7795\build\native\lib_release;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_mixer-2.0.4\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\Lua Library\x64\Release;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_ttf-2.0.15\lib\x64;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Source;$(LibraryPath)</LibraryPath>
-    <IncludePath>E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\packages\zlib-msvc14-x64.1.2.11.7795\build\native\include;E:\Projects\Applications\VisualStudio\VC\Kthura\src;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_mixer-2.0.4\include;E:\Projects\Applications\VisualStudio\VC\TQSG;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\include;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\include;E:\Projects\Applications\VisualStudio\VC\JCR6\headers;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Headers;E:\Projects\Applications\VisualStudio\VC\TrickyUnits\Headers;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Projects\Applications\VisualStudio\VC\Medals;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\packages\zlib-msvc14-x64.1.2.11.7795\build\native\include;E:\Projects\Applications\VisualStudio\VC\Kthura\src;E:\Projects\Applications\VisualStudio\VC\3rdparty\Lua\lua-5.4.0\raw\src;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_mixer-2.0.4\include;E:\Projects\Applications\VisualStudio\VC\TQSG;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2_image-2.0.5\include;E:\Projects\Applications\VisualStudio\VC\3rdparty\SDL2-2.0.12\include;E:\Projects\Applications\VisualStudio\VC\JCR6\headers;E:\Projects\Applications\VisualStudio\VC\Apollo Game Engine\Headers;E:\Projects\Applications\VisualStudio\VC\TrickyUnits\Headers;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,6 +159,7 @@ powershell updatebuilddata
     <ClCompile Include="..\Kthura\src\Kthura_Draw.cpp" />
     <ClCompile Include="..\Kthura\src\Kthura_SDL_Driver.cpp" />
     <ClCompile Include="..\Kthura\src\Kthura_TQSG_SA_Driver.cpp" />
+    <ClCompile Include="..\Medals\Medals.cpp" />
     <ClCompile Include="..\TQSG\TQSA.cpp" />
     <ClCompile Include="..\TQSG\TQSE.cpp" />
     <ClCompile Include="..\TQSG\TQSG.cpp" />
@@ -169,6 +170,7 @@ powershell updatebuilddata
     <ClCompile Include="..\TrickyUnits\Source\Dijkstra.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\dim2.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\Dirry.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\GetHTTP.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\JXSDA.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\MD5.cpp" />
@@ -192,6 +194,7 @@ powershell updatebuilddata
     <ClCompile Include="Source\API\Graphics.cpp" />
     <ClCompile Include="Source\API\JCR6.cpp" />
     <ClCompile Include="Source\API\Kthura.cpp" />
+    <ClCompile Include="Source\API\Medals_API.cpp" />
     <ClCompile Include="Source\API\RPGCharAPI.cpp" />
     <ClCompile Include="Source\core.cpp" />
     <ClCompile Include="Source\Crash.cpp" />

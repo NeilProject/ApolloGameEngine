@@ -110,6 +110,8 @@ RPGChar = setmetatable({},{
 						return PreciseWanted[sf("%s.STATSCRIPT",char)]
 					elseif what=="STATLIST" then
 						return RPGGetAllStats(char)
+					elseif what=="STATTABLE" then
+						return Neil.Globals.Split(RPGGetStatList(char),";")
 					elseif what=="POINTS" then
 						PreciseWanted[sf("%s.POINTS",char)] = PreciseWanted[sf("%s.POINTS",char)] or setmetatable({},{
 							__newindex = function() error("Read only field assigned") end,

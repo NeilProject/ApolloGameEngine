@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 21.08.05
+// Version: 21.10.31
 // EndLic
 // C++
 #include <iostream>
@@ -550,6 +550,38 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Kthura_ColorByLabel(lua_State* L) {
+		qVerify();
+		string Layer = luaL_checkstring(L, 4);
+		string Label = luaL_checkstring(L, 5);
+		auto
+			R{ luaL_checkinteger(L,6) },
+			G{ luaL_checkinteger(L,7) },
+			B{ luaL_checkinteger(L,8) };
+		auto lm{ *(Maps[Tag].Layer(Layer)->LabelMap(Label)) };
+		for (auto o : lm ){
+			o->R(R);
+			o->G(G);
+			o->B(B);
+		}
+		return 0;
+	}
+
+	static int Kthura_TexByLabel(lua_State* L) {
+		qVerify();
+		auto
+			Layer = luaL_checkstring(L, 4),
+			Label = luaL_checkstring(L, 5),
+			Tex = luaL_checkstring(L, 6),
+			Kind = luaL_optstring(L, 7, "ALL");
+		auto lm{ *(Maps[Tag].Layer(Layer)->LabelMap(Label)) };
+		auto UK = Upper(Kind);
+		for (auto o : lm) {
+			if (UK == "ALL" || UK == Upper(o->Kind())) o->Texture(Tex);
+		}
+		return 0;
+	}
+
 	static int Kthura_HideByLabel(lua_State* L) {
 		qVerify();
 		string Layer = luaL_checkstring(L, 4);
@@ -706,6 +738,17 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int Kthura_CreateObject(lua_State* L) {
+		qVerify();
+		auto
+			Layer{ luaL_checkstring(L,4) },
+			Kind{ luaL_checkstring(L,5) },
+			OTag{ luaL_optstring(L,6,"") };
+		auto o{ Maps[Tag].Layer(Upper(Layer))->RNewObject(Kind) };
+		o->Tag(OTag);
+		return 0;
+	}
+
 
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
@@ -754,6 +797,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_ShowButLabel", Kthura_ShowButLabel);
 		Apollo_State::RequireFunction("AKTHURA_HideButLabel", Kthura_HideButLabel);
 		Apollo_State::RequireFunction("AKTHURA_LabelMapDump", Kthura_LabelMapDump);
+		Apollo_State::RequireFunction("AKTHURA_ColorByLabel", Kthura_ColorByLabel);
+		Apollo_State::RequireFunction("AKTHURA_TexByLabel", Kthura_TexByLabel);
 		Apollo_State::RequireFunction("AKTHURA_PixInObj", Kthura_PixInObj);
 		Apollo_State::RequireFunction("AKTHURA_NewObj", Kthura_NewObj);
 		Apollo_State::RequireFunction("AKTHURA_GetData", Kthura_GetData);
@@ -765,6 +810,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_RemapDominance", Kthura_RemapDominance);
 		Apollo_State::RequireFunction("AKTHURA_CreateObj", Kthura_CreateObj);
 		Apollo_State::RequireFunction("AKTHURA_ScreenSize", Kthura_KthuraScreensize);
+		Apollo_State::RequireFunction("AKTHURA_CREATEOBJECT", Kthura_CreateObject);
 		Apollo_State::RequireFunction("AKTHURA_MX", Kthura_MX);
 		Apollo_State::RequireFunction("AKTHURA_MY", Kthura_MY);
 		Apollo_State::RequireNeil("API/Kthura.neil");

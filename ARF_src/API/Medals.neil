@@ -1,0 +1,21 @@
+Table AMDL = LGGTTT("AMDL")
+
+
+QuickMeta Medals
+
+	index
+		Key = Key:upper()
+		Switch Key
+			case "AWARD" "SETGAME"
+				return AMDL[Key]
+			Default
+				return AMDL[Key]()
+		End
+	End
+	
+	newindex
+		Key = Key:upper()
+		AMDL["SET"..Key](Value)
+	End
+	
+End

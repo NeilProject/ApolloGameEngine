@@ -192,6 +192,15 @@
     <ClCompile Include="..\TrickyUnits\Source\TRandom.cpp">
       <Filter>Source Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="..\Medals\Medals.cpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\API\Medals_API.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\GetHTTP.cpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">

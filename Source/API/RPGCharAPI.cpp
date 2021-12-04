@@ -236,6 +236,17 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int RPGGetStatList(lua_State* L) {
+		std::string ch = luaL_checkstring(L, 1); CheckChar(ch);
+		string r{ "" };
+		for (auto s : Character::Map[ch].Stats()) {
+			if (r.size()) r += ";";
+			r += s;
+		}
+		lua_pushstring(L, r.c_str());
+		return 1;
+	}
+
 	static int RPGGetChName(lua_State* L) {
 		std::string ch = luaL_checkstring(L, 1); CheckChar(ch);
 		lua_pushstring(L, Character::Map[ch].Name.c_str());
@@ -314,6 +325,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("RPGSetPartyMax", RPGSetPartyMax);
 		Apollo_State::RequireFunction("RPGGetPartyMax", RPGGetPartyMax);
 		Apollo_State::RequireFunction("RPGGetAllStats", RPGGetAllStats);
+		Apollo_State::RequireFunction("RPGGetStatList", RPGGetStatList);
 		Apollo_State::RequireFunction("RPGGetChName", RPGGetChName);
 		Apollo_State::RequireFunction("RPGSetChName", RPGSetChName);
 		Apollo_State::RequireFunction("RPGKillChar", RPGKillChar);

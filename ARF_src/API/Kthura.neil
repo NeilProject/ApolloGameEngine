@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Kthura.neil
 // Apollo - Kthura Linker
-// version: 21.08.05
+// version: 21.10.31
 // Copyright (C) 2020, 2021 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -477,8 +477,8 @@ class KTHURA_Layer
 			AKTH.SPAWNSPOT(MapTag,ApolloState.Name,MapID,LayerTag,a,b,Actor)
 		elseif t(a)=="string"
 			AKTH.SPAWNOBJTAG(MapTag,ApolloState.Name,MapID,LayerTag,"string",a,Actor)
-		else
-			Lua.error("Invalid spawn request!")
+		else			
+			Lua.error("Invalid spawn request! ("..Lua.type(Actor)..":"..Actor.."; "..Lua.type(a)..":"..Lua.tostring(a).."; "..Lua.type(b)..":"..Lua.tostring(b)..")")
 		end
 
 	end
@@ -512,6 +512,15 @@ class KTHURA_Layer
 		AKTH.HIDEBUTLABEL(MapTag,ApolloState.Name,MapID,LayerTag,label)
 	end
 	
+	Void ColorByLabel(String Label,Int R=255, int G=255, int B=255)
+		AKTH.COLORBYLABEL(MapTag,ApolloState.Name,MapID,LayerTag,label,R,G,B)
+	End
+	
+	Void TexByLabel(String Label,String Tex,String Kind="ALL")
+		AKTH.TEXBYLABEL(MapTag,ApolloState.Name,MapID,LayerTag,label,Tex,Kind)
+	End
+
+	
 	get string LabelMapDump
 		return AKTH.LABELMAPDUMP(MapTag,ApolloState.Name,MapID,LayerTag)
 	end
@@ -539,6 +548,8 @@ class KTHURA_Layer
 		b2i[true] = 1
 		return AKTH.BLOCKED(MapTag,ApolloState.Name,MapID,LayerTag,X,Y,b2i[a!=false])
 	end
+	
+		
 
 end
 
@@ -590,7 +601,6 @@ class KTHURA_Map
 		return Split(AKTH.MAPMETAFIELDS(Tag,ApolloState.Name,ID),";")
 	end
 	
-
 	
 End
 
