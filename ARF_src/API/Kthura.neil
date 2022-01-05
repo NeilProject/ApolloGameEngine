@@ -426,6 +426,10 @@ class KTHURA_Layer
 		Return Split(AKTH.ALTENUMOBJECTS(MapTag,ApolloState.Name,MapID,LayerTag),";")
 	End
 	
+	Get String ObjEnumString
+		Return AKTH.ALTENUMOBJECTS(MapTag,ApolloState.Name,MapID,LayerTag)
+	End
+	
 	Get Delegate EachObject
 		int i = 0
 		table OE = ObjEnum
