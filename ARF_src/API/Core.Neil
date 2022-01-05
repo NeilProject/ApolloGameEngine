@@ -194,6 +194,10 @@ End
 global delegate Shell = Lua.Shell
 global delegate Sleep = Lua.Sleep
 
+global Bool ValueIsSomething(v)
+	return v!=nil && v!=false && v!="" && v!=0
+End
+
 //Init
 //	Print("DEBUG! Salut monde!") // Test output!
 //End
