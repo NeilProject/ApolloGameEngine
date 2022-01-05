@@ -83,7 +83,7 @@ namespace Tricky_Apollo {
 	static int AEA_MouseHitRight(lua_State* L) { lua_pushboolean(L, TQSE_MouseHit(SDL_BUTTON_RIGHT)); return 1; }
 	static int AEA_MouseDownRight(lua_State* L) { lua_pushboolean(L, TQSE_MouseDown(SDL_BUTTON_RIGHT)); return 1; }
 	static int AEA_KeyByName(lua_State* L) { lua_pushnumber(L, SDL_GetKeyFromName(luaL_checkstring(L, 1))); return 1; }
-	static int AEA_KeyName(lua_State* L) { lua_pushstring(L, SDL_GetKeyName(1)); return 1; }
+	static int AEA_KeyName(lua_State* L) { lua_pushstring(L, SDL_GetKeyName(luaL_checkinteger(L,1))); return 1; }
 
 
 
