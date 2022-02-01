@@ -77,6 +77,9 @@
 		return 0;\
 	}
 
+#define qCheckLayer(Lay,Fun)\
+	 qAssert(Maps[Tag].Layers.count(Layer), string(Fun)+string(": No layer named ")+Lay)
+
 #define qObjActor() \
 		qObjVerify(); \
 		qAssert((obj->Kind() == "Actor"), "Object \"" + objTag + "\" is not an actor!"); \
@@ -159,6 +162,7 @@ namespace Tricky_Apollo {
 	static int Kthura_EnumObjects(lua_State* L) {
 		qVerify();
 		string Layer = Upper(luaL_checkstring(L, 4));
+		qCheckLayer(Layer, "EnumObject");
 		if (!Maps[Tag].Layers.count(Layer)) { Crash("Map " + Tag + " does not have a layer named \"" + Layer + "\"", State, Apollo_State::TraceBack(State)); return 0; }
 		for (auto& obj : Maps[Tag].Layers[Layer]->Objects) {
 			lua_pushinteger(L,obj->ID());
@@ -170,6 +174,8 @@ namespace Tricky_Apollo {
 		qVerify();
 		string Layer{ Upper(luaL_checkstring(L, 4)) };
 		string Result{ "" };
+		qCheckLayer(Layer, "AltEnumObject");
+		if (!Maps[Tag].Layers.count(Layer)) { Crash("Map " + Tag + " does not have a layer named \"" + Layer + "\"", State, Apollo_State::TraceBack(State)); return 0; }
 		for (auto& obj : Maps[Tag].Layers[Layer]->Objects) {
 			if (Result.size()) Result += ";";
 			Result += to_string(obj->ID());
@@ -222,6 +228,7 @@ namespace Tricky_Apollo {
 		auto x = luaL_checkinteger(L, 5);
 		auto y = luaL_checkinteger(L, 6);
 		string actortag = luaL_checkstring(L, 7);
+		qCheckLayer(Layer, "SpawnSpot");
 		//auto actor = KthuraActor::Spawn(Maps[Tag].Layer(Layer), x,y);
 		//actor->Tag(actortag);
 		cout << "Spawning actor '" << actortag << "' on spot (" << x << "," << y << ") on layer '" << Layer << "'\n";
@@ -234,6 +241,7 @@ namespace Tricky_Apollo {
 		qVerify();
 		string Layer = luaL_checkstring(L, 4);
 		string OTag = luaL_checkstring(L, 5);
+		qCheckLayer(Layer, "HasTag(\""+OTag+"\")");
 		lua_pushboolean(L, Maps[Tag].Layer(Layer)->HasTag(OTag));
 		return 1;
 	}
@@ -320,6 +328,7 @@ namespace Tricky_Apollo {
 			//qCase("ROTATIONRADIANS", obj->RotationRadians());
 			qCase("ANIMSPEED", obj->AnimSpeed());
 			qCase("ANIMFRAME", obj->AnimFrame());			
+			qCase("BLEND", obj->Blend());
 		} else {
 			Crash("Unknown Object Integer field: "+ObjKey, State, Apollo_State::TraceBack(State));
 		}
@@ -383,6 +392,7 @@ namespace Tricky_Apollo {
 		qStCs("SCALEX") obj->ScaleX ( value);
 		qStCs("SCALEY") obj->ScaleY ( value);
 		qStCs("DOMINANCE") obj->Dominance(value);
+		qStCs("BLEND") obj->Blend(value);
 		qStCs("ROTATION") obj->RotationDegrees(value);
 		qStCs("ROTATIONDEGREES") obj->RotationDegrees(value);
 		//qStCs("ROTATIONRADIANS") obj->RotationRadians(value);
@@ -425,6 +435,7 @@ namespace Tricky_Apollo {
 		int scy = luaL_checkinteger(L, 6);
 		int inx = luaL_checkinteger(L, 7);
 		int iny = luaL_checkinteger(L, 8);
+		qCheckLayer(Layer, "Draw");
 		if (!Maps[Tag].Layers.count(Layer)) {
 			Crash("Cannot draw non-existent layer: " + Layer, State, Apollo_State::TraceBack(State));
 			return 0;
@@ -435,7 +446,7 @@ namespace Tricky_Apollo {
 
 	static int Kthura_GetTags(lua_State* L) {
 		qVerify();
-		string Layer = Upper(luaL_checkstring(L, 4));
+		string Layer = Upper(luaL_checkstring(L, 4));		
 		if (!Maps[Tag].Layers.count(Layer)) {
 			Crash("Cannot get the object tags from a non-existent layer: " + Layer, State, Apollo_State::TraceBack(State));
 			return 0;
@@ -489,6 +500,7 @@ namespace Tricky_Apollo {
 	static int Kthura_DumpBlockMap(lua_State* L) {
 		qVerify();
 		std::string Layer = luaL_checkstring(L, 4);
+		qCheckLayer(Layer, "DumoBlockMap");
 		lua_pushstring(L,Maps[Tag].Layer(Layer)->BlockMapStringDump().c_str());
 		return 1;
 	}
@@ -497,6 +509,7 @@ namespace Tricky_Apollo {
 		qVerify();
 		std::string Layer = luaL_checkstring(L, 4);
 		std::string ret = "";
+		qCheckLayer(Layer, "DumpDominance");
 		for (auto it : Maps[Tag].Layer(Layer)->_DomMap) {
 			if (ret != "") ret += ";";
 			ret += "[" + it.first + "] " + it.second->Kind() + " " + it.second->Tag()+" ("+to_string(it.second->X())+","+to_string(it.second->Y())+") "+to_string(it.second->W())+"x"+to_string(it.second->H())+"  ";
@@ -508,7 +521,7 @@ namespace Tricky_Apollo {
 
 	static int Kthura_AnyThingMoving(lua_State* L) {
 		qVerify(); 
-		std::string Layer = luaL_checkstring(L, 4);
+		std::string Layer = luaL_checkstring(L, 4); qCheckLayer(Layer, "AnyThingMovig");
 		auto Lay = Maps[Tag].Layer(Layer);
 		bool ret{ false };
 		for (auto o : Lay->Objects) {
@@ -521,6 +534,18 @@ namespace Tricky_Apollo {
 	static int Kthura_KillObject(lua_State* L) {
 		qObjVerify();
 		Maps[Tag].Layer(Layer)->Kill(obj);
+		return 0;
+	}
+
+	static int Kthura_KillByLabel(lua_State* L) {
+		qVerify(); 
+		std::string Layer = luaL_checkstring(L, 4);
+		std::string Label = luaL_checkstring(L, 5); qCheckLayer(Layer, "KillByLabel");
+		auto old{ Maps[Tag].AutoMap }; Maps[Tag].AutoMap = false;
+		auto copy{ *Maps[Tag].Layer(Layer)->LabelMap(Label) };
+		for (auto o : copy) Maps[Tag].Layer(Layer)->Kill(o);
+		Maps[Tag].AutoMap = old;
+		if (old) Maps[Tag].Layer(Layer)->RemapLabels();
 		return 0;
 	}
 
@@ -546,6 +571,7 @@ namespace Tricky_Apollo {
 		qVerify();
 		string Layer = luaL_checkstring(L, 4);
 		string Label = luaL_checkstring(L, 5);
+		qCheckLayer(Layer, "ShowByLabel");
 		Maps[Tag].Layer(Layer)->ShowByLabel(Label);
 		return 0;
 	}
@@ -554,6 +580,7 @@ namespace Tricky_Apollo {
 		qVerify();
 		string Layer = luaL_checkstring(L, 4);
 		string Label = luaL_checkstring(L, 5);
+		qCheckLayer(Layer, "ColorByLabel");
 		auto
 			R{ luaL_checkinteger(L,6) },
 			G{ luaL_checkinteger(L,7) },
@@ -574,6 +601,7 @@ namespace Tricky_Apollo {
 			Label = luaL_checkstring(L, 5),
 			Tex = luaL_checkstring(L, 6),
 			Kind = luaL_optstring(L, 7, "ALL");
+		qCheckLayer(Layer, "TexByLabel");
 		auto lm{ *(Maps[Tag].Layer(Layer)->LabelMap(Label)) };
 		auto UK = Upper(Kind);
 		for (auto o : lm) {
@@ -586,6 +614,7 @@ namespace Tricky_Apollo {
 		qVerify();
 		string Layer = luaL_checkstring(L, 4);
 		string Label = luaL_checkstring(L, 5);		
+		qCheckLayer(Layer, "HideByLabel");
 		Maps[Tag].Layer(Layer)->HideByLabel(Label);
 		return 0;
 	}
@@ -595,6 +624,7 @@ namespace Tricky_Apollo {
 		qVerify();
 		string Layer = luaL_checkstring(L, 4);
 		string Label = luaL_checkstring(L, 5);
+		qCheckLayer(Layer, "ShowButLabel");
 		//cout << "Hiding everything except label \"" << Label << "\" on Layer: " << Layer << "\n";
 		Maps[Tag].Layer(Layer)->ShowButLabel(Label);
 		return 0;
@@ -604,6 +634,7 @@ namespace Tricky_Apollo {
 		qVerify();
 		string Layer = luaL_checkstring(L, 4);
 		string Label = luaL_checkstring(L, 5);
+		qCheckLayer(Layer, "HideButLabel");
 		Maps[Tag].Layer(Layer)->HideButLabel(Label);
 		return 0;
 	}
@@ -611,7 +642,23 @@ namespace Tricky_Apollo {
 	static int Kthura_LabelMapDump(lua_State* L) {
 		qVerify();
 		string Layer = luaL_checkstring(L, 4);
+		qCheckLayer(Layer, "LabelMapDump");
 		lua_pushstring(L, Maps[Tag].Layer(Layer)->LabelMapDump().c_str());
+		return 1;
+	}
+
+	static int Kthura_LabelEnum(lua_State* L) {
+		qVerify();
+		string Layer = Upper(luaL_checkstring(L, 4));
+		string Label = luaL_checkstring(L, 5);
+		if (!Maps[Tag].Layers.count(Layer)) Crash("Layer non-existent (" + Layer + ")", State);
+		string out{ "" };
+		auto LM{ Maps[Tag].Layer(Layer)->LabelMap(Label) };
+		for (auto o : *LM) {
+			if (out.size()) out += ";";
+			out += to_string(o->ID());
+		}
+		lua_pushstring(L, out.c_str());
 		return 1;
 	}
 
@@ -628,7 +675,7 @@ namespace Tricky_Apollo {
 		string
 			Layer = luaL_checkstring(L, 4),
 			Kind = luaL_checkstring(L, 5),
-			OTag = luaL_optstring(L, 6, "");
+			OTag = luaL_optstring(L, 6, ""); qCheckLayer(Layer, "NewObj");
 		auto
 			obj = Maps[Tag].Layer(Layer)->RNewObject(Kind);
 		if (Tag.size()) obj->Tag(OTag);
@@ -640,7 +687,7 @@ namespace Tricky_Apollo {
 	static int Kthura_Blocked(lua_State* L) {
 		qVerify();
 		string
-			Layer = luaL_checkstring(L, 4);
+			Layer = luaL_checkstring(L, 4); qCheckLayer(Layer, "Blocked");
 		int
 			X = luaL_checkinteger(L, 5),
 			Y = luaL_checkinteger(L, 6),
@@ -743,7 +790,7 @@ namespace Tricky_Apollo {
 		auto
 			Layer{ luaL_checkstring(L,4) },
 			Kind{ luaL_checkstring(L,5) },
-			OTag{ luaL_optstring(L,6,"") };
+			OTag{ luaL_optstring(L,6,"") }; qCheckLayer(Layer, "CreateObject");
 		auto o{ Maps[Tag].Layer(Upper(Layer))->RNewObject(Kind) };
 		o->Tag(OTag);
 		return 0;
@@ -797,6 +844,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_ShowButLabel", Kthura_ShowButLabel);
 		Apollo_State::RequireFunction("AKTHURA_HideButLabel", Kthura_HideButLabel);
 		Apollo_State::RequireFunction("AKTHURA_LabelMapDump", Kthura_LabelMapDump);
+		Apollo_State::RequireFunction("AKTHURA_LabelEnum", Kthura_LabelEnum);
+		Apollo_State::RequireFunction("AKTHURA_KillByLabel", Kthura_KillByLabel);
 		Apollo_State::RequireFunction("AKTHURA_ColorByLabel", Kthura_ColorByLabel);
 		Apollo_State::RequireFunction("AKTHURA_TexByLabel", Kthura_TexByLabel);
 		Apollo_State::RequireFunction("AKTHURA_PixInObj", Kthura_PixInObj);
