@@ -52,11 +52,16 @@ Class Audio
 		End
 	End
 	
+	Static Void Kill(String Tag)
+		AAUA.KILL(Tag)
+	End
+	
 	Static Var Load(String File, String ATag="")
 		String GT = AAUA.LOAD(ATag,File,ApolloState.Name)
 		AllowCAudio = true
 		var Ret = New Audio(GT,ATag=="")
 		AllowCAudio = false
+		Print("Loaded Audio: "..Ret.Tag.." (from file: "..File..")")
 		return Ret
 	End
 		
