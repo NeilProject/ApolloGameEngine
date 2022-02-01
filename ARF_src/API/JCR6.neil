@@ -59,7 +59,10 @@ group JCR6
 		table ret
 		// Although ipairs() should work, I prefer this method in case future versions of Lua may be less forgiving on that
 		int i = 1
-		dir = dir:upper().."/"
+		dir = dir:upper()
+		if !suffixed(dir,"/")
+			dir += "/"
+		end
 		while Entry[i]
 			if prefixed(Entry[i]:upper(),dir)
 				ret += Entry[i]
