@@ -41,6 +41,7 @@
 #include <QuickString.hpp>
 #include <Dirry.hpp>
 #include <TQSE.hpp>
+#include <Platform.hpp>
 
 
 // Lua
@@ -199,6 +200,7 @@ using namespace Tricky_Apollo;
 
 int main(int n, char* args[]) {
 	printf("Apollo Game Engine\nWritten by Jeroen P. Broks\nBuild date: %s\n(c) Jeroen P. Broks\nReleased under the terms of the GPL3\n\n",Appollo_BuildDate);
+	printf("Running in %s(%s)\n\n", Platform(true).c_str(), Platform(false).c_str());
 	//TQSE_Init();  TQSE_ShowKeyNames(); return 0; // debug	
 	ApolloConfigFile();
 	CLI_Args(n, args);
