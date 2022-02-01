@@ -554,6 +554,11 @@ namespace Tricky_Apollo {
 	} 
 #pragma endregion
 
+#pragma region Blend
+	static int AGGA_AlphaBlend(lua_State* L) { TQSG_SetBlend(TQSG_Blend::ALPHA); return 0; }
+	static int AGGA_AdditiveBlend(lua_State* L) { TQSG_SetBlend(TQSG_Blend::ADDITIVE); return 0; }
+#pragma endregion
+
 
 
 	// Init
@@ -575,6 +580,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGGA_SetAlpha", AGGA_SetAlpha);
 		Apollo_State::RequireFunction("AGGA_GetAlpha", AGGA_GetAlpha);
 		Apollo_State::RequireFunction("AGGA_Plot", AGGA_Plot);
+		Apollo_State::RequireFunction("AGGA_AlphaBlend", AGGA_AlphaBlend);
+		Apollo_State::RequireFunction("AGGA_AdditiveBlend", AGGA_AdditiveBlend);
 		// Images
 		Apollo_State::RequireFunction("AIMG_Load", AIMG_Load);
 		Apollo_State::RequireFunction("AIMG_LoadAnim", AIMG_LoadAnim);
