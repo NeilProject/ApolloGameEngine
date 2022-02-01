@@ -147,6 +147,10 @@ class KTHURA_Object
 		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ANIMFRAME")
 	End
 	
+	Get Int Blend
+		return AKTH.GETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"BLEND")
+	End
+	
 	Get String Kind
 		return AKTH.GETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"KIND")
 	End
@@ -267,7 +271,11 @@ class KTHURA_Object
 	Set Int AnimFrame
 		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"ANIMFRAME", Value)
 	End
-	
+
+	Set Int Blend
+		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"BLEND", Value)
+	End
+
 	Set Int Frame
 		self.AnimFrame=value
 	end
@@ -342,6 +350,10 @@ class KTHURA_Object
 	get bool Walking
 		return AKTH.GETOBJBOOL(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"WALKING")
 	end
+	
+	Get bool Moving
+		return AKTH.GETOBJBOOL(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"Moving")
+	End
 	
 	void StopWalking()
 		AKTH.SETOBJINT(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"WALKING", 0)
@@ -506,6 +518,10 @@ class KTHURA_Layer
 	void HideByLabel(string label)
 		AKTH.HIDEBYLABEL(MapTag,ApolloState.Name,MapID,LayerTag,label)
 	end
+	
+	void KillByLabel(string label)
+		AKTH.KILLBYLABEL(MapTag,ApolloState.Name,MapID,LayerTag,label)
+	End
 
 	void ShowButLabel(string label)
 		AKTH.SHOWBUTLABEL(MapTag,ApolloState.Name,MapID,LayerTag,label)
@@ -523,7 +539,10 @@ class KTHURA_Layer
 	Void TexByLabel(String Label,String Tex,String Kind="ALL")
 		AKTH.TEXBYLABEL(MapTag,ApolloState.Name,MapID,LayerTag,label,Tex,Kind)
 	End
-
+	
+	String SLabelEnum(String Label)
+		Return AKTH.LABELENUM(MapTag,ApolloState.Name,MapID,LayerTag,Label)
+	End
 	
 	get string LabelMapDump
 		return AKTH.LABELMAPDUMP(MapTag,ApolloState.Name,MapID,LayerTag)
@@ -539,7 +558,7 @@ class KTHURA_Layer
 	var NewObject(string nkind,ntag)
 		ntag = ntag or ""
 		int i = AKTH.NEWOBJ(MapTag,ApolloState.Name,MapID,LayerTag,nkind,ntag)
-		return obj(ntag)
+		return obj(i)
 	end
 	
 	get delegate NewObj
