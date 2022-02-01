@@ -305,7 +305,7 @@ namespace Tricky_Apollo {
 			qCase("X", obj->X());
 			qCase("Y", obj->Y());
 			qCase("W", obj->W());
-			qCase("H", obj->W());
+			qCase("H", obj->H());
 			qCase("INSX", obj->insertx());
 			qCase("INSY", obj->inserty());
 			qCase("R", obj->R());
