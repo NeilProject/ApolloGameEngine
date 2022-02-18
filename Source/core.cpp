@@ -382,7 +382,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("CurrentFlow", APICORE_GetFlow);
 		Apollo_State::RequireFunction("ApolloQuit", APICORE_Quit);
 		Apollo_State::RequireFunction("nFPS", APICORE_FPS);
-		Apollo_State::RequireFunction("sFPS", APICORE_FPS);
+		Apollo_State::RequireFunction("sFPS", APICORE_sFPS);
 		Apollo_State::RequireFunction("showFPS", APICORE_showFPS);
 		Apollo_State::RequireFunction("MinTicks", APICORE_MinTicks);
 		Apollo_State::RequireFunction("GetMinTicks", APICORE_MinTicks);

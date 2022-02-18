@@ -796,6 +796,18 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int Kthura_StringLayers(lua_State* L) {
+		qVerify();
+		auto sep{ luaL_optstring(L,4,";") };
+		string ret{ "" };
+		for (auto l : Maps[Tag].Layers) {
+			if (ret.size()) ret += sep;
+			ret += l.first;
+		}
+		lua_pushstring(L,ret.c_str());
+		return 1;
+	}
+
 
 	void ApolloAPIInit_Kthura() {
 		Kthura::Panic = Kthura_Panic;
@@ -812,6 +824,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AKTHURA_CountObjects", Kthura_CountObjects);
 		Apollo_State::RequireFunction("AKTHURA_HasLayer", Kthura_MapHasLayer);
 		Apollo_State::RequireFunction("AKTHURA_Layers", Kthura_Layers);
+		Apollo_State::RequireFunction("AKTHURA_StringLayers", Kthura_StringLayers);
 		Apollo_State::RequireFunction("AKTHURA_VerifyObject", Kthura_VerifyObject);
 		Apollo_State::RequireFunction("AKTHURA_GetObjInt", Kthura_GetObjInt);
 		Apollo_State::RequireFunction("AKTHURA_SetObjInt", Kthura_SetObjInt);

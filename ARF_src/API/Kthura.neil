@@ -423,11 +423,17 @@ class KTHURA_Layer
 		return AKTH.COUNTOBJECTS(MapTag,ApolloState.Name,MapID,LayerTag)
 	End
 	
+	var _Obj
 	var Obj(I_want)
+		_Obj = _Obj || {}
+		if _Obj[I_want]
+			return _Obj[I_want]
+		End
 		//Print("I want it all! And I want it now!")
 		Int ObjID = AKTH.VERIFYOBJECT(MapTag,ApolloState.Name,MapID,LayerTag,Lua.type(I_want),I_want)
 		//return new KTHURA_Object(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID)
-		  return new KTHURA_Object(MapID, MapTag,  LayerTag, ObjID)
+		_Obj[I_want] =  new KTHURA_Object(MapID, MapTag,  LayerTag, ObjID)
+		return _Obj[I_want]
 	end
 	
 	
@@ -504,6 +510,7 @@ class KTHURA_Layer
 	end
 	
 	void Kill(objid)
+		self._Obj={}
 		AKTH.KILLOBJECT(MapTag,ApolloState.Name,MapID,LayerTag,lua.type(objid),objid)
 	end
 	
@@ -601,13 +608,24 @@ class KTHURA_Map
 		Meta = Lua.setmetatable({},{["__index"]=MIndex, ["__newindex"]=MNewIndex,["__len"]=MLen})
 	end
 	
+	Var _Layers
 	Var Layer(string WantedLayer)
-		//Print("Get:",WantedLayer," From ",Tag)
-		return new KTHURA_Layer(ID,Tag,WantedLayer)
+		//Print("Get:",WantedLayer," From ",Tag)		
+		_Layers = _Layers || {}
+		_Layers[WantedLayer] = _Layers[WantedLayer] || new KTHURA_Layer(ID,Tag,WantedLayer) 
+		return _Layers[WantedLayer]
 	End
 	
 	Get Table Layers
 		return { AKTH.LAYERS(Tag,ApolloState.Name,ID) }
+	End
+	
+	Get String StringLayers
+		return AKTH.STRINGLAYERS(Tag,ApolloState.Name,ID)
+	End
+	
+	String XStringLayers(string sep)
+		return AKTH.STRINGLAYERS(Tag,ApolloState.Name,ID,sep)
 	End
 	
 	void Remap()

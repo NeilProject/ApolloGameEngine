@@ -15,6 +15,7 @@ namespace Tricky_Apollo {
 	static int Medal_FullScore(lua_State* L) { lua_pushinteger(L,FullScore()); return 1; }
 	static int Medal_MaxScore(lua_State* L) { lua_pushinteger(L, MaxScore()); return 1; }
 	static int Medal_Percent(lua_State* L) { lua_pushinteger(L, ScorePercent()); return 1; }
+	static int Medal_Awarded(lua_State* L) { lua_pushboolean(L, Awarded(gameid, luaL_checkstring(L, 1))); return 1; }
 
 
 	static int Medal_SetStorage(lua_State* L) { strcpy_s(StorageMethod, luaL_checkstring(L, 1)); Storage(StorageMethod); return 0; }
@@ -33,6 +34,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AMDL_SetGame", Medal_SetGame);
 		Apollo_State::RequireFunction("AMDL_Game", Medal_GetGame);
 		Apollo_State::RequireFunction("AMDL_Award", Medal_Award);
+		Apollo_State::RequireFunction("AMDL_Awarded", Medal_Awarded);
 		Apollo_State::RequireFunction("AMDL_FullScore", Medal_FullScore);
 		Apollo_State::RequireFunction("AMDL_MaxScore", Medal_MaxScore);
 		Apollo_State::RequireFunction("AMDL_Percent", Medal_Percent);

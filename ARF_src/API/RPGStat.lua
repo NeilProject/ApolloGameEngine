@@ -53,6 +53,13 @@ RPGChar = setmetatable({},{
 	__newindex = function() error("No new members may be assinged to RPGChar; Use the RPGChar.Create() function stead") end,
 
 	__index = function(s,char)
+		if type(char)=="number" then
+			return Neil.Globals.RPGParty[char]
+		end
+		if type(char)~="string" then
+			error("'string' expected as key for RPGChar, but I got a "..type(char).."! ("..tostring(char)..")")
+			return nil
+		end
 		if char:upper()=="ALL" then return Neil.Globals.Split(RPGAllChars(),";") end
 		if char:upper()=="CREATE" then return RPGCreate end
 		if char:upper()=="KILL" then return RPGKillChar end

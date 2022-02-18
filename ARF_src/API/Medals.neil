@@ -6,7 +6,7 @@ QuickMeta Medals
 	index
 		Key = Key:upper()
 		Switch Key
-			case "AWARD" "SETGAME"
+			case "AWARD" "SETGAME" "AWARDED"
 				return AMDL[Key]
 			Default
 				return AMDL[Key]()
