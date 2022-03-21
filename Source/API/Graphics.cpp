@@ -489,6 +489,20 @@ namespace Tricky_Apollo {
 		return 2;
 	}
 
+	static int AGAS_InvRecalc(lua_State* L) {
+		auto
+			x{ (int)luaL_checkinteger(L,1) },
+			y{ (int)luaL_checkinteger(L,2) };
+		auto
+			t{ luaL_checkstring(L,3) },
+			s{ luaL_checkstring(L,4) };
+		if (!HasAS(t)) Crash(string("There is no AS tagged \"") + t + "\"!", s);
+		auto a{ GetAS(t) };
+		lua_pushinteger(L, a->TCX(x));
+		lua_pushinteger(L, a->TCY(y));
+		return 2;
+	}
+
 	static int AGAS_Draw(lua_State* L) {
 		auto
 			x{ (int)luaL_checkinteger(L,1) },
@@ -623,6 +637,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGAS_Scale", AGAS_Scale);
 		Apollo_State::RequireFunction("AGAS_GetAutoScale", AGAS_GetAutoScale);
 		Apollo_State::RequireFunction("AGAS_CoordRecalc", AGAS_CoordRecalc);
+		Apollo_State::RequireFunction("AGAS_InvRecalc", AGAS_InvRecalc);
 		// Link Script
 		Apollo_State::RequireNeil("API/Graphics.neil");
 		// Image Font
