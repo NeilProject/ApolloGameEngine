@@ -1,0 +1,70 @@
+Table AGIN = LGGTTT("AGIN")
+
+
+Class GINIE
+	ReadOnly Static String State = ApolloState.Name 
+	Static Bool Has(string Tag)
+		Return AGIN.HAS(State,Tag:upper())
+	End
+	
+	Static Var Load(string File,string Tag="")
+		AGIN.CREATE(State,Tag:upper(),File,1)
+		return new GINIE(Tag)
+	End
+	
+	Static Var Create(string Tag="")
+		AGIN.CREATE(State,Tag:upper(),"",0)
+		return new GINIE(Tag)
+	End
+	
+	Static Var Obtain(String Tag)
+		If !Has(Tag)
+			Lua.error("There is no GINIE object tagged: "..Tag)
+		Else
+			Return new GINIE(Tag)
+		End
+	End
+	
+	Static Var LoadNew(String File,String Tag)
+		If Has(Tag)
+			return Obtain(Tag)
+		Else
+			Return Load(Tag)
+		End
+	End
+	
+	ReadOnly String _Tag
+	Constructor(string Tag)
+		_Tag = Tag:upper()
+	End
+	
+	String Value(string Cat,string Key,_Value)
+		If _Value!=nil
+			AGIN.SETVAL(State,_Tag,Cat,Key,Lua.tostring(_Value))
+			Return _Value
+		Else
+			Return AGIN.GETVAL(State,_Tag,Cat,Key)
+		End
+	End
+	
+	Void Add(string Cat,String Key,string Val)
+		AGIN.LISTAD(State,_Tag,Cat,Key,Val)
+	End
+	
+	Int Count(String Cat,String Key)
+		Return AGIN.LISTCN(State,_Tag,Cat,Key)
+	End
+	
+	String ListGet(String Cat,String Key, Int idx)
+		Return AGIN.LISTGT(State,_Tag,Cat,Key,Idx)
+	End
+	
+	Var ListCopy(String Cat,String Key)
+		Var Ret
+		Ret = {}
+		For i=1,Count(Cat,Key)
+			Ret[i]=ListGet(Cat,Key,i)
+		End
+		Return Ret
+	End
+End

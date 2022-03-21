@@ -201,6 +201,9 @@
     <ClCompile Include="..\TrickyUnits\Source\GetHTTP.cpp">
       <Filter>Header Files\Tricky%27s Units</Filter>
     </ClCompile>
+    <ClCompile Include="Source\API\GINIE_API.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">
