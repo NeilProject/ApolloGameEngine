@@ -296,6 +296,11 @@ group Screen
 		return AGAS.RECALC(x,y,Tag,ApolloState.Name)
 	End
 	
+	Var TrueCoords(string Tag,int x, int y)
+		return AGAS.INVRECALC(x,y,Tag,ApolloState.Name)
+	End
+
+	
 	Var AltRectData(string Tag,int x,int y, int w, int h)
 		return AGAS.COORDRECALC(Tag,ApolloState.Name,x,y,w,h)
 	End
