@@ -197,6 +197,7 @@ powershell updatebuilddata
     <ClCompile Include="Source\API\Kthura.cpp" />
     <ClCompile Include="Source\API\Medals_API.cpp" />
     <ClCompile Include="Source\API\RPGCharAPI.cpp" />
+    <ClCompile Include="Source\AQS\AQS_Run.cpp" />
     <ClCompile Include="Source\core.cpp" />
     <ClCompile Include="Source\Crash.cpp" />
     <ClCompile Include="Source\Globals.cpp" />
@@ -234,6 +235,7 @@ powershell updatebuilddata
     <ClInclude Include="Headers\States.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\API\ApolloAPIs.hpp" />
+    <ClInclude Include="Source\AQS\AQS_Run.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Apollo Game Engine.rc" />

@@ -8,13 +8,20 @@ Class GINIE
 	End
 	
 	Static Var Load(string File,string Tag="")
-		AGIN.CREATE(State,Tag:upper(),File,1)
+		AGIN.CREATE(State,Tag:upper(),File,4)
 		return new GINIE(Tag)
 	End
 	
 	Static Var Create(string Tag="")
 		AGIN.CREATE(State,Tag:upper(),"",0)
 		return new GINIE(Tag)
+	End
+	
+	Static Var CreateNew(string Tag)
+		If !Has(Tag)
+			return Create(Tag)
+		End
+		Return new GINIE(Tag)
 	End
 	
 	Static Var Obtain(String Tag)

@@ -55,6 +55,11 @@ namespace Tricky_Apollo {
 			GData[Tag].Parse(S);
 			break;
 		}
+		case 4: {
+			auto b = JCRPackage.Characters(S);
+			GData[Tag].AutoParse(b);
+			break;
+		}
 		default:
 			Crash(string("Unknown GINIE creation code ") + to_string(T), state, Apollo_State::TraceBack(state));
 		}
@@ -136,7 +141,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGIN_ListCn", GListCnt);
 		Apollo_State::RequireFunction("AGIN_listGt", GListGet);
 		Apollo_State::RequireFunction("AGIN_ListAd", GListAdd);
-		Apollo_State::RequireFunction("AGIN_Has", GHas);
+		Apollo_State::RequireFunction("AGIN_Has", GHas);		
 		Apollo_State::RequireNeil("API/GINIE.neil");
 	}
 }
