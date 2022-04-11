@@ -184,6 +184,7 @@ powershell updatebuilddata
     <ClCompile Include="..\TrickyUnits\Source\TrickyMath.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\TrickySTOI.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\TrickyTime.cpp" />
+    <ClCompile Include="Source\API\AQS_API.cpp" />
     <ClCompile Include="Source\API\Audio.cpp" />
     <ClCompile Include="Source\API\BankAPI.cpp" />
     <ClCompile Include="Source\API\BlopPlasma.cpp" />

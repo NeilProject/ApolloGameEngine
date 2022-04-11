@@ -29,6 +29,7 @@
 #include <States.hpp>
 #include <Crash.hpp>
 #include <QuickString.hpp>
+#include <TrickySTOI.hpp>
 
 using namespace std; // I know! I'm horrible! You don't have to tell me!
 using namespace TrickyUnits;
@@ -41,6 +42,10 @@ namespace Tricky_Apollo {
 		map<string, bool> gBool;
 	} tgv;
 	static map<string, tgv> bgv{};
+	// Allow use in AQS
+	map<string, int>* xgInt(string bundle) { return &(bgv[bundle].gInt); }
+	map<string, string>* xgStr(string bundle) { return &(bgv[bundle].gString); }
+	map<string, bool>* xgBoo(string bundle) { return &(bgv[bundle].gBool); }
 
 	static int AGV_Define(lua_State* L) {
 		auto state{ luaL_checkstring(L,1) };
@@ -161,6 +166,31 @@ namespace Tricky_Apollo {
 		lua_pushstring(L, ret.c_str());
 		return 1;
 	}
+
+	static int AGV_ToGINIE(lua_State* L) {
+		static string tf[2]{ "false","true" };
+		auto state{ luaL_checkstring(L,1) };
+		auto bundle{ luaL_checkstring(L,2) };
+		string ret{ "" };
+		ret += "[bool]\n"; for (auto fe : bgv[bundle].gBool) ret += fe.first + "=" + tf[fe.second]+"\n";
+		ret += "\n[int]\n"; for (auto fe : bgv[bundle].gInt) ret += fe.first + "=" + to_string(fe.second) + "\n";
+		ret += "\n[string]\n"; for (auto fe : bgv[bundle].gString) ret += fe.first + "=" + fe.second + "\n";
+		lua_pushstring(L, ret.c_str());
+		return 1;
+	}
+
+	static int AGV_FromGINIE(lua_State* L) {
+		GINIE Data;
+		auto state{ luaL_checkstring(L,1) };
+		auto bundle{ luaL_checkstring(L,2) };
+		auto source{ luaL_checkstring(L,3) };
+		Data.Parse(source);
+		if (bgv.count(bundle)) bgv.erase(bundle);
+		for (auto k : Data.EachValue("bool")) bgv[bundle].gBool[k] = Upper(Data.Value("bool", k)) == "TRUE";
+		for (auto k:Data.EachValue("int")) bgv[bundle].gInt[k] = ToInt(Data.Value("int", k));
+		for (auto k : Data.EachValue("string")) bgv[bundle].gString[k] = Data.Value("string", k);
+		return 0;
+	}
 	
 
 	void ApolloAPIInit_InitGameVars() {
@@ -171,6 +201,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGVR_Enroll", AGV_Enroll);
 		Apollo_State::RequireFunction("AGVR_Show", AGV_Show);
 		Apollo_State::RequireFunction("AGVR_Sub", AGV_Sub);
+		Apollo_State::RequireFunction("AGVR_ToGINIE", AGV_ToGINIE);
+		Apollo_State::RequireFunction("AGVR_FrGINIE", AGV_FromGINIE);
 		Apollo_State::RequireNeil("API/GameVars.neil");
 	}
 

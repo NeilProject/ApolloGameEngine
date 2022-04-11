@@ -91,9 +91,20 @@ QuickMeta GV
 				Return Split(GameVars.SHOW(ApolloState.Name,"_GV_"),"\n")
 			Case "SUB"
 				return gvSub
+			case "GINIE"
+				Return GameVars.TOGINIE(ApolloState.Name,"_GV_")
 			Default
 				Lua.assert(Types[key],"I do not know type: "..key)				
 				Return Types[key];
+		End
+	End
+	NewIndex
+		key = key:upper()
+		Switch Key
+			Case "GINIE"
+				GameVars.FRGINIE(ApolloState.Name,"_GV_",value)
+			Default
+				Lua.error(key.." is either not part of gv or it's read-only")
 		End
 	End
 End

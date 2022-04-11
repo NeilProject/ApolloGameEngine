@@ -82,7 +82,7 @@ namespace Tricky_Apollo {
 		auto
 			cat{ luaL_checkstring(L,3) },
 			key{ luaL_checkstring(L,4) };
-		lua_pushstring(L,GData[GID].Value(cat, key).c_str());		
+		lua_pushstring(L,GData[GID].Value(cat, key).c_str());
 		return 1;
 	}
 
@@ -129,6 +129,8 @@ namespace Tricky_Apollo {
 		lua_pushboolean(L, GData.count(GID));
 		return 1;
 	}
+
+	
 
 
 

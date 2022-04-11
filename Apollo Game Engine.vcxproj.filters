@@ -210,6 +210,9 @@
     <ClCompile Include="Source\AQS\AQS_Run.cpp">
       <Filter>Source Files\Apollo\AQS</Filter>
     </ClCompile>
+    <ClCompile Include="Source\API\AQS_API.cpp">
+      <Filter>Source Files\Apollo\API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">

@@ -1,0 +1,34 @@
+Const Table AQSA = LGGTTT("AQSA")
+
+Group AQS
+	Void Load(string state,string script)
+		AQSA.LOAD(State,ApolloState.Name,Script)
+	End
+	
+	Void LoadNew(string state,string script)
+		If !AQSA.HAVE(state,ApolloState.Name)
+			AQSA.LOAD(State,ApolloState.Name,Script)
+		End
+	End
+	
+	Bool Has(string State)
+		Return AQSA.HAVE(state,ApolloState.Name)
+	End
+	
+	Bool Have(string State)
+		Return AQSA.HAVE(state,ApolloState.Name)
+	End
+	
+	Void Kill(String State)
+		AQSA.KILL(state,ApolloState.Name)
+	End
+	
+	Void Call(String State, String Chunk, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z)
+		AQSA.CALL(State,ApolloState.Name,Chunk, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z)
+	End
+	
+	Bool HasChunk(String State, String Chunk)
+		return AQSA.HASCHUNK(State,ApolloState.Name,Chunk)
+	End
+	
+End

@@ -185,6 +185,7 @@ namespace Tricky_Apollo {
 	static int APICORE_PlanToKill(lua_State* L) {
 		string kState = luaL_checkstring(L, 1);
 		StatesToBeKilled.push_back(kState);
+		return 0;
 	}
 
 	static int APICORE_Call(lua_State* L) {

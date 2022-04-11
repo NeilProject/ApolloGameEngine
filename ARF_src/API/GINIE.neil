@@ -24,6 +24,11 @@ Class GINIE
 		Return new GINIE(Tag)
 	End
 	
+	Static Var Parse(string Tag,Src)
+		AGIN.CREATE(State,Tag:upper(),Src,3)
+		return new GINIE(Tag)
+	End
+	
 	Static Var Obtain(String Tag)
 		If !Has(Tag)
 			Lua.error("There is no GINIE object tagged: "..Tag)
@@ -50,6 +55,7 @@ Class GINIE
 			AGIN.SETVAL(State,_Tag,Cat,Key,Lua.tostring(_Value))
 			Return _Value
 		Else
+			//printf("GINIE.%s[%s,%s]='%s' (%s)\n",_Tag,Cat,Key,Lua.tostring(AGIN.GETVAL(State,_Tag,Cat,Key)),Lua.type(AGIN.GETVAL(State,_Tag,Cat,Key)))
 			Return AGIN.GETVAL(State,_Tag,Cat,Key)
 		End
 	End
@@ -70,8 +76,41 @@ Class GINIE
 		Var Ret
 		Ret = {}
 		For i=1,Count(Cat,Key)
-			Ret[i]=ListGet(Cat,Key,i)
+			Ret[i]=ListGet(Cat,Key,i-1)
 		End
 		Return Ret
+	End
+	
+	Var ListPairs(Cat,Key)
+		Int c = Count(Cat,Key)
+		Int i = -1
+		Return Var()
+			i++
+			if i>=c
+				return nil,nil
+			end
+			return i,ListGet(Cat,key,i)
+		End
+		
+	End
+	
+	Var ListEach(Cat,Key)
+		Int c = Count(Cat,Key)
+		int i = -1
+		Return String()
+			i++
+			if i>=c
+				return nil,nil
+			end
+			return ListGet(Cat,key,i)
+		End
+	End
+	
+	Get String UnParseMe
+		Return AGIN.UNPARS(State,_Tag)
+	End
+	
+	Static String UnParse(string Tag)
+		Return AGIN.UNPARS(State,Tag)
 	End
 End
