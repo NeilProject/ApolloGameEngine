@@ -81,7 +81,7 @@ Class GINIE
 		Return Ret
 	End
 	
-	Var ListPairs(Cat,Key)
+	Var ListPairs(String Cat,String Key)
 		Int c = Count(Cat,Key)
 		Int i = -1
 		Return Var()
@@ -94,16 +94,17 @@ Class GINIE
 		
 	End
 	
-	Var ListEach(Cat,Key)
+	Var ListEach(String Cat,String Key)
 		Int c = Count(Cat,Key)
 		int i = -1
-		Return String()
+		Var R()
 			i++
 			if i>=c
-				return nil,nil
+				return nil
 			end
 			return ListGet(Cat,key,i)
 		End
+		Return R
 	End
 	
 	Get String UnParseMe

@@ -588,6 +588,7 @@ class KTHURA_Map
 	readonly int ID
 	//readonly bool AutoDestroy
 	readonly table Meta
+	readonly table MetaData
 	
 	public Constructor(string T,int aID)
 		Tag = T
@@ -606,6 +607,7 @@ class KTHURA_Map
 			return #self.MetaFields
 		end
 		Meta = Lua.setmetatable({},{["__index"]=MIndex, ["__newindex"]=MNewIndex,["__len"]=MLen})
+		MetaData = Meta
 	end
 	
 	Var _Layers
