@@ -266,6 +266,29 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int AGAS_Stretch(lua_State* L) {
+		std::string State = luaL_checkstring(L, 1);
+		std::string Tag = luaL_checkstring(L, 2);
+		int x = floor(luaL_checknumber(L, 3));
+		int y = floor(luaL_checknumber(L, 4));
+		int w = floor(luaL_checknumber(L, 5));
+		int h = floor(luaL_checknumber(L, 6));
+		int f = luaL_checknumber(L, 7);
+		std::string AltScreen = luaL_checkstring(L, 8);
+		auto a{ GetAS(AltScreen) };
+		auto
+			sx{ a->RCX(x) },
+			sy{ a->RCY(y) },
+			sw{ a->RCW(w) },
+			sh{ a->RCH(h) };
+
+		//GetTex(Tag, State)->Draw(x, y, f);
+		// std::cout << "Tile(" << x << "," << y << "," << w << "," << h << "," << f << ");\n";
+		Apollo_SDL_Stretch(Tag, sx, sy, sw, sh, sf, State, Apollo_State::TraceBack(State));
+		if (TQSG_GetError() != "") Crash(TQSG_GetError(), State, Apollo_State::TraceBack(State));
+		return 0;
+	}
+
 
 	static int AIMG_ImgWidth(lua_State* L) {
 		std::string State = luaL_checkstring(L, 1);
@@ -617,6 +640,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_Negative", AIMG_Negative);
 		Apollo_State::RequireFunction("AIMG_GetRotation", AIMG_GetRotation);
 		Apollo_State::RequireFunction("AIMG_SetRotation", AIMG_SetRotation);
+
 		// Alias in General 
 		Apollo_State::RequireFunction("AGGA_GetRotation", AIMG_GetRotation);
 		Apollo_State::RequireFunction("AGGA_SetRotation", AIMG_SetRotation);
@@ -638,6 +662,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGAS_GetAutoScale", AGAS_GetAutoScale);
 		Apollo_State::RequireFunction("AGAS_CoordRecalc", AGAS_CoordRecalc);
 		Apollo_State::RequireFunction("AGAS_InvRecalc", AGAS_InvRecalc);
+		Apollo_State::RequireFunction("AGAS_Stretch", AGAS_Stretch);
 		// Link Script
 		Apollo_State::RequireNeil("API/Graphics.neil");
 		// Image Font
