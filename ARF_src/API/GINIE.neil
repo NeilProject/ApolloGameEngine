@@ -41,12 +41,13 @@ Class GINIE
 		If Has(Tag)
 			return Obtain(Tag)
 		Else
-			Return Load(Tag)
+			Return Load(File,Tag)
 		End
 	End
 	
 	ReadOnly String _Tag
 	Constructor(string Tag)
+		Lua.assert(Tag!="","Trying to create tagless GINIE object!")
 		_Tag = Tag:upper()
 	End
 	
