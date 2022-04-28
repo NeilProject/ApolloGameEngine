@@ -7,7 +7,7 @@
 	auto \
 		state{luaL_checkstring(L,1)},\
 		GID{ luaL_checkstring(L,2) };\
-		if (!GData.count(GID)) { Crash(string("GINIE data for script not found on tag ")+GID,state,Apollo_State::TraceBack(state)); return r;}
+		if (!GData.count(GID)) { Crash(string("GINIE data for script not found on tag: ")+GID,state,Apollo_State::TraceBack(state)); return r;}
 
 #define ocheck()\
 	auto \
@@ -97,7 +97,7 @@ namespace Tricky_Apollo {
 		auto
 			cat{ luaL_checkstring(L,3) },
 			key{ luaL_checkstring(L,4) };
-		lua_pushinteger(L, GData[GID].List(cat, key).size());
+		lua_pushinteger(L, GData[GID].List(cat, key)->size());
 		return 1;
 	}
 
@@ -108,7 +108,7 @@ namespace Tricky_Apollo {
 			key{ luaL_checkstring(L,4) };
 		auto
 			idx{ luaL_checkinteger(L,5) };
-		lua_pushstring(L, GData[GID].List(cat, key)[idx].c_str());
+		lua_pushstring(L, (*GData[GID].List(cat, key))[idx].c_str());
 		return 1;
 	}
 
