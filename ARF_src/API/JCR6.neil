@@ -97,6 +97,11 @@ group JCR6
 	bool EntryExists(string entry, string resource="*MPACKAGE")
 		return AJCR.ENTRYEXISTS(resource,State,entry)
 	end
+
+	bool DirExists(string entry, string resource="*MPACKAGE")
+		return AJCR.DIREXISTS(resource,State,entry)
+	end
+
 	
 	ReadOnly Delegate HasEntry
 	
