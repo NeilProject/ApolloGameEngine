@@ -284,7 +284,7 @@ namespace Tricky_Apollo {
 
 		//GetTex(Tag, State)->Draw(x, y, f);
 		// std::cout << "Tile(" << x << "," << y << "," << w << "," << h << "," << f << ");\n";
-		Apollo_SDL_Stretch(Tag, sx, sy, sw, sh, sf, State, Apollo_State::TraceBack(State));
+		Apollo_SDL_Stretch(Tag, sx, sy, sw, sh, f, State, Apollo_State::TraceBack(State));
 		if (TQSG_GetError() != "") Crash(TQSG_GetError(), State, Apollo_State::TraceBack(State));
 		return 0;
 	}
