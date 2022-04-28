@@ -263,6 +263,10 @@ Class Image
 		AGAS.DRAW(x,y,frame,Tag,ATag,ApolloState.Name)
 	End
 	
+	Void AltStretch(string ATag,int X,int Y,int W, int H,int frame=0)
+		AGAS.STRETCH(ApolloState.Name,Tag,x,y,w,h,frame,ATag)
+	End
+	
 	Static Void AltScale(String ATag, number W, number h)
 		AGAS.SCALE(W,H,ATag,ApolloState.Name)
 	End
