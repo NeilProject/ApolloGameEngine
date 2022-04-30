@@ -199,6 +199,15 @@ namespace Tricky_Apollo {
 		}
 	}
 
+	void KillTexByPrefix(std::string _prefix) {
+		auto pr = Upper(_prefix);
+		vector<string> Victims;
+		for (auto a : Texture) {
+			if (prefixed(a.first, pr)) Victims.push_back(a.first);
+		}
+		for (auto v : Victims) Texture.erase(v);
+	}
+
 	bool TagExists(std::string Tag) {
 		return Texture.count(Upper(Tag));
 	}

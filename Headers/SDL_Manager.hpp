@@ -63,6 +63,7 @@ namespace Tricky_Apollo {
 	int TexWidth(std::string Tag, std::string State="C++", std::string Traceback="");
 	int TexHeight(std::string Tag, std::string State = "C++", std::string Traceback = "");
 	void KillTex(std::string Tag); // RemTex requires a tag to exist, KillTex does not!
+	void KillTexByPrefix(std::string _prefix);
 	bool TagExists(std::string Tag);
 	void SetTex(std::string Tag, TQSG_AutoImage Img);
 	std::string MkTex(std::string Tag);

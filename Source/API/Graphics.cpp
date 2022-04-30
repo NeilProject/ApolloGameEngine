@@ -197,6 +197,12 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int AIMG_KillByPrefix(lua_State* L) {
+		auto Pref{ luaL_checkstring(L,1) };
+		KillTexByPrefix(Pref);
+		return 0;
+	}
+
 	static int AIMG_Draw(lua_State* L) {
 		std::string State = luaL_checkstring(L, 1);
 		std::string Tag = luaL_checkstring(L, 2);
@@ -623,6 +629,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_Load", AIMG_Load);
 		Apollo_State::RequireFunction("AIMG_LoadAnim", AIMG_LoadAnim);
 		Apollo_State::RequireFunction("AIMG_Kill", AIMG_Kill);
+		Apollo_State::RequireFunction("AIMG_KillByPrefix", AIMG_KillByPrefix);
 		Apollo_State::RequireFunction("AIMG_Stretch", AIMG_Stretch);
 		Apollo_State::RequireFunction("AIMG_Draw", AIMG_Draw);
 		Apollo_State::RequireFunction("AIMG_XDraw", AIMG_XDraw);
