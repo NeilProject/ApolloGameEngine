@@ -1,7 +1,7 @@
 -- <License Block>
 -- ARF_src/API/RPGStat.lua
 -- RPG Stat Link up
--- version: 22.04.30
+-- version: 22.05.10
 -- Copyright (C) 2020, 2021, 2022 Jeroen P. Broks
 -- This software is provided 'as-is', without any express or implied
 -- warranty.  In no event will the authors be held liable for any damages
@@ -34,6 +34,16 @@ QuickMeta RPGParty
 	index
 		if type(key)=="string" and key:upper()=="MAX"
 			return Lua.RPGGetPartyMax()
+		elseif type(key)=="string" and (key:upper()=="HAS" or key:upper()=="HAVE")
+			bool chk(string char)
+				for i=1,Lua.RPGGetPartyMax()
+					if Lua.RPGGetParty(i)==char
+						Return True
+					end
+				end
+				Return False
+			end
+			Return chk
 		end
 		return Lua.RPGGetParty(key)
 	end
