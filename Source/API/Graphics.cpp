@@ -484,6 +484,14 @@ namespace Tricky_Apollo {
 		return 0;
 	}
 
+	static int AIMG_CountFrames(lua_State* L) {
+		auto
+			State{ luaL_checkstring(L, 1) },
+			Tag{ luaL_checkstring(L, 2) };
+		lua_pushinteger(L, Tex_FrameCount(Tag,State, Apollo_State::TraceBack(State)));
+		return 1;
+	}
+
 	
 
 	// ImageFont
@@ -647,6 +655,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AIMG_Negative", AIMG_Negative);
 		Apollo_State::RequireFunction("AIMG_GetRotation", AIMG_GetRotation);
 		Apollo_State::RequireFunction("AIMG_SetRotation", AIMG_SetRotation);
+		Apollo_State::RequireFunction("AIMG_CountFrames", AIMG_CountFrames);
 
 		// Alias in General 
 		Apollo_State::RequireFunction("AGGA_GetRotation", AIMG_GetRotation);
