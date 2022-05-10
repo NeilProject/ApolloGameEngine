@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 22.04.30
+// Version: 22.05.10
 // EndLic
 
 
@@ -64,6 +64,7 @@ namespace Tricky_Apollo {
 	int TexHeight(std::string Tag, std::string State = "C++", std::string Traceback = "");
 	void KillTex(std::string Tag); // RemTex requires a tag to exist, KillTex does not!
 	void KillTexByPrefix(std::string _prefix);
+	int Tex_FrameCount(std::string Tag, std::string State, std::string Traceback);
 	bool TagExists(std::string Tag);
 	void SetTex(std::string Tag, TQSG_AutoImage Img);
 	std::string MkTex(std::string Tag);

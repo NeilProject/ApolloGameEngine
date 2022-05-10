@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 22.04.30
+// Version: 22.05.10
 // EndLic
 
 
@@ -379,11 +379,22 @@ namespace Tricky_Apollo {
 		auto T = Upper(Tag);
 		if (Texture.count(T) != 1) {
 			if (T == "**DEATH**") return; // Otherwise we get a cyclic function call, recursing stuff forever until the stack blows up!
-			Crash("There is no image loaded named " + T, State, Traceback, AE_NoTextureOnTag);
+			Crash("Draw: There is no image loaded named " + T, State, Traceback, AE_NoTextureOnTag);
 			return;
 		}
 		auto& Tex = Texture[T];
 		Tex->Draw(x, y,f);
+	}
+
+	int Tex_FrameCount(std::string Tag,std::string State,std::string Traceback){
+		auto T = Upper(Tag);
+		if (Texture.count(T) != 1) {
+			if (T == "**DEATH**") return 0; // Otherwise we get a cyclic function call, recursing stuff forever until the stack blows up!
+			Crash("Count: There is no image loaded named " + T, State, Traceback, AE_NoTextureOnTag);
+			return 0;
+		}
+		auto& Tex = Texture[T];
+		return Tex->Frames();
 	}
 
 	void Apollo_SDL_XDraw(std::string Tag, int x, int y, int f, std::string State, std::string Traceback) {
