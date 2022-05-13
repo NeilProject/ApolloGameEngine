@@ -167,6 +167,10 @@ class KTHURA_Object
 		return AKTH.GETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"LABELS")
 	end
 	
+	Get String Label
+		Return Labels
+	End
+	
 	Get Bool Impassible
 		return AKTH.GETOBJBOOL(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"IMPASSIBLE")
 	end
@@ -296,6 +300,10 @@ class KTHURA_Object
 	Set String Labels
 		AKTH.SETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"LABELS", Value)
 	end
+	
+	Set String Label
+		Labels = Value
+	End
 	
 	get string Tag
 		return AKTH.GETOBJSTR(MapTag,ApolloState.Name,MapID,LayerTag,"number",ObjID,"TAG")
