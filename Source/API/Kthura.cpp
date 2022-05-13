@@ -345,6 +345,7 @@ namespace Tricky_Apollo {
 			qCase("TAG", obj->Tag());
 			qCase("KIND", obj->Kind());
 			qCase("LABELS", obj->Labels());
+			qCase("LABEL", obj->Labels());
 			qCase("WIND", obj->Wind());
 		} else {
 			Crash("Unknown Object String field: " + ObjKey, State, Apollo_State::TraceBack(State));
@@ -421,6 +422,7 @@ namespace Tricky_Apollo {
 		qStCs("TAG") obj->Tag(value);
 		qStCs("KIND") Crash("Kthura Object Field 'Kind' is read-only!", State, Apollo_State::TraceBack(State));
 		qStCs("LABELS") obj->Labels(value);
+		qStCs("LABEL") obj->Labels(value);
 		qStCs("WIND") obj->Wind(value);
 		else {
 			Crash("Could not write to Object String field: " + ObjKey, State, Apollo_State::TraceBack(State));
