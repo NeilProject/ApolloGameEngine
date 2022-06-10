@@ -23,7 +23,11 @@ Global Const Table GameVars = LGGTTT("AGVR")
 
 QuickMeta GV__Bool
 	Index
-		return GameVars.RECEIVE(ApolloState.Name,"_GV_",1,key)
+		if prefixed(Key,"!")
+			return !GameVars.RECEIVE(ApolloState.Name,"_GV_",1,right(key,#key-1))
+		Else
+			return GameVars.RECEIVE(ApolloState.Name,"_GV_",1,key)
+		End
 	End
 	NewIndex
 		If value

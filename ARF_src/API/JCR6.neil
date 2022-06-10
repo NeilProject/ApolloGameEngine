@@ -43,6 +43,10 @@ group JCR6
 		AJCR.STARTENTRIES(resource,State)
 	end
 	
+	Get Delegate Dir
+		Return Self.GetDir
+	End
+	
 	table GetDir(string dir,string resource="*MPACKAGE")
 		//table ret
 		//dir = dir:upper().."/"

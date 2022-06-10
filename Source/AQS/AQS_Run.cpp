@@ -78,16 +78,17 @@ namespace ApolloQuickScript {
 		string Func{ "" };
 		void Parse(string ex, string Bundle, string& Type, string& svalue, int& ivalue, bool& bvalue) {
 #ifdef InApollo
-			if (prefixed(ex, "$$")) { auto gs = xgStr(Bundle); svalue = (*gs)[right(ex, ex.size() - 2)]; bvalue = svalue.size() > 0; ivalue = 0; Type = "String"; }
-			else if (prefixed(ex, "$$")) { auto gs = xgStr(Bundle); svalue = (*gs)[right(ex, ex.size() - 1)]; bvalue = svalue.size() > 0; ivalue = 0; Type = "String"; }
-			else if (prefixed(ex, "%%")) { auto gs = xgInt(Bundle); ivalue = (*gs)[right(ex, ex.size() - 2)]; svalue = to_string(ivalue); bvalue = ivalue; Type = "Int"; }
-			else if (prefixed(ex, "%")) { auto gs = xgInt(Bundle); ivalue = (*gs)[right(ex, ex.size() - 1)]; svalue = to_string(ivalue); bvalue = ivalue; Type = "Int"; }
-			else if (prefixed(ex, "&")) { 
+			if (prefixed(ex, "$$")) { auto gs = xgStr(Bundle); svalue = (*gs)[right(Upper(ex), ex.size() - 2)]; bvalue = svalue.size() > 0; ivalue = 0; Type = "String"; }
+			else if (prefixed(Upper(ex), "$$")) { auto gs = xgStr(Bundle); svalue = (*gs)[right(Upper(ex), ex.size() - 1)]; bvalue = svalue.size() > 0; ivalue = 0; Type = "String"; }
+			else if (prefixed(Upper(ex), "%%")) { auto gs = xgInt(Bundle); ivalue = (*gs)[right(Upper(ex), ex.size() - 2)]; svalue = to_string(ivalue); bvalue = ivalue; Type = "Int"; }
+			else if (prefixed(Upper(ex), "%")) { auto gs = xgInt(Bundle); ivalue = (*gs)[right(Upper(ex), ex.size() - 1)]; svalue = to_string(ivalue); bvalue = ivalue; Type = "Int"; }
+			else if (prefixed(Upper(ex), "&")) { 
 				auto gs = xgBoo(Bundle); 
-				bvalue = (*gs)[right(ex, ex.size() - 1)]; 
+				bvalue = (*gs)[right(Upper(ex), ex.size() - 1)]; 
 				ivalue = bvalue;
 				svalue = to_string(ivalue); bvalue = ivalue; 
 				Type = "Bool";
+				//cout << "AQS>Check: " << right(ex, ex.size() - 1) << " >> " << bvalue << endl; // debug only!
 			}
 			else 
 #endif

@@ -348,6 +348,7 @@ Class ImageFont
 		end
 		AutoDestruct = ATag==""
 		Tag = ATag
+		Self.Dark=Self.DarkText
 	end
 	
 	Static Var Load(String File,String ATag="")
@@ -408,6 +409,7 @@ Class ImageFont
 		Graphics.Color(r,g,b)
 		Text(Txt,x,y,ah,av,autonext)
 	end
-		
+	
+	ReadOnly Delegate Dark
 
 end

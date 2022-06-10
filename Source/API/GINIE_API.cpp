@@ -155,6 +155,19 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int GCategories(lua_State* L) {
+		auto
+			state{ luaL_checkstring(L,1) },
+			GID{ luaL_checkstring(L,2) };
+		string r{ "" };
+		for (auto k : GData[GID].EachGroup()) {
+			if (r.size()) r += "\n";
+			r += k;
+		}
+		lua_pushstring(L, r.c_str());
+		return 1;		
+	}
+
 	
 
 
@@ -168,6 +181,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AGIN_ListCn", GListCnt);
 		Apollo_State::RequireFunction("AGIN_listGt", GListGet);
 		Apollo_State::RequireFunction("AGIN_ListAd", GListAdd);
+		Apollo_State::RequireFunction("AGIN_Categories", GCategories);
 		Apollo_State::RequireFunction("AGIN_Has", GHas);		
 		Apollo_State::RequireNeil("API/GINIE.neil");
 	}

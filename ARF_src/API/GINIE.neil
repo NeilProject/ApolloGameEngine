@@ -38,9 +38,11 @@ Class GINIE
 	
 	Static Var CreateNew(string Tag)
 		If !Has(Tag)
+			//Print(State..">","Creating GINIE:"..Tag) // DEBUG ONLY!
 			return Create(Tag)
 		End
-		Return new GINIE(Tag)
+		//Return new GINIE(Tag)
+		return self.Obtain(Tag)
 	End
 	
 	Static Var Parse(string Tag,Src)
@@ -80,6 +82,10 @@ Class GINIE
 		End
 	End
 	
+	Number NValue(String Cat, string Key)
+		return Lua.tonumber(Value(Cat,Key)) || 0
+	End
+	
 	Void Add(string Cat,String Key,string Val)
 		AGIN.LISTAD(State,_Tag,Cat,Key,Val)
 	End
@@ -101,6 +107,23 @@ Class GINIE
 		Return Ret
 	End
 	
+	Bool ListHas(String Cat,String Key, String Value,ignorecase)
+		if ignorecase
+			Value=Value:upper()
+		end
+		For i=1,Count(Cat,Key)
+			String G = ListGet(Cat,Key,i-1)
+			if ignorecase
+				G = G:upper()
+			end
+			if G==Value
+				Return True
+			end
+		End
+		Return False
+	End
+		
+	
 	Var ListPairs(String Cat,String Key)
 		Int c = Count(Cat,Key)
 		Int i = -1
@@ -110,8 +133,7 @@ Class GINIE
 				return nil,nil
 			end
 			return i,ListGet(Cat,key,i)
-		End
-		
+		End		
 	End
 	
 	Var ListEach(String Cat,String Key)
@@ -125,6 +147,10 @@ Class GINIE
 			return ListGet(Cat,key,i)
 		End
 		Return R
+	End
+	
+	Get Var Categories
+		Return Split(AGIN.CATEGORIES(State,_Tag),"\n")
 	End
 	
 	Get String UnParseMe
