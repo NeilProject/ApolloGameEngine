@@ -213,6 +213,12 @@
     <ClCompile Include="Source\API\AQS_API.cpp">
       <Filter>Source Files\Apollo\API</Filter>
     </ClCompile>
+    <ClCompile Include="HomeFiles.cpp">
+      <Filter>Source Files\Apollo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TrickyUnits\Source\FileList.cpp">
+      <Filter>Header Files\Tricky%27s Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Identify.hpp">

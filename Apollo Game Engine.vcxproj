@@ -170,6 +170,7 @@ powershell updatebuilddata
     <ClCompile Include="..\TrickyUnits\Source\Dijkstra.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\dim2.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\Dirry.cpp" />
+    <ClCompile Include="..\TrickyUnits\Source\FileList.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\GetHTTP.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\GINIE.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\JXSDA.cpp" />
@@ -184,6 +185,7 @@ powershell updatebuilddata
     <ClCompile Include="..\TrickyUnits\Source\TrickyMath.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\TrickySTOI.cpp" />
     <ClCompile Include="..\TrickyUnits\Source\TrickyTime.cpp" />
+    <ClCompile Include="HomeFiles.cpp" />
     <ClCompile Include="Source\API\AQS_API.cpp" />
     <ClCompile Include="Source\API\Audio.cpp" />
     <ClCompile Include="Source\API\BankAPI.cpp" />
