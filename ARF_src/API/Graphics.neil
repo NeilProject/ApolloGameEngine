@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Graphics.neil
 // Apollo - Graphics Linkup
-// version: 22.05.10
+// version: 22.07.18
 // Copyright (C) 2020, 2021, 2022 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -132,7 +132,7 @@ Class Image
 		//	print(Lua.type(v),k)
 		//End
 		AllowCImage = true
-		String NTag = AIMG.LOAD(File,Tag)
+		String NTag = AIMG.LOAD(Lua.Neil.Globals.JCR6.dEnt(File),Tag)
 		var Ret = new Image(NTag)
 		AllowCImage = false
 		Return Ret
@@ -149,6 +149,7 @@ Class Image
 	static Bool TagExists(string Tag)
 		return AIMG.TAGEXISTS(Tag)
 	end
+	
 	
 	Static Var LoadNew(string File,string Tag)
 		if TagExists(Tag)
@@ -353,7 +354,7 @@ Class ImageFont
 	
 	Static Var Load(String File,String ATag="")
 		AllowCFont = true
-		string NTag = AFNT.LOADIMAGEFONT(ApolloState.Name,ATag,File)
+		string NTag = AFNT.LOADIMAGEFONT(ApolloState.Name,ATag,Lua.Neil.Globals.JCR6.dEnt(File))
 		var ret = new ImageFont(File,NTag)
 		AllowCFont = False
 		return ret
@@ -366,6 +367,19 @@ Class ImageFont
 		AllowCFont = false
 		return ret
 	end
+	
+	static Bool TagExists(string Tag)
+		return AFNT.GOTTAG(Tag)
+	End
+	
+	Static Var LoadNew(string File,string Tag)
+		if TagExists(Tag)
+			Return Obtain(Tag)
+		else
+			Return Load(File,Tag)
+		End
+	End
+
 	
 	void Text(String Txt, int x, int y, int ah=0, int av=0, autonext)
 		int an=0
