@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 22.04.30
+// Version: 22.07.18
 // EndLic
 #include <AP_Lua_CPP.hpp>
 #include <TQSE.hpp>
@@ -90,6 +90,70 @@ namespace Tricky_Apollo {
 	static int AEA_KeyByName(lua_State* L) { lua_pushnumber(L, SDL_GetKeyFromName(luaL_checkstring(L, 1))); return 1; }
 	static int AEA_KeyName(lua_State* L) { lua_pushstring(L, SDL_GetKeyName(luaL_checkinteger(L,1))); return 1; }
 
+	static int AEA_EventName(lua_State* L) { lua_pushstring(L, TQSE_Name().c_str()); return 1; }
+	
+	static int AEA_EventFData(lua_State* L) {
+		lua_pushinteger(L, TQSE_Type());
+		lua_pushstring(L, TQSE_Name().c_str());
+		switch (TQSE_Type()) {
+		case SDL_FIRSTEVENT:
+			return 2;
+		case SDL_KEYDOWN:
+		{
+			auto k = TQSE_GetKey();
+			lua_pushstring(L, SDL_GetKeyName(k));
+			lua_pushinteger(L, k);
+			lua_pushboolean(L, false); // compatibility thing. 
+			return 5;
+		}
+		case SDL_KEYUP:
+		{
+			auto k = TQSE_GetKey();
+			lua_pushstring(L, SDL_GetKeyName(k));
+			lua_pushinteger(L, k);
+			return 4;
+		}
+		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONUP: {
+			//x, y, button, istouch, presses
+			auto button{ TQSE_LastPolled().button.button };
+			//for (auto c = 1; c < 3; c++) if (TQSE_MouseHit(c)) button = c; 
+
+			lua_pushinteger(L, TQSE_MouseX());
+			lua_pushinteger(L, TQSE_MouseY());
+			lua_pushinteger(L, button);
+			lua_pushboolean(L, false); // Touch not yet supported, but perhaps in the future
+			lua_pushinteger(L, 1); // Repeated pressed not yet supported, but perhaps in the future
+			return 7;
+		}
+		case SDL_MOUSEMOTION:
+			// x, y, dx, dy, istouch
+		{
+			int
+				x{ TQSE_MouseX() },
+				y{ TQSE_MouseY() };
+			static int
+				ox{ x },
+				oy{ y };
+			lua_pushinteger(L, x);
+			lua_pushinteger(L, y);
+			lua_pushinteger(L, x - ox);
+			lua_pushinteger(L, y - oy);
+			ox = x;
+			oy = y;
+			lua_pushboolean(L, false); // Touch. Not yet supported, but perhaps in the future
+			return 7;
+		}
+			
+		// Cases just for beating clearn, but not really needed. At least I got an indication I didn't forget them
+		case SDL_QUIT:
+		case SDL_APP_TERMINATING:
+		case SDL_APP_LOWMEMORY:
+		default:
+			return 2;
+		}
+	}
+
 
 
 	void ApolloAPIInit_Events(){
@@ -112,6 +176,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AEA_MouseWheelY", AEA_MouseWheelY);
 		Apollo_State::RequireFunction("AEA_KeyName", AEA_KeyName);
 		Apollo_State::RequireFunction("AEA_Flush", AEA_Flush);
+		Apollo_State::RequireFunction("AEA_Name", AEA_EventName);
+		Apollo_State::RequireFunction("AEA_QuickData", AEA_EventFData);
 		Apollo_State::RequireNeil("API/Events.neil");
 	}
 }
