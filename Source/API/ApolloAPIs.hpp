@@ -21,6 +21,7 @@ namespace Tricky_Apollo {
 	void ApolloAPIInit_Medals();
 	void ApolloAPIInit_GINIE();
 	void ApolloAPIInit_AQS();
+	void ApolloAPIInit_AHFA();
 	 
 
 
@@ -41,6 +42,7 @@ namespace Tricky_Apollo {
 		ApolloAPIInit_Medals();
 		ApolloAPIInit_GINIE();
 		ApolloAPIInit_AQS();
+		ApolloAPIInit_AHFA();
 	}
 
 }
