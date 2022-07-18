@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/JCR6.neil
 // Apollo - JCR6 - Link
-// version: 22.04.30
+// version: 22.07.18
 // Copyright (C) 2020, 2021, 2022 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -28,6 +28,20 @@ string LastPoint=""
 
 group JCR6
 	readonly string State = ApolloState.Name
+	
+	Bool RemoveDupeSlashes = True
+	string dEnt(string E)
+		if !RemoveDupeSlashes
+			Return E
+		End
+		string OE
+		string NE = E
+		repeat
+			OE = NE
+			NE = Replace(OE,"//","/")			
+		until NE==OE
+		return NE
+	End
 
 	//table Entries(string resource="*MPACKAGE")
 	//	return { AJCR.ENTRIES(resource,State) }
@@ -80,12 +94,43 @@ group JCR6
 		return ret
 	end
 	
+	table GetDirNP(string dir,string resource="*MPACKAGE")
+		var d = GetDir(dir,resource)
+		var ret = {}
+		if !suffixed(dir,"/")
+			dir += "/"
+		end
+		for f in each(d)
+			ret += right(f,#f-#dir)
+		end
+		return ret
+	end
+		
+		
+	
 	string LoadString(string entry,string resource="*MPACKAGE")
 		return AJCR.LOADSTRING(resource,State,entry)
 	end
 	
 	Table LoadLines(string entry,string resource="*MPACKAGE")
-		return Split(LoadString(Entry,Resource),"\n")
+		//return Split(LoadString(Entry,Resource),"\n")
+		Var Ret = {}
+		Int L = 1
+		String S = LoadString(Entry,Resource)
+		for i=1,#S
+			String Ch=Mid(S,i,1)
+			Ret[L] = Ret[L] || ""
+			Switch Ch
+				case "\n"
+					L++
+					Ret[L] = Ret[L] || ""
+				case "\r"
+					// IGNORE!
+				default
+					Ret[L]+=Ch
+			End
+		End
+		Return Ret
 	End
 	
 	int Size(string entry,string resource="*MPACKAGE")
