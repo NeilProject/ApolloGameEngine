@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 22.05.10
+// Version: 22.07.18
 // EndLic
 #include <AP_Lua_CPP.hpp>
 #include <GINIE.hpp>
