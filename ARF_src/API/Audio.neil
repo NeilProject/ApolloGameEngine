@@ -1,7 +1,7 @@
 // License Information:
 // ARF_src/API/Audio.neil
 // Apollo - Audio link
-// version: 22.04.30
+// version: 22.07.18
 // Copyright (C) 2020, 2021, 2022 Jeroen P. Broks
 // This software is provided 'as-is', without any express or implied
 // warranty.  In no event will the authors be held liable for any damages
@@ -57,7 +57,7 @@ Class Audio
 	End
 	
 	Static Var Load(String File, String ATag="")
-		String GT = AAUA.LOAD(ATag,File,ApolloState.Name)
+		String GT = AAUA.LOAD(ATag,Lua.Neil.Globals.JCR6.dEnt(File),ApolloState.Name)
 		AllowCAudio = true
 		var Ret = New Audio(GT,ATag=="")
 		AllowCAudio = false
