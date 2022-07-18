@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 22.05.10
+// Version: 22.07.18
 // EndLic
 // We get into the deep of this later!
 
@@ -41,6 +41,11 @@ namespace Tricky_Apollo {
 	static int AGGA_Cls(lua_State* L) {
 		TQSG_Cls();
 		return 0;
+	}
+
+	static int AGGA_IsFullScreen(lua_State* L) {		
+		lua_pushboolean(L,TQSG_Full());
+		return 1;
 	}
 
 	static int AGGA_ClsColor(lua_State* L) {
@@ -370,6 +375,11 @@ namespace Tricky_Apollo {
 		APGetFont(Tag,State)->Fixed = luaL_checkinteger(L, 3);
 		return 0;
 	}
+
+	static int AFNT_HasTag(lua_State* L) {
+		lua_pushboolean(L, GotFont(false, luaL_checkstring(L, 1), "N/A"));
+		return 1;
+	}
 	
 	static int AFNT_GFix(lua_State* L) {
 		std::string State = luaL_checkstring(L, 1);
@@ -615,6 +625,7 @@ namespace Tricky_Apollo {
 	// Init
 	void ApolloAPIInit_Graphics() {
 		// General
+		Apollo_State::RequireFunction("AGGA_IsFullScreen", AGGA_IsFullScreen);
 		Apollo_State::RequireFunction("AGGA_Cls", AGGA_Cls);
 		Apollo_State::RequireFunction("AGGA_ClsColor", AGGA_ClsColor);
 		Apollo_State::RequireFunction("AGGA_Alpha", AGGA_Alpha); 
@@ -669,6 +680,8 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AFNT_GFix", AFNT_GFix);
 		Apollo_State::RequireFunction("AFNT_TxtW", AFNT_TxtW);
 		Apollo_State::RequireFunction("AFNT_TxtH", AFNT_TxtH);
+		Apollo_State::RequireFunction("AFNT_GotTag", AFNT_HasTag);
+
 		// Alternate Screen
 		Apollo_State::RequireFunction("AGAS_Create", AGAS_Create);
 		Apollo_State::RequireFunction("AGAS_Recalc", AGAS_Recalc);
