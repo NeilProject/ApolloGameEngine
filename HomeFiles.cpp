@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 22.07.18
+// Version: 22.07.19
 // EndLic
 // C++
 #include <string>
@@ -61,6 +61,15 @@ namespace Tricky_Apollo {
 		for (int i = 1; i < a.size() - 4; ++i)
 			if (mid(a, i + 1, 4) == "/../") Crash("Invalid dir!", S);
 	}
+
+	static bool BAllowPath(string a, string S) {
+		a = TReplace(a, '\\', '/');
+		if (prefixed(a, "../")) return false;
+		for (int i = 1; i < a.size() - 4; ++i)
+			if (mid(a, i + 1, 4) == "/../") return false;
+		return true;
+	}
+
 
 	static int AHFA_Load(lua_State* L) {
 		auto
@@ -142,6 +151,31 @@ namespace Tricky_Apollo {
 		return 1;
 	}
 
+	static int AHFA_Write(lua_State* L) {
+		auto
+			State{ luaL_checkstring(L,1) },
+			File{ luaL_checkstring(L,2) },
+			Str{ luaL_checkstring(L,3) };
+		auto
+			RF{ SGDir() + "/" + File };	
+		auto
+			AP{ BAllowPath(RF, State) };
+		if (!AP) {
+			lua_pushboolean(L, false);
+			lua_pushstring(L, string(string("Invalid path: ")+File).c_str());
+			return 2;
+		}
+		if (!DirectoryExists(ExtractDir(RF))) {
+			lua_pushboolean(L, false);
+			lua_pushstring(L, string(string("Path not found: ") + File).c_str());
+			return 2;
+		}
+		SaveString(RF, Str);
+		lua_pushboolean(L, true);
+		lua_pushstring(L, "");
+		return 2;
+	}
+
 	// Init Apollo Home File API
 	void ApolloAPIInit_AHFA() {
 		Apollo_State::RequireFunction("AHFA_PATH", AHFA_Path);
@@ -151,6 +185,7 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AHFA_DIREXISTS", AHFA_DirExists);
 		Apollo_State::RequireFunction("AHFA_GETDIR", AHFA_GetDir);
 		Apollo_State::RequireFunction("AHFA_CREATEDIR", AHFA_CreateDir);
+		Apollo_State::RequireFunction("AHFA_WRITE", AHFA_Write);
 		Apollo_State::RequireNeil("API/HomeFile.neil");
 	}
 
