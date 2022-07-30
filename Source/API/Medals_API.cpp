@@ -23,6 +23,8 @@
 // 
 // Version: 22.05.10
 // EndLic
+
+#include <algorithm>
 #include <AP_Lua_CPP.hpp>
 #include <Medals.hpp>
 #include "../../Headers/Globals.hpp"
@@ -33,6 +35,7 @@ namespace Tricky_Apollo {
 
 	static char gameid[200];
 	static char StorageMethod[200];
+	static int AltMax{ 0 };
 
 	static int Medal_SetGame(lua_State* L) { strcpy_s(gameid, luaL_checkstring(L, 1)); return 0; }
 	static int Medal_GetGame(lua_State* L) { lua_pushstring(L, gameid); return 1; }
@@ -45,6 +48,18 @@ namespace Tricky_Apollo {
 
 	static int Medal_SetStorage(lua_State* L) { strcpy_s(StorageMethod, luaL_checkstring(L, 1)); Storage(StorageMethod); return 0; }
 	static int Medal_GetStorage(lua_State* L) { lua_pushstring(L, StorageMethod); return 1; }
+
+	static int Medal_SetAltMax(lua_State* L) { AltMax = std::max(0, (int)luaL_checkinteger(L, 1)); return 0; }
+	static int Medal_GetAltMax(lua_State* L) { lua_pushinteger(L, AltMax); return 1; }
+	static int Medal_AltPercent(lua_State* L) {
+		if (AltMax)
+			lua_pushnumber(L, ((double)FullScore() / std::min((double)AltMax, (double)MaxScore()) * 100));
+		else
+			lua_pushinteger(L, ScorePercent());
+		return 1;
+
+	}
+
 
 	void ApolloAPIInit_Medals() {
 		LoadFromInternet();
@@ -65,6 +80,10 @@ namespace Tricky_Apollo {
 		Apollo_State::RequireFunction("AMDL_Percent", Medal_Percent);
 		Apollo_State::RequireFunction("AMDL_Storage", Medal_GetStorage);
 		Apollo_State::RequireFunction("AMDL_SetStorage", Medal_SetStorage);
+
+		Apollo_State::RequireFunction("AMDL_SetAltMax", Medal_SetAltMax);
+		Apollo_State::RequireFunction("AMDL_AltMax", Medal_GetAltMax);
+		Apollo_State::RequireFunction("AMDL_AltPercent",Medal_AltPercent);
 		Apollo_State::RequireNeil("API/Medals.neil");
 	}
 
