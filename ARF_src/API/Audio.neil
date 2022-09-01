@@ -102,6 +102,10 @@ Class Audio
 		return ret
 	End
 	
+	static void QPlay(string tag)
+		Obtain(tag).Play()
+	End
+	
 	Static ReadOnly Delegate ChannelPlaying = AAUA.CHANNELPLAYING
 	
 	static Bool HasTag(string Tag)
