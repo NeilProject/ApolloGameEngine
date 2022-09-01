@@ -452,12 +452,12 @@ namespace ApolloQuickScript {
 				}
 			} break;
 			case 7:
-				if (!ins->Parameters.size()) qcrash("Jump without jumpdata", scriptfile, Chunk, calledby);
+				if (!ins->Parameters.size()) qcrash("JumpTrue without jumpdata", scriptfile, Chunk, calledby);
 				if (ins->Parameters[0]->Type != ParaType::Label) qcrash("Label expected for jump", scriptfile, Chunk, calledby);
 				if (lastcheck) { ipos = ins->Parameters[0]->Label; start = false; }
 				break;
 			case 8:
-				if (!ins->Parameters.size()) qcrash("Jump without jumpdata", scriptfile, Chunk, calledby);
+				if (!ins->Parameters.size()) qcrash("JumpFalse without jumpdata", scriptfile, Chunk, calledby);
 				if (ins->Parameters[0]->Type != ParaType::Label) qcrash("Label expected for jump", scriptfile, Chunk, calledby);
 				if (!lastcheck) { ipos = ins->Parameters[0]->Label; start = false; }
 				break;
