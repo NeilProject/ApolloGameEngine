@@ -228,6 +228,7 @@ namespace Tricky_Apollo {
 		std::string stat = luaL_checkstring(L, 2);
 		std::string value = luaL_checkstring(L, 3);
 		Character::Map[ch].GetStat(stat)->Script(value);
+		return 0;
 	}
 
 	static int RPGGetAllStats(lua_State* L) {

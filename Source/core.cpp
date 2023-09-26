@@ -194,6 +194,7 @@ namespace Tricky_Apollo {
 		string cPara = luaL_checkstring(L, 3);
 		bool cWantRet = luaL_optinteger(L, 4,0);
 		auto s = Apollo_State::Get(cState);
+		// cout << "Calling: " << cState << "::" << cFunc << "( " << cPara << " )\n"; // DEBUG ONLY
 		s->RawCallByType(cFunc, cPara);
 		if (cWantRet) {
 			/*
@@ -262,6 +263,7 @@ namespace Tricky_Apollo {
 		string fVar = luaL_checkstring(L, 3);
 		auto fVal = luaL_checkstring(L, 4);
 		Apollo_State::Get(fState, cState)->DefString(fVar, fVal);
+		return 0;
 	}
 
 	static int INTERSTATE_SetInt(lua_State* L) {
@@ -270,6 +272,7 @@ namespace Tricky_Apollo {
 		string fVar = luaL_checkstring(L, 3);
 		auto fVal = luaL_checkinteger(L, 4);
 		Apollo_State::Get(fState, cState)->DefInt(fVar, fVal);
+		return 0;
 	}
 
 	static int INTERSTATE_SetNumber(lua_State* L) {
@@ -278,6 +281,7 @@ namespace Tricky_Apollo {
 		string fVar = luaL_checkstring(L, 3);
 		auto fVal = luaL_checknumber(L, 4);
 		Apollo_State::Get(fState, cState)->DefNumber(fVar, fVal);
+		return 0;
 	}
 
 	static int INTERSTATE_SetBool(lua_State* L) {
@@ -286,6 +290,7 @@ namespace Tricky_Apollo {
 		string fVar = luaL_checkstring(L, 3);
 		auto fVal = luaL_checkstring(L, 4);
 		Apollo_State::Get(fState, cState)->DefBool(fVar, fVal);
+		return 0;
 	}
 
 
